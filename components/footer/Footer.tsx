@@ -1,0 +1,79 @@
+import React from "react";
+import BrandName from "../BrandName";
+
+import Image from "next/image";
+import Link from "next/link";
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import { BsFacebook, BsMessenger } from "react-icons/bs";
+import { SiZalo } from "react-icons/si";
+
+type Props = {};
+
+const Footer = (props: Props) => {
+  return (
+    <div className="block w-full bg-black z-10 shadow-sm">
+      <div className="px-40 pt-10 pb-4 flex gap-14">
+        <div className="flex flex-col gap-3 max-w-xs text-white text-sm">
+          <BrandName className="bg-white rounded-md" />
+          <p>
+            Chành xe miền Tây là dự án thuộc đồ án tốt nghiệp năm 2023 của nhóm
+            sinh viên đại học FPT.
+          </p>
+          <div className="flex gap-2 items-center">
+            <MdOutlineAlternateEmail />
+            nthieu1332002@gmail.com
+          </div>
+        </div>
+        <div className="flex flex-col gap-3 text-white text-sm">
+          <h2 className="text-base font-bold">Về Chành xe miền Tây</h2>
+          <Link href="/" className="hover:underline">
+            Về chúng tôi
+          </Link>
+          <Link href="/" className="hover:underline">
+            Bảng giá
+          </Link>
+          <Link href="/" className="hover:underline">
+            Hỏi đáp
+          </Link>
+        </div>
+        <div className="flex flex-col gap-3 text-white text-sm">
+          <h2 className="text-base font-bold">Chính sách</h2>
+          <Link href="/" className="hover:underline">
+            Chính sách trả hàng
+          </Link>
+          <Link href="/" className="hover:underline">
+            Công nghệ
+          </Link>
+          <Link href="/" className="hover:underline">
+            Quy định chung
+          </Link>
+          <Link href="/" className="hover:underline">
+            Quy trình giao hàng
+          </Link>
+          <Link href="/" className="hover:underline">
+            Quy trình gửi hàng
+          </Link>
+        </div>
+        <div className="flex flex-col gap-3 text-white text-sm">
+          <h2 className="text-base font-bold">Khác</h2>
+          <Link href="/" className="hover:underline">
+            Chành xe dành cho đối tác
+          </Link>
+        </div>
+        <div className="flex gap-5">
+          <Link href="/" target="_blank">
+            <BsFacebook className="rounded-full text-[#0866ff] w-12 h-12" />
+          </Link>
+          <Link href="/" target="_blank">
+            <BsMessenger className="rounded-full text-[#009ef7] w-12 h-12" />
+          </Link>
+          <Link href="/" target="_blank">
+            <SiZalo className="rounded-full text-[#0065f7] bg-white w-12 h-12 p-2" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Footer;

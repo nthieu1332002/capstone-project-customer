@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "@/public/assets/icon-removebg-preview.png";
 import name from "@/public/assets/ChanhXeMienTay.png";
 import Image from "next/image";
 import { cn } from "@/lib/utils";

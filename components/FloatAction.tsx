@@ -4,6 +4,7 @@ import React from 'react';
 import { FloatButton } from 'antd';
 import { FaFacebookMessenger } from 'react-icons/fa6';
 import { SiZalo } from 'react-icons/si';
+import { BsFacebook } from 'react-icons/bs';
 
 const FloatAction = () => {
   return (
@@ -13,6 +14,7 @@ const FloatAction = () => {
       style={{ right: 24 }}
       icon={<CustomerServiceOutlined />}
     >
+      <FloatButton icon={<BsFacebook className="text-[#0866ff]"/>} />
 
       <FloatButton icon={<FaFacebookMessenger className="text-[#009ef7]"/>} />
       <FloatButton icon={<SiZalo className="text-[#0065f7]"/>} />

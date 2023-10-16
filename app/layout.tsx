@@ -11,6 +11,7 @@ import theme from "@/theme/themeConfig";
 import { ConfigProvider } from "antd";
 import ModalProvider from "@/providers/ModalProvider";
 import FloatAction from "@/components/FloatAction";
+import Footer from "@/components/footer/Footer";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -38,7 +39,7 @@ export default async function RootLayout({
               <FloatAction/>
               <Header currentUser={currentUser} />
               {children}
-              <></>
+              <Footer/>
             </ConfigProvider>
           </AuthProvider>
         </StyledComponentsRegistry>
