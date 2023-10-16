@@ -53,7 +53,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
               style={{ backgroundColor: "#3ebde0", verticalAlign: "middle" }}
               size="large"
             >
-              {currentUser.user.email.substring(0, 5)}
+              {currentUser.user.email?.substring(0, 5)}
             </Avatar>
           </div>
 

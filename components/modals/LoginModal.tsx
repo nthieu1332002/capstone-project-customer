@@ -15,8 +15,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 type FieldType = {
-  email?: string | number;
-  password?: string;
+  email: string;
+  password: string;
 };
 const phoneNumberPattern = /^[0-9]{10,12}$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,12 +50,12 @@ const LoginModal = () => {
     }, 300);
   }, [form, onClose]);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: FieldType) => {
     setDisabled(true);
-
+    console.log("values", values);
     signIn("credentials", {
       email: "kminchelle",
-      password: "0lelplR2",
+      password: "0lelplR",
       // ...values,
       redirect: false,
     }).then((callback) => {
@@ -176,11 +176,14 @@ const LoginModal = () => {
                   <Button
                     disabled={disabled}
                     label="Đăng nhập"
-                    onClick={handleSubmit}
+                    htmlType="submit"
                   />
                   <p className="text-sm text-center mt-2">
                     Bạn chưa có tài khoản?{" "}
-                    <span className="text-primary-color font-bold cursor-pointer" onClick={() => onOpen("register")}>
+                    <span
+                      className="text-primary-color font-bold cursor-pointer"
+                      onClick={() => onOpen("register")}
+                    >
                       Tạo ngay
                     </span>
                   </p>

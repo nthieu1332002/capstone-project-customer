@@ -16,6 +16,7 @@ export default async function getCurrentUser() {
     return session
     
   } catch (err: any) {
+    console.log("err", err);
     return null
   }
 }

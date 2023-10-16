@@ -15,13 +15,13 @@ export const authOptions: AuthOptions = {
       name: "credentials",
       credentials: {
         email: { label: "email", type: "text" },
-        password: { label: "Password", type: "password" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("credentials", credentials);
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Đăng nhập thất bại');
+          throw new Error("[ALL] Invalid credentials");
         }
-
         const res = await axios.post("https://dummyjson.com/auth/login", {
           username: credentials?.email,
           password: credentials?.password,
@@ -36,7 +36,6 @@ export const authOptions: AuthOptions = {
           throw new Error('Invalid credentials');
         }
         console.log("user", { ...user, role });
-
         return { ...user, role }
       },
     })
@@ -44,10 +43,12 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.role = user.role
+      console.log("token", token);
       return token
     },
     async session({ session, token }) {
       if (session?.user) session.user.role = token.role
+      console.log("session", session);
       return session
     },
   },

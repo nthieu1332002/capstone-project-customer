@@ -5,11 +5,12 @@ import { IconType } from "react-icons";
 
 type ButtonProps = {
   label: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;
   icon?: IconType;
+  htmlType?: "submit" | "reset" | "button";
 };
 
 const Button = ({

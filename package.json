@@ -11,10 +11,12 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.0",
     "@reduxjs/toolkit": "^1.9.7",
+    "@types/lodash": "^4.14.199",
     "@types/react-redux": "^7.1.27",
     "antd": "^5.10.0",
     "axios": "^1.5.1",
     "clsx": "^2.0.0",
+    "lodash": "^4.17.21",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
     "query-string": "^8.1.0",
