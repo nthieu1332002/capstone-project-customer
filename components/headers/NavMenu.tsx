@@ -100,14 +100,14 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
           </div>
         </div>
       ) : (
-        <>
+        <div className="hidden lg:flex items-center gap-5">
           <NavLink name="Đăng nhập" onClick={() => onOpen("login")} />
           <NavLink
             name="Đăng ký"
             onClick={() => onOpen("register")}
             type="button"
           />
-        </>
+        </div>
       )}
     </>
   );

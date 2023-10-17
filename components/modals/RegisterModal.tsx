@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import {HiOutlineUser } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
+import { BiSearch } from "react-icons/bi";
 
 
 type FieldType = {
