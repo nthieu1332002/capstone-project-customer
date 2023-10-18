@@ -11,10 +11,10 @@ type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <div className="block w-full bg-black z-10 shadow-sm">
-      <div className="px-40 pt-10 pb-4 flex gap-14">
+    <div className=" bottom-0 w-full bg-black z-10 shadow-sm">
+      <div className="mx-auto md:px-10 xl:px-40 sm:px-2 px-4 py-5 md:py-10 pt-10 pb-4 flex flex-col flex-wrap md:flex-row lg:flex-nowrap gap-5 lg:gap-14">
         <div className="flex flex-col gap-3 max-w-xs text-white text-sm">
-          <BrandName className="bg-white rounded-md" />
+          <BrandName className="bg-white rounded-md"/>
           <p>
             Chành xe miền Tây là dự án thuộc đồ án tốt nghiệp năm 2023 của nhóm
             sinh viên đại học FPT.

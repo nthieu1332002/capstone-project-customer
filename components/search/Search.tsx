@@ -28,21 +28,34 @@ locale.lang.shortMonths = [
   "T11",
   "T12",
 ];
-type Props = {};
 const DATE_FORMAT = "DD/MM/YYYY";
 
-const Search = (props: Props) => {
-  const fromRef = useRef();
-  const toRef = useRef();
-
-  const [location, setLocation] = useState("");
+const Search = () => {
+  const fromRef = useRef<HTMLInputElement>(null);
+  const toRef = useRef<HTMLInputElement>(null);
 
   const disabledDate: RangePickerProps["disabledDate"] = (current) => {
     return current && current < dayjs().endOf("day");
   };
+
+  const handleSearch = async () => {
+    if (!fromRef.current?.value || !toRef.current?.value) {
+      return;
+    }
+    console.log("from:", fromRef.current?.value);
+    console.log("to:", toRef.current?.value);
+    const directionsService = new google.maps.DirectionsService()
+    const results = await directionsService.route({
+      origin: fromRef.current.value,
+      destination: toRef.current.value,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    })
+    console.log(results);
+  };
   return (
     <>
-      <div className="absolute flex gap-2 shadow-md bg-white rounded-md pl-8 pr-5 py-5 w-[1000px] -bottom-3">
+      <div className="absolute flex gap-2 shadow-md bg-white rounded-md pl-8 pr-5 py-5 w-[1000px] bottom-4">
         <div className="border-[1px] w-full py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer">
           <div className="flex items-center justify-between text-sm font-semibold mx-1">
             <div className="flex items-center gap-2 px-6 w-full">
@@ -55,7 +68,7 @@ const Search = (props: Props) => {
                     type="text"
                     className="custom-search"
                     placeholder="Chọn điểm xuất phát"
-                    ref={fromRef.current}
+                    ref={fromRef}
                   />
                 </GoogleMapSearch>
               </div>
@@ -70,7 +83,7 @@ const Search = (props: Props) => {
                     type="text"
                     className="custom-search"
                     placeholder="Chọn điểm đến"
-                    ref={toRef.current}
+                    ref={toRef}
                   />
                 </GoogleMapSearch>
               </div>
@@ -79,14 +92,13 @@ const Search = (props: Props) => {
               <MdOutlineDateRange size="18" />
               <div className="relative flex flex-col w-full">
                 <label htmlFor="date">Ngày đi</label>
-
                 <DatePicker
                   id="date"
                   defaultValue={dayjs(new Date())}
                   format={DATE_FORMAT}
                   disabledDate={disabledDate}
                   locale={locale}
-                  suffixIcon=""
+                  suffixIcon={null}
                   placeholder="Chọn ngày đi"
                   bordered={false}
                   className="custom-search"
@@ -96,7 +108,12 @@ const Search = (props: Props) => {
           </div>
         </div>
         <div className="flex items-center justify-center">
-          <button className="rotate-12 p-3 rounded-full bg-primary-color shadow-primary-color/75 shadow-lg text-white active:translate-y-1"><IoIosSend size={22}/></button>
+          <button
+            onClick={handleSearch}
+            className="rotate-12 p-3 rounded-full bg-primary-color shadow-primary-color/75 shadow-lg text-white active:translate-y-1"
+          >
+            <IoIosSend size={22} />
+          </button>
         </div>
       </div>
     </>

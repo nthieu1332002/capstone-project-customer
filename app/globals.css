@@ -45,6 +45,22 @@
   width: 100%;
 }
 
+.custom-search-sidebar {
+  border-radius: 32px !important;
+  padding: 0.5rem 0.7rem !important;
+  font-size: 1rem !important;
+  font-weight: normal;
+  outline: none;
+  background-color: white !important;
+  /* border: none !important; */
+  width: 100%;
+}
+.custom-search-sidebar>.ant-picker-input span.ant-picker-suffix {
+  margin-left: 1px;
+  margin-right: 10px;
+  order: -1;
+}
+
 .dropdown-list.active {
   opacity: 1;
   visibility: visible;

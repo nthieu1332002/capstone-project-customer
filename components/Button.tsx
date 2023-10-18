@@ -11,6 +11,7 @@ type ButtonProps = {
   small?: boolean;
   icon?: IconType;
   htmlType?: "submit" | "reset" | "button";
+  className?: string;
 };
 
 const Button = ({
@@ -20,6 +21,7 @@ const Button = ({
   outline,
   small,
   icon: Icon,
+  className,
 }: ButtonProps) => {
   return (
     <button
@@ -30,7 +32,8 @@ const Button = ({
         outline
           ? "bg-white border-black text-black"
           : "bg-primary-color text-white",
-        small ? "text-sm py-1 font-light" : "text-md py-2 font-semibold"
+        small ? "text-sm py-1 font-light" : "text-md py-2 font-semibold",
+        className
       )}
     >
       {Icon && <Icon size={24} className="absolute left-4 top-2" />}
