@@ -15,11 +15,10 @@ const ModalProvider = () => {
     return null;
   }
   return (
-    <>
+    <div>
       <LoginModal />
       <RegisterModal />
-
-    </>
+    </div>
   );
 };
 

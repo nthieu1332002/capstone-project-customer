@@ -19,7 +19,7 @@ const Header = ({ currentUser }: Props) => {
         <NavLink
           name="Về chúng tôi"
           type="normal"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/about")}
         />
       ),
       key: "0",
@@ -29,7 +29,7 @@ const Header = ({ currentUser }: Props) => {
         <NavLink
           name="Bảng giá"
           type="normal"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/pricing")}
         />
       ),
       key: "1",
@@ -39,7 +39,7 @@ const Header = ({ currentUser }: Props) => {
         <NavLink
           name="Hỏi đáp"
           type="normal"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/questions")}
         />
       ),
       key: "2",
@@ -64,17 +64,17 @@ const Header = ({ currentUser }: Props) => {
               <NavLink
                 name="Về chúng tôi"
                 type="normal"
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/about")}
               />
               <NavLink
                 name="Bảng giá"
                 type="normal"
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/pricing")}
               />
               <NavLink
                 name="Hỏi đáp"
                 type="normal"
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/questions")}
               />
             </div>
             

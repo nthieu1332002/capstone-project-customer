@@ -50,17 +50,16 @@ const RegisterModal = () => {
   const handleClose = useCallback(() => {
     setShowModal(false);
     form.resetFields();
-    setTimeout(() => {
-      onClose();
-    }, 300);
+    setTimeout(onClose, 300);
+
   }, [form, onClose]);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = useCallback((values: FieldType) => {
     setDisabled(true);
-
+    console.log("values", values);
     signIn("credentials", {
       email: "kminchelle",
-      password: "0lelplR2",
+      password: "0lelplR",
       // ...values,
       redirect: false,
     }).then((callback) => {
@@ -72,9 +71,8 @@ const RegisterModal = () => {
         router.refresh();
         setShowModal(false);
         form.resetFields();
-        setTimeout(() => {
-          onClose();
-        }, 300);
+        setTimeout(onClose, 300);
+
       }
 
       if (callback?.error) {
@@ -82,7 +80,8 @@ const RegisterModal = () => {
         form.resetFields();
       }
     });
-  };
+  },[form, onClose, router]);
+  
   if (!isModalOpen) {
     return null;
   }

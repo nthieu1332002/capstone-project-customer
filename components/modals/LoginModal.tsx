@@ -46,12 +46,10 @@ const LoginModal = () => {
   const handleClose = useCallback(() => {
     setShowModal(false);
     form.resetFields();
-    setTimeout(() => {
-      onClose();
-    }, 300);
+    setTimeout(onClose, 300);
   }, [form, onClose]);
 
-  const handleSubmit = (values: FieldType) => {
+  const handleSubmit = useCallback((values: FieldType) => {
     setDisabled(true);
     console.log("values", values);
     signIn("credentials", {
@@ -68,9 +66,8 @@ const LoginModal = () => {
         router.refresh();
         setShowModal(false);
         form.resetFields();
-        setTimeout(() => {
-          onClose();
-        }, 300);
+        setTimeout(onClose, 300);
+
       }
 
       if (callback?.error) {
@@ -78,7 +75,7 @@ const LoginModal = () => {
         form.resetFields();
       }
     });
-  };
+  }, [form, onClose, router]);
   if (!isModalOpen) {
     return null;
   }

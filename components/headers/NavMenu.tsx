@@ -42,7 +42,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
     };
   }, [handleClickOutside]);
   return (
-    <>
+    <div>
       {currentUser ? (
         <div className="relative" ref={menuRef}>
           <div
@@ -109,7 +109,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

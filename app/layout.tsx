@@ -28,7 +28,7 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   return (
-    <html lang="en">
+    <html lang="en" translate="no">
       {/* background color here if using color theme*/}
       <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
         <StyledComponentsRegistry>
