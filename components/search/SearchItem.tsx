@@ -14,7 +14,7 @@ type Props = {
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
   const chooseBooking= (route: route) => {
-    
+    router.push('/booking')
   }
   return (
     <div className="rounded-3xl border shadow-md p-4 mb-3">

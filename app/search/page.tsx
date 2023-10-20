@@ -4,7 +4,6 @@ import axios from "axios";
 import React from "react";
 import qs from "query-string";
 
-type Props = {};
 export type route = {
   id: number;
   name: string;

@@ -43,8 +43,6 @@ const SearchSideBar = (props: Props) => {
   const from = searchParams.get("from");
   const to = searchParams.get("to");
   const date = searchParams.get("date");
-  console.log("from", from);
-  console.log("to", to);
 
   const [form] = Form.useForm();
 
@@ -69,7 +67,6 @@ const SearchSideBar = (props: Props) => {
 
   const handleSubmit = useCallback((values: FieldType) => {
     setDisabled(true);
-    console.log("values", values);
     const url = qs.stringifyUrl({
       url: "/search",
       query: {
@@ -80,9 +77,6 @@ const SearchSideBar = (props: Props) => {
     }, { skipNull: true });
 
     router.push(url);
-    // route.push(
-    //   `/search?from=${values.from}&to=${values.to}&date=${values.date}`
-    // );
   }, [router]);
   return (
     <div className="px-12 py-6 bg-[#f8f8f8] border-b">
@@ -93,7 +87,7 @@ const SearchSideBar = (props: Props) => {
         loadingElement={<Loading />}
       >
         <div className="flex flex-col gap-2">
-          <div className="flex justify-start">
+          <div>
             <button className="p-3 rounded-full text-black hover:bg-gray-200 transition">
               <IoMdArrowRoundBack size={24} />
             </button>
