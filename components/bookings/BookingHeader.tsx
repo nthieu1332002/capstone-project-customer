@@ -12,7 +12,7 @@ const BookingHeader = ({ name, icon: Icon, className }: Props) => {
   return (
     <div
       className={cn(
-        "flex items-center gap-1 text-lg font-semibold tracking-tight text-primary-color",
+        "flex items-center my-2 gap-1 text-lg font-semibold tracking-tight text-primary-color",
         className
       )}
     >

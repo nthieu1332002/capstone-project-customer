@@ -47,7 +47,7 @@
 
 .custom-search-sidebar {
   border-radius: 32px !important;
-  padding: 0.5rem 0.7rem !important;
+  padding: 0.5rem 0.9rem !important;
   font-size: 1rem !important;
   font-weight: normal;
   outline: none;
@@ -59,6 +59,9 @@
   margin-left: 1px;
   margin-right: 10px;
   order: -1;
+}
+.custom-search-sidebar:placeholder-shown {
+  font-weight: 500 !important;
 }
 
 .dropdown-list.active {
