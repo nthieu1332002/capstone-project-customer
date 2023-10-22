@@ -1,7 +1,7 @@
 "use client";
 
 import { DatePicker, Form, Input } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import locale from "antd/es/date-picker/locale/vi_VN";
 import qs from "query-string";
@@ -43,30 +43,15 @@ const SearchSideBar = (props: Props) => {
   const from = searchParams.get("from");
   const to = searchParams.get("to");
   const date = searchParams.get("date");
-
-  const [form] = Form.useForm();
-
-  const [disabled, setDisabled] = useState(true);
-  const values = Form.useWatch([], form);
   const router = useRouter();
 
-  useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setDisabled(false);
-      },
-      () => {
-        setDisabled(true);
-      }
-    );
-  }, [form, values]);
+
 
   const disabledDate: RangePickerProps["disabledDate"] = (current) => {
     return current && current < dayjs().startOf("day");
   };
 
   const handleSubmit = useCallback((values: FieldType) => {
-    setDisabled(true);
     const url = qs.stringifyUrl({
       url: "/search",
       query: {
@@ -94,9 +79,8 @@ const SearchSideBar = (props: Props) => {
           </div>
           <h1 className="text-lg font-bold">Tìm kiếm của bạn</h1>
           <Form
-            form={form}
             layout="vertical"
-            name="login-form"
+            name="search-sidebar-form"
             onFinish={handleSubmit}
             requiredMark={false}
             initialValues={{
@@ -168,7 +152,6 @@ const SearchSideBar = (props: Props) => {
             </Form.Item>
             <Form.Item>
               <Button
-                disabled={disabled}
                 className="rounded-full"
                 label="Tìm kiếm"
                 htmlType="submit"
@@ -181,4 +164,4 @@ const SearchSideBar = (props: Props) => {
   );
 };
 
-export default SearchSideBar;
+export default memo(SearchSideBar);

@@ -26,23 +26,11 @@ const LoginModal = () => {
   const { isOpen, onClose, type, onOpen } = useAuthModal();
   const isModalOpen = isOpen && type === "login";
   const [showModal, setShowModal] = useState(isModalOpen);
-  const [disabled, setDisabled] = useState(true);
-  const values = Form.useWatch([], form);
   const router = useRouter();
-
   useEffect(() => {
     setShowModal(isModalOpen);
   }, [isModalOpen, isOpen]);
-  useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setDisabled(false);
-      },
-      () => {
-        setDisabled(true);
-      }
-    );
-  }, [form, values]);
+
   const handleClose = useCallback(() => {
     setShowModal(false);
     form.resetFields();
@@ -50,16 +38,12 @@ const LoginModal = () => {
   }, [form, onClose]);
 
   const handleSubmit = useCallback((values: FieldType) => {
-    setDisabled(true);
-    console.log("values", values);
     signIn("credentials", {
       email: "kminchelle",
       password: "0lelplR",
       // ...values,
       redirect: false,
     }).then((callback) => {
-      console.log("callback", callback);
-      setDisabled(false);
 
       if (callback?.ok) {
         toast.success("Đăng nhập thành công");
@@ -174,7 +158,6 @@ const LoginModal = () => {
                 </Form.Item>
                 <Form.Item>
                   <Button
-                    disabled={disabled}
                     label="Đăng nhập"
                     htmlType="submit"
                   />
