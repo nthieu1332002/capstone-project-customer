@@ -13,9 +13,10 @@ import Image from "next/image";
 import useAuthModal from "@/hooks/useAuthModal";
 import { Avatar } from "antd";
 import { cn } from "@/lib/utils";
+import { Session } from "next-auth";
 
 type NavMenuProps = {
-  currentUser?: any | null;
+  currentUser?: Session | null;
 };
 
 const NavMenu = ({ currentUser }: NavMenuProps) => {
@@ -42,7 +43,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
     };
   }, [handleClickOutside]);
   return (
-    <div>
+    <>
       {currentUser ? (
         <div className="relative" ref={menuRef}>
           <div
@@ -67,20 +68,20 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
           >
             <div className="flex flex-col">
               <div className="px-5 py-4">
-                <strong className="text-base">{currentUser.user.email}</strong>
+                <strong className="text-base">{currentUser.user.name}</strong>
                 <span className="flex gap-2">
-                  <BsFillTelephoneFill /> 09454054090
+                  <BsFillTelephoneFill /> {currentUser.user.phone}
                 </span>
               </div>
               <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
               <div className="p-2">
                 <NavMenuItem
-                  onClick={() => router.push("/")}
+                  onClick={() => router.push("/user/profile")}
                   icon={<FaRegCircleUser />}
                   name="Tài khoản"
                 />
                 <NavMenuItem
-                  onClick={() => router.push("/")}
+                  onClick={() => router.push("/user/order")}
                   icon={<MdOutlineHistory />}
                   name="Đơn hàng của tôi"
                 />
@@ -109,7 +110,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

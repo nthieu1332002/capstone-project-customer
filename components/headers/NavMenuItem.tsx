@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import React from "react";
-import { IconType } from "react-icons";
 type Props = {
   onClick: () => void;
   icon: React.ReactElement;
@@ -11,9 +11,10 @@ const NavMenuItem = ({ onClick, icon, name, type }: Props) => {
   return (
     <div
       onClick={onClick}
-      className={`flex items-center justify-start gap-3 px-3 py-3 hover:bg-neutral-100
-    transition cursor-pointer text-sm rounded-md
-    font-semibold ${type == "active" && "text-main-color"}`}
+      className={cn(
+        "flex items-center justify-start gap-3 px-3 py-3 hover:bg-neutral-200 transition cursor-pointer text-sm rounded-md font-semibold",
+        type == "active" && "text-primary-color"
+      )}
     >
       <span>{icon}</span> {name}
     </div>

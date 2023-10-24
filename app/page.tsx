@@ -2,7 +2,6 @@ import Search from "@/components/search/Search";
 import RouteSuggestion from "@/components/homepage/routes/RouteSuggestion";
 import HubSection from "@/components/homepage/hubs/HubSection";
 const Home = () => {
-  
   return (
     <div className="min-h-screen">
       <div className="relative h-[500px] w-full bg-blue-200 flex items-center justify-center">

@@ -1,9 +1,8 @@
 
+import { axios } from "@/lib/axios";
 import NextAuth, { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import axios from "axios";
-
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -14,41 +13,41 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { label: "email", type: "text" },
+        indentifier: { label: "indentifier", type: "text" },
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("credentials", credentials);
-        if (!credentials?.email || !credentials?.password) {
+        if (!credentials?.indentifier || !credentials?.password) {
           throw new Error("[ALL] Invalid credentials");
         }
-        const res = await axios.post("https://dummyjson.com/auth/login", {
-          username: credentials?.email,
+        const res = await axios.post("/api/customer/login/token", {
+          indentifier: credentials?.indentifier,
           password: credentials?.password,
+          device_name: "customer_web"
         })
-        if (!res.status) {
-          throw new Error('Đăng nhập thất bại');
-        }
+        if (res && res.status !== 200) {
+          throw new Error("[ALL] Invalid credentials");
 
-        const user = await res.data
-        const role = await res.data.gender
-        if (!user) {
-          throw new Error('Invalid credentials');
         }
-        console.log("user", { ...user, role });
-        return { ...user, role }
-      },
+        const user = res.data.data.customer;
+        console.log({ ...user, accessToken: res.data.data.access_token });
+        return { ...user, accessToken: res.data.data.access_token }
+      }
     })
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = user.role
-      console.log("token", token);
+      if (user) {
+        token.phone = user.phone
+        token.accessToken = user.accessToken
+      }
       return token
     },
     async session({ session, token }) {
-      if (session?.user) session.user.role = token.role
-      console.log("session", session);
+      if (session?.user) {
+        session.user.phone = token.phone
+        session.user.accessToken = token.accessToken
+      }
       return session
     },
   },

@@ -4,6 +4,14 @@ const nextConfig = {
         domains: [
             "res.cloudinary.com"
         ],
+    },
+    async rewrites() {
+        return [
+            {
+                source: '/user',
+                destination: '/user/profile'
+            }
+        ]
     }
 }
 

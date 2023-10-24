@@ -32,10 +32,10 @@ const BookingForm = (props: Props) => {
     console.log("values", values);
   }, []);
   return (
-    <div className="px-32 py-8">
-      <h1 className="text-black font-bold text-2xl">Đơn hàng của bạn</h1>
+    <div className="px-1 md:px-5 lg:px-5 xl:px-32 py-8">
+      <h1 className="text-center text-black font-bold text-2xl">Đơn hàng của bạn</h1>
 
-      <div className="flex items-center justify-center px-32 my-10">
+      <div className="flex items-center justify-center px-5 md:px-32 my-4 md:my-10">
         <Steps
           size="small"
           progressDot
@@ -54,7 +54,7 @@ const BookingForm = (props: Props) => {
           ]}
         />
       </div>
-      <div className="border-2 rounded-lg p-10">
+      <div className="border-2 rounded-lg p-3 lg:p-10">
         <Form
           layout="vertical"
           name="booking-form"
@@ -84,7 +84,7 @@ const BookingForm = (props: Props) => {
               className="custom-search-sidebar"
             />
           </Form.Item>
-          <div className="flex justify-between gap-5">
+          <div className="flex flex-col md:flex-row justify-between md:gap-5">
             <Form.Item<FieldType>
               label={<p className="font-medium text-sm">Số điện thoại</p>}
               validateTrigger="onBlur"
@@ -164,7 +164,7 @@ const BookingForm = (props: Props) => {
               className="custom-search-sidebar"
             />
           </Form.Item>
-          <div className="flex justify-between gap-5">
+          <div className="flex flex-col md:flex-row justify-between md:gap-5">
             <Form.Item<FieldType>
               label={<p className="font-medium text-sm">Số điện thoại</p>}
               validateTrigger="onBlur"
@@ -208,7 +208,7 @@ const BookingForm = (props: Props) => {
           <Divider />
 
           <BookingHeader name="Thông tin gói hàng" icon={TbPackage} />
-          <div className="flex gap-5">
+          <div className="flex flex-col md:flex-row md:gap-5">
             <Form.Item<FieldType>
               label={
                 <p className="font-medium text-sm">Tổng khối lượng (gam)</p>
@@ -227,6 +227,7 @@ const BookingForm = (props: Props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 style={{ width: "100%" }}
+                min={0}
                 placeholder="10"
                 className="custom-input-number"
               />
@@ -247,6 +248,7 @@ const BookingForm = (props: Props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 style={{ width: "100%" }}
+                min={0}
                 placeholder="10"
                 className="custom-input-number"
               />
@@ -267,6 +269,7 @@ const BookingForm = (props: Props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 style={{ width: "100%" }}
+                min={0}
                 placeholder="10"
                 className="custom-input-number"
               />
@@ -286,6 +289,7 @@ const BookingForm = (props: Props) => {
                 formatter={(value) =>
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
+                min={0}
                 style={{ width: "100%" }}
                 placeholder="10"
                 className="custom-input-number"

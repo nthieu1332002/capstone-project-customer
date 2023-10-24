@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 type FieldType = {
-  email: string;
+  indentifier: string;
   password: string;
 };
 const phoneNumberPattern = /^[0-9]{10,12}$/;
@@ -26,6 +26,8 @@ const LoginModal = () => {
   const { isOpen, onClose, type, onOpen } = useAuthModal();
   const isModalOpen = isOpen && type === "login";
   const [showModal, setShowModal] = useState(isModalOpen);
+  const [disabled, setDisabled] = useState(false);
+
   const router = useRouter();
   useEffect(() => {
     setShowModal(isModalOpen);
@@ -33,33 +35,33 @@ const LoginModal = () => {
 
   const handleClose = useCallback(() => {
     setShowModal(false);
+    setDisabled(false);
     form.resetFields();
+    router.refresh();
     setTimeout(onClose, 300);
-  }, [form, onClose]);
-
-  const handleSubmit = useCallback((values: FieldType) => {
-    signIn("credentials", {
-      email: "kminchelle",
-      password: "0lelplR",
-      // ...values,
-      redirect: false,
-    }).then((callback) => {
-
-      if (callback?.ok) {
-        toast.success("Đăng nhập thành công");
-        router.refresh();
-        setShowModal(false);
-        form.resetFields();
-        setTimeout(onClose, 300);
-
-      }
-
-      if (callback?.error) {
-        toast.error("Sai thông tin đăng nhập");
-        form.resetFields();
-      }
-    });
   }, [form, onClose, router]);
+
+  const handleSubmit = useCallback(
+    async (values: FieldType) => {
+      setDisabled(true);
+      await signIn("credentials", {
+        ...values,
+        redirect: false,
+      }).then((res) => {
+        console.log("res", res);
+
+        if (res?.ok) {
+          toast.success("Đăng nhập thành công");
+          handleClose();
+        } else {
+          toast.error("Sai thông tin đăng nhập");
+        }
+      });
+      setDisabled(false);
+
+    },
+    [handleClose]
+  );
   if (!isModalOpen) {
     return null;
   }
@@ -106,7 +108,7 @@ const LoginModal = () => {
               >
                 <Form.Item<FieldType>
                   label="Email / Số điện thoại"
-                  name="email"
+                  name="indentifier"
                   rules={[
                     {
                       required: true,
@@ -158,6 +160,7 @@ const LoginModal = () => {
                 </Form.Item>
                 <Form.Item>
                   <Button
+                    disabled={disabled}
                     label="Đăng nhập"
                     htmlType="submit"
                   />

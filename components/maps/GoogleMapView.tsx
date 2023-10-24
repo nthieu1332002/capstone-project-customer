@@ -73,7 +73,7 @@ const GoogleMapView = (props: Props) => {
       {isLoaded ? (
         <GoogleMap
           center={center}
-          zoom={9}
+          zoom={8}
           onClick={() => setActiveMarker(null)}
           mapContainerStyle={{ width: "100%", height: "100%" }}
           onLoad={onLoad}

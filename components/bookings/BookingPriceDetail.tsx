@@ -8,7 +8,7 @@ type Props = {};
 
 const BookingPriceDetail = (props: Props) => {
   return (
-    <div className="p-4 sticky top-[80px]">
+    <div className="p-2 md:p-4 sticky top-[80px]">
       <div className="mb-4 border rounded-md">
         <div className="p-4 flex items-center gap-2 text-lg font-bold border-b">
           <BsTruck className="text-primary-color" size={20} />

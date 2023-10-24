@@ -13,15 +13,15 @@ import SocialButton from "../SocialButton";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import {HiOutlineUser } from "react-icons/hi";
+import { HiOutlineUser } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
-
+import axios from "axios";
 
 type FieldType = {
-  name?: string;
-  phone?: number;
-  email?: string;
-  password?: string;
+  name: string;
+  phone: number;
+  email: string;
+  password: string;
 };
 const phoneNumberPattern = /^[0-9]{10,12}$/;
 const RegisterModal = () => {
@@ -29,58 +29,44 @@ const RegisterModal = () => {
   const { isOpen, onClose, type, onOpen } = useAuthModal();
   const isModalOpen = isOpen && type === "register";
   const [showModal, setShowModal] = useState(isModalOpen);
-  const [disabled, setDisabled] = useState(true);
-  const values = Form.useWatch([], form);
-  const router = useRouter();
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     setShowModal(isModalOpen);
   }, [isModalOpen, isOpen]);
-  useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setDisabled(false);
-      },
-      () => {
-        setDisabled(true);
-      }
-    );
-  }, [form, values]);
+
   const handleClose = useCallback(() => {
     setShowModal(false);
+    setDisabled(false);
     form.resetFields();
     setTimeout(onClose, 300);
-
   }, [form, onClose]);
 
-  const handleSubmit = useCallback((values: FieldType) => {
-    setDisabled(true);
-    console.log("values", values);
-    signIn("credentials", {
-      email: "kminchelle",
-      password: "0lelplR",
-      // ...values,
-      redirect: false,
-    }).then((callback) => {
-      console.log("callback", callback);
+  const handleSubmit = useCallback(
+    async (values: FieldType) => {
+      setDisabled(true);
+      try {
+        const data = {
+          ...values,
+          password_confirmation: values.password,
+          device_name: "customer_web",
+        };
+        const res = await axios.post("/api/auth/register", {data: data})
+        
+        if (res.status == 200) {
+          toast.success("Đăng ký thành công");
+          handleClose()
+        }
+      } catch (error: any) {
+        console.log("error", error.response.data);
+        setDisabled(false);
+        toast.error(error.response.data);
+      }
       setDisabled(false);
+    },
+    [handleClose]
+  );
 
-      if (callback?.ok) {
-        toast.success("Đăng ký thành công");
-        router.refresh();
-        setShowModal(false);
-        form.resetFields();
-        setTimeout(onClose, 300);
-
-      }
-
-      if (callback?.error) {
-        toast.error("Đăng ký thất bại");
-        form.resetFields();
-      }
-    });
-  },[form, onClose, router]);
-  
   if (!isModalOpen) {
     return null;
   }
@@ -139,9 +125,7 @@ const RegisterModal = () => {
                   className="mb-4"
                 >
                   <Input
-                    prefix={
-                      <HiOutlineUser className="text-zinc-300" />
-                    }
+                    prefix={<HiOutlineUser className="text-zinc-300" />}
                     placeholder="Nguyễn A"
                     className="custom-input"
                   />
@@ -162,9 +146,7 @@ const RegisterModal = () => {
                   className="mb-4"
                 >
                   <Input
-                    prefix={
-                      <AiOutlinePhone className="text-zinc-300" />
-                    }
+                    prefix={<AiOutlinePhone className="text-zinc-300" />}
                     placeholder="0123456789"
                     className="custom-input"
                   />
@@ -175,7 +157,7 @@ const RegisterModal = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Email hoặc số điện thoại không được bỏ trống.",
+                      message: "Email không được bỏ trống.",
                     },
                     {
                       type: "email",
@@ -200,6 +182,10 @@ const RegisterModal = () => {
                       required: true,
                       message: "Mật khẩu không được bỏ trống.",
                     },
+                    {
+                      min: 8,
+                      message: "Mật khẩu phải có ít nhất 8 kí tự.",
+                    }
                   ]}
                   className="mb-4"
                 >
@@ -219,7 +205,10 @@ const RegisterModal = () => {
                   />
                   <p className="text-sm text-center mt-2">
                     Đã có tài khoản?{" "}
-                    <span className="text-primary-color font-bold cursor-pointer" onClick={() => onOpen("login")}>
+                    <span
+                      className="text-primary-color font-bold cursor-pointer"
+                      onClick={() => onOpen("login")}
+                    >
                       Đăng nhập ngay
                     </span>
                   </p>
