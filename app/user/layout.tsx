@@ -4,9 +4,10 @@ import { authAxios } from "@/lib/axios";
 import { redirect } from "next/navigation";
 
 const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
-  
+  const user = await getCurrentUser();
+
+  if (!user) return redirect("/");
   const data = await authAxios.get("/api/user");
-  console.log(data);
   if (!data) return redirect("/");
   return (
     <div className="min-h-screen pt-[68px]">

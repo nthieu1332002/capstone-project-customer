@@ -4,19 +4,49 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { MdOutlineHistory, MdOutlineLogout } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import NavMenuItem from "../headers/NavMenuItem";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Avatar } from "antd";
 import { signOut } from "next-auth/react";
 import { RiErrorWarningLine, RiVerifiedBadgeLine } from "react-icons/ri";
 import { cn } from "@/lib/utils";
+import useAuthModal from "@/hooks/useAuthModal";
+
+const sidebarList = [
+  {
+    id: 1,
+    name: "Tài khoản",
+    path: "/user",
+    icon: <FaRegCircleUser />,
+  },
+  {
+    id: 2,
+    name: "Đơn hàng của tôi",
+    path: "/user/order",
+    icon: <FaRegCircleUser />,
+  },
+  {
+    id: 3,
+    name: "Danh sách yêu thích",
+    path: "/user/favorite",
+    icon: <AiOutlineHeart />,
+  },
+  {
+    id: 4,
+    name: "Đăng xuất",
+    icon: <MdOutlineLogout />,
+  },
+];
 
 type Props = {
   user: any;
 };
 
 const UserSidebar = ({ user }: Props) => {
+  const { onOpen } = useAuthModal();
   const router = useRouter();
-  const verified = user?.phone_verified_at || user?.email_verified_at
+  const pathname = usePathname();
+  console.log("ppathname", pathname);
+  const verified = user?.phone_verified_at || user?.email_verified_at;
   return (
     <div className="w-[500px]">
       <div className="flex flex-col rounded-lg border  py-3">
@@ -31,7 +61,12 @@ const UserSidebar = ({ user }: Props) => {
           </div>
           <div className="">
             <strong className="text-base">{user?.name}</strong>
-            <span className={cn("flex gap-2 items-center", verified ? "text-primary-color" : "text-red-500")}>
+            <span
+              className={cn(
+                "flex gap-2 items-center",
+                verified ? "text-primary-color" : "text-red-500"
+              )}
+            >
               {verified ? (
                 <>
                   <RiVerifiedBadgeLine size={15} /> Đã xác thực
@@ -46,27 +81,18 @@ const UserSidebar = ({ user }: Props) => {
         </div>
         <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
         <div className="p-2">
-          <NavMenuItem
-            onClick={() => router.push("/")}
-            icon={<FaRegCircleUser />}
-            name="Tài khoản"
-          />
-          <NavMenuItem
-            onClick={() => router.push("/")}
-            icon={<MdOutlineHistory />}
-            name="Đơn hàng của tôi"
-          />
-          <NavMenuItem
-            onClick={() => router.push("/")}
-            icon={<AiOutlineHeart />}
-            name="Danh sách yêu thích"
-          />
-          <NavMenuItem
-            onClick={() => signOut()}
-            icon={<MdOutlineLogout />}
-            type="active"
-            name="Đăng xuất"
-          />
+          {sidebarList.map((item) => {
+            return (
+              <NavMenuItem
+                key={item.id}
+                onClick={() => item.path ? router.push(item.path) : onOpen("logout")}
+                icon={item.icon}
+                name={item.name}
+                type={pathname === item.path ? "active" : ""}
+              />
+            );
+          })}
+          
         </div>
       </div>
     </div>

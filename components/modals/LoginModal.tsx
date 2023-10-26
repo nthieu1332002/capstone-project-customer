@@ -34,9 +34,9 @@ const LoginModal = () => {
   }, [isModalOpen, isOpen]);
 
   const handleClose = useCallback(() => {
-    setShowModal(false);
     setDisabled(false);
     form.resetFields();
+    setShowModal(false);
     router.refresh();
     setTimeout(onClose, 300);
   }, [form, onClose, router]);

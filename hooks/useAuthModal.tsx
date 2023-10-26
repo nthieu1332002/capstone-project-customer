@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = "login" | "register" | "forgotPassword";
+export type ModalType = "login" | "register" | "logout";
 
 type AuthModalStore = {
   type: ModalType | null;

@@ -1,7 +1,7 @@
 "use client";
 import LoginModal from "@/components/modals/LoginModal";
+import LogoutModal from "@/components/modals/LogoutModal";
 import RegisterModal from "@/components/modals/RegisterModal";
-import useAuthModal from "@/hooks/useAuthModal";
 import React, { useEffect, useState } from "react";
 
 
@@ -18,6 +18,7 @@ const ModalProvider = () => {
     <div>
       <LoginModal />
       <RegisterModal />
+      <LogoutModal/>
     </div>
   );
 };

@@ -76,7 +76,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
               <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
               <div className="p-2">
                 <NavMenuItem
-                  onClick={() => router.push("/user/profile")}
+                  onClick={() => router.push("/user")}
                   icon={<FaRegCircleUser />}
                   name="Tài khoản"
                 />
@@ -91,7 +91,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
                   name="Danh sách yêu thích"
                 />
                 <NavMenuItem
-                  onClick={() => signOut()}
+                  onClick={() => onOpen("logout")}
                   icon={<MdOutlineLogout />}
                   type="active"
                   name="Đăng xuất"
