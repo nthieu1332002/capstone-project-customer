@@ -37,7 +37,6 @@ const Search = () => {
   const toRef = useRef<HTMLInputElement>(null);
   const [date, setDate] = useState(dayjs(new Date()).format("DD-MM-YYYY"));
   const router = useRouter();
-  console.log(date);
   const disabledDate: RangePickerProps["disabledDate"] = (current) => {
     return current && current < dayjs().startOf("day");
   };

@@ -9,6 +9,9 @@ export const axios = Axios.create({
         "Accept": "application/json",
     },
 });
+axios.interceptors.response.use(
+    (response) => response.data
+);
 
 
 export const authAxios = Axios.create({

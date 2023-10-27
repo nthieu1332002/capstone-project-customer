@@ -4,52 +4,54 @@ import { Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
 import Button from "../Button";
-import { route } from "@/app/search/page";
 import { useRouter } from "next/navigation";
+import useBookingStore, { Booking } from "@/hooks/useBookingStore";
 
 type Props = {
-  route: route
+  route: Booking;
 };
 
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
-  const chooseBooking= (route: route) => {
+  const {set} = useBookingStore()
+  const chooseBooking= (route: Booking) => {
+    set(route)
     router.push('/booking')
   }
   return (
-    <div className="rounded-3xl border shadow-md p-4 mb-3">
+    <div className="rounded-3xl border p-4 mb-3">
       <div className="flex gap-5">
         <div className="relative h-36 w-36 rounded-2xl overflow-hidden">
           <Image
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
-            src={route.image}
+            src="https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"
             alt=""
             priority
           />
         </div>
         <div className="flex-grow flex flex-col justify-between ">
-          <h2 className="font-semibold text-lg">{route.name}</h2>
+          <h2 className="font-semibold text-lg">{route.start_station.partner.name}</h2>
           <ul className="flex flex-col gap-2 mt-2 list-disc list-inside">
             <li className="font-semibold">
-              <Tooltip placement="right" title={route.from.location}>
-                {route.from.name}
+              <Tooltip placement="right" title={route.start_station.address}>
+                {route.start_station.name} <span className="text-sm italic text-gray-400">(cách bạn {route.start_station.distance_to_sender} km)</span>
               </Tooltip>
             </li>
             <div className="ml-[1px] border-l-[3px] border-dotted pl-6">
-              <p className="text-sm text-gray-600">{route.distance} km</p>
+              <p className="text-sm text-gray-600">20 km</p>
             </div>
             <li className="font-semibold">
-              <Tooltip placement="right" title={route.to.location}>
-                {route.to.name}
+              <Tooltip placement="right" title={route.end_station.address}>
+                {route.end_station.name} <span className="text-sm italic text-gray-400">(cách điểm đến {route.end_station.distance_to_receiver} km)</span>
               </Tooltip>
             </li>
           </ul>
         </div>
         <div className="flex flex-col justify-between items-center">
           <p className="text-lg font-bold text-primary-color">
-            {new Intl.NumberFormat("en-Us").format(route.price)}đ
+            {new Intl.NumberFormat("en-Us").format(route.lowest_price)}đ
           </p>
           <Button
             onClick={() => chooseBooking(route)}

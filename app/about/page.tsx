@@ -1,4 +1,4 @@
-import SearchSideBar from "@/components/search/SearchSideBar";
+import SearchSideBar from "@/components/search/SearchBar";
 
 type Props = {};
 

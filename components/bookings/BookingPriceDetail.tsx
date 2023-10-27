@@ -1,12 +1,15 @@
 "use client";
 
+import { Booking } from "@/hooks/useBookingStore";
 import { BsTruck } from "react-icons/bs";
 import { PiMoney } from "react-icons/pi";
 import { RiTruckFill } from "react-icons/ri";
 
-type Props = {};
+type Props = {
+  booking: Booking;
+};
 
-const BookingPriceDetail = (props: Props) => {
+const BookingPriceDetail = ({ booking }: Props) => {
   return (
     <div className="p-2 md:p-4 sticky top-[80px]">
       <div className="mb-4 border rounded-md">
@@ -20,28 +23,28 @@ const BookingPriceDetail = (props: Props) => {
               <div className="flex items-center justify-center p-2 bg-primary-color rounded-md">
                 <RiTruckFill className="text-white" />
               </div>
-              Phương Trang
+              {booking.start_station.partner.name}
             </h2>
 
             <ul className="flex flex-col gap-2 mt-2 list-disc list-inside">
-              <li className="">Bến xe Miền Đông mới</li>
+              <li className="">{booking.start_station.name}</li>
               <div className="ml-[1px] border-l-[3px] border-dotted pl-6">
                 <p className="text-gray-600">112 km</p>
               </div>
-              <li className="">Bến xe Vũng Tàu</li>
+              <li className="">{booking.end_station.name}</li>
             </ul>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="border rounded-md">
-        <div className="p-4 flex items-center gap-2 text-lg font-bold border-b">
-          <PiMoney className="text-primary-color" size={20} />
-          <p>Chi tiết giá</p>
-        </div>
-        <div className="px-4 py-3 flex flex-col gap-3 text-sm">
-          <div className="flex justify-between">
-            <p>Giá cơ bản</p>
-            <p> {new Intl.NumberFormat("en-Us").format(20000)}đ</p>
+          <div className="border rounded-md">
+            <div className="p-4 flex items-center gap-2 text-lg font-bold border-b">
+              <PiMoney className="text-primary-color" size={20} />
+              <p>Chi tiết giá</p>
+            </div>
+            <div className="px-4 py-3 flex flex-col gap-3 text-sm">
+              <div className="flex justify-between">
+                <p>Giá cơ bản</p>
+                <p> { new Intl.NumberFormat("en-Us").format(booking.lowest_price)}đ</p>
           </div>
           <div className="flex justify-between">
             <p>Giá theo khối lượng</p>

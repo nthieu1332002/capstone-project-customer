@@ -8,6 +8,7 @@ import { RiErrorWarningLine } from "react-icons/ri";
 import { TbPackage, TbUserCircle } from "react-icons/tb";
 import { PiNotePencil } from "react-icons/pi";
 import Button from "@/components/Button";
+import { Booking } from "@/hooks/useBookingStore";
 const { TextArea } = Input;
 type FieldType = {
   sender_name: string;
@@ -25,9 +26,11 @@ type FieldType = {
   width: number;
 };
 const phoneNumberPattern = /^[0-9]{10,12}$/;
-type Props = {};
+type Props = {
+  booking: Booking | null;
+};
 
-const BookingForm = (props: Props) => {
+const BookingForm = ({booking}: Props) => {
   const handleSubmit = useCallback((values: FieldType) => {
     console.log("values", values);
   }, []);

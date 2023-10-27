@@ -45,26 +45,30 @@ const SearchSideBar = (props: Props) => {
   const date = searchParams.get("date");
   const router = useRouter();
 
-
-
   const disabledDate: RangePickerProps["disabledDate"] = (current) => {
     return current && current < dayjs().startOf("day");
   };
 
-  const handleSubmit = useCallback((values: FieldType) => {
-    const url = qs.stringifyUrl({
-      url: "/search",
-      query: {
-        from: values.from,
-        to: values.to,
-        date: values.date,
-      }
-    }, { skipNull: true });
+  const handleSubmit = useCallback(
+    (values: FieldType) => {
+      const url = qs.stringifyUrl(
+        {
+          url: "/search",
+          query: {
+            from: values.from,
+            to: values.to,
+            date: dayjs(values.date).format("DD-MM-YYYY"),
+          },
+        },
+        { skipNull: true }
+      );
 
-    router.push(url);
-  }, [router]);
+      router.push(url);
+    },
+    [router]
+  );
   return (
-    <div className="px-12 py-6 bg-[#f8f8f8] border-b">
+    <div className="px-12 pt-6 pb-3 border-b">
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string}
         libraries={libraries}
@@ -73,7 +77,7 @@ const SearchSideBar = (props: Props) => {
       >
         <div className="flex flex-col gap-2">
           <div>
-            <button className="p-3 rounded-full text-black hover:bg-gray-200 transition">
+            <button onClick={() => router.push("/")} className="p-3 rounded-full text-black hover:bg-gray-200 transition">
               <IoMdArrowRoundBack size={24} />
             </button>
           </div>
@@ -140,7 +144,6 @@ const SearchSideBar = (props: Props) => {
               <DatePicker
                 id="date"
                 format={DATE_FORMAT}
-                value={dayjs(date, DATE_FORMAT)}
                 disabledDate={disabledDate}
                 locale={locale}
                 suffixIcon={
