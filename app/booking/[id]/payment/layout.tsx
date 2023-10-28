@@ -1,4 +1,4 @@
-import BookingForm from "@/components/bookings/BookingForm";
+
 import BookingPriceDetail from "@/components/bookings/BookingPriceDetail";
 import axios from "axios";
 import qs from "query-string";
@@ -56,7 +56,7 @@ const BookingIdLayout = async ({
         </div>
       </main>
       <div className="hidden lg:flex w-[500px] flex-col">
-        <BookingPriceDetail />
+        <BookingPriceDetail/>
       </div>
     </div>
   );

@@ -8,11 +8,9 @@ import {
   Space,
   theme,
 } from "antd";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
-import { BsFilter } from "react-icons/bs";
 import { LiaFilterSolid } from "react-icons/lia";
-import { SliderMarks } from "antd/es/slider";
 type Props = {};
 
 const FilterSideBar = (props: Props) => {
@@ -82,7 +80,6 @@ const FilterSideBar = (props: Props) => {
                     <Slider
                       range
                       step={50000}
-                      defaultValue={[0, 500000]}
                       max={500000}
                       marks={{
                         0: 0,

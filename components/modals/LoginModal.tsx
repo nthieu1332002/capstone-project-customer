@@ -48,8 +48,6 @@ const LoginModal = () => {
         ...values,
         redirect: false,
       }).then((res) => {
-        console.log("res", res);
-
         if (res?.ok) {
           toast.success("Đăng nhập thành công");
           handleClose();

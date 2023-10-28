@@ -1,4 +1,4 @@
-import getCurrentUser from "@/actions/getCurrentUser";
+import getServerUser from "@/actions/getServerUser";
 import { axios } from "@/lib/axios";
 import { NextResponse } from "next/server";
 
@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     try {
 
         const { data } = await req.json()
-        const session = await getCurrentUser();
+        const session = await getServerUser();
         if (session) {
             return new NextResponse("Session already exists", {
                 status: 403,

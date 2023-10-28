@@ -3,12 +3,13 @@
 import NoteText from "@/components/NoteText";
 import BookingHeader from "@/components/bookings/BookingHeader";
 import { Divider, Form, Input, InputNumber, Steps } from "antd";
-import React, { useCallback } from "react";
+import React, { use, useCallback } from "react";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbPackage, TbUserCircle } from "react-icons/tb";
 import { PiNotePencil } from "react-icons/pi";
 import Button from "@/components/Button";
 import { Booking } from "@/hooks/useBookingStore";
+import { useRouter } from "next/navigation";
 const { TextArea } = Input;
 type FieldType = {
   sender_name: string;
@@ -31,9 +32,11 @@ type Props = {
 };
 
 const BookingForm = ({booking}: Props) => {
+  const router = useRouter();
   const handleSubmit = useCallback((values: FieldType) => {
     console.log("values", values);
-  }, []);
+    router.push(`/booking/${booking?.lowest_price}/payment`);
+  }, [booking?.lowest_price, router]);
   return (
     <div className="px-1 md:px-5 lg:px-5 xl:px-32 py-8">
       <h1 className="text-center text-black font-bold text-2xl">Đơn hàng của bạn</h1>

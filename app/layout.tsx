@@ -5,7 +5,7 @@ import { Open_Sans } from "next/font/google";
 import { AuthProvider } from "@/redux/provider";
 import Header from "@/components/headers/Header";
 import ToasterProvider from "@/providers/ToasterProvider";
-import getCurrentUser from "@/actions/getCurrentUser";
+import getServerUser from "@/actions/getServerUser";
 import StyledComponentsRegistry from "@/lib/AntdRegistry";
 import theme from "@/theme/themeConfig";
 import { ConfigProvider } from "antd";
@@ -26,8 +26,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getCurrentUser();
-  console.log(currentUser);
+  const currentUser = await getServerUser();
   return (
     <html lang="en" translate="no">
       {/* background color here if using color theme*/}

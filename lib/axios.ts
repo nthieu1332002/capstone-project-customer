@@ -25,14 +25,15 @@ export const authAxios = Axios.create({
 authAxios.interceptors.request.use(
     async (config) => {
         const session = await getServerSession(authOptions)
-        if (!config.headers["Authorization"]) {
+        console.log("session", session);
+        if (!config.headers["Authorization"] && session) {
             config.headers[
                 "Authorization"
             ] = `Bearer ${session?.user?.accessToken}`;
         }
         return config;
     },
-    (error) => Promise.reject(error)
+    (error) => {console.log("error axios",error); Promise.reject(error)}
 );
 
 authAxios.interceptors.response.use(
