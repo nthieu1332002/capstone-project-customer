@@ -30,7 +30,6 @@ export const authOptions: AuthOptions = {
 
         }
         const user = res.data.data.customer;
-        console.log({ ...user, accessToken: res.data.data.access_token });
         return { ...user, accessToken: res.data.data.access_token }
       }
     })
