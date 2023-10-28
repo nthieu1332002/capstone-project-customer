@@ -3,7 +3,7 @@
 import NoteText from "@/components/NoteText";
 import BookingHeader from "@/components/bookings/BookingHeader";
 import { Divider, Form, Input, InputNumber, Steps } from "antd";
-import React, { use, useCallback } from "react";
+import React, { useCallback } from "react";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbPackage, TbUserCircle } from "react-icons/tb";
 import { PiNotePencil } from "react-icons/pi";
@@ -28,7 +28,7 @@ type FieldType = {
 };
 const phoneNumberPattern = /^[0-9]{10,12}$/;
 type Props = {
-  booking: Booking | null;
+  booking?: Booking;
 };
 
 const BookingForm = ({booking}: Props) => {

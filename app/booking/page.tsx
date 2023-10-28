@@ -3,25 +3,34 @@
 import BookingForm from "@/components/bookings/BookingForm";
 import BookingPriceDetail from "@/components/bookings/BookingPriceDetail";
 import useBookingStore from "@/hooks/useBookingStore";
-import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Booking = () => {
   const { booking } = useBookingStore();
   console.log(booking);
   const route = useRouter();
-  if (!booking) return route.back();
+
+  useEffect(() => {
+    if (!booking) {
+      route.push("/");
+    }
+  }, [booking, route]);
   return (
-    <div className="min-h-screen pt-[68px]">
-      <div className="flex h-full max-w-screen px-5">
-        <main className="flex-grow">
-          <BookingForm booking={booking} />
-        </main>
-        <div className="hidden lg:flex w-[500px] flex-col">
-          <BookingPriceDetail />
+    <>
+      {booking ? (
+        <div className="flex h-full max-w-screen px-5">
+          <main className="flex-grow">
+            <BookingForm booking={booking} />
+          </main>
+          <div className="hidden lg:flex w-[500px] flex-col">
+            <BookingPriceDetail />
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        "Loading..."
+      )}
+    </>
   );
 };
 
