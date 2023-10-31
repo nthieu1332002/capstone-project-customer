@@ -90,7 +90,7 @@ const UserProfile = ({ user }: Props) => {
             />
           </Form.Item>
           <Form.Item>
-            <Button label="Cập nhật" htmlType="submit" />
+            <Button label="Cập nhật" />
           </Form.Item>
         </Form>
       </div>

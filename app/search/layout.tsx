@@ -5,7 +5,7 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen pt-[68px]">
       <div className="flex h-full max-w-screen">
-        <div className="hidden lg:flex h-[1000px] w-[500px] flex-col border-x">
+        <div className="hidden lg:flex h-full w-[500px] flex-col border-x">
           <SearchSideBar />
           <FilterSideBar />
         </div>

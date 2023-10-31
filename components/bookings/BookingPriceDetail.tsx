@@ -1,15 +1,15 @@
 "use client";
 
-import useBookingStore, { Booking } from "@/hooks/useBookingStore";
+import { Booking } from "@/hooks/useBookingStore";
 import { BsTruck } from "react-icons/bs";
 import { PiMoney } from "react-icons/pi";
 import { RiTruckFill } from "react-icons/ri";
 
-type Props = {};
+type Props = {
+  booking?: Booking;
+};
 
-const BookingPriceDetail = ({}: Props) => {
-  const { booking } = useBookingStore();
-
+const BookingPriceDetail = ({ booking }: Props) => {
   return (
     <div className="p-2 md:p-4 sticky top-[80px]">
       <div className="mb-4 border rounded-md">
@@ -19,19 +19,19 @@ const BookingPriceDetail = ({}: Props) => {
         </div>
         <div className="px-4 py-3 flex flex-col gap-3 text-sm">
           <div className="flex-grow flex flex-col gap-2 justify-between ">
-            <h2 className="flex items-center gap-1 text-base font-semibold text-primary-color">
+            <div className="flex items-center gap-1 text-base font-semibold text-primary-color">
               <div className="flex items-center justify-center p-2 bg-primary-color rounded-md">
                 <RiTruckFill className="text-white" />
               </div>
-              {booking?.start_station.partner.name}
-            </h2>
+              <p>{booking?.start_station.partner.name}</p>
+            </div>
 
             <ul className="flex flex-col gap-2 mt-2 list-disc list-inside">
-              <li className="">{booking?.start_station.name}</li>
+              <li>{booking?.start_station.name}</li>
               <div className="ml-[1px] border-l-[3px] border-dotted pl-6">
                 <p className="text-gray-600">112 km</p>
               </div>
-              <li className="">{booking?.end_station.name}</li>
+              <li>{booking?.end_station.name}</li>
             </ul>
           </div>
         </div>
@@ -45,7 +45,9 @@ const BookingPriceDetail = ({}: Props) => {
           <div className="flex justify-between">
             <p>Giá cơ bản</p>
             <p>
-              {booking && new Intl.NumberFormat("en-Us").format(booking.lowest_price)}đ
+              {booking &&
+                new Intl.NumberFormat("en-Us").format(booking.lowest_price)}
+              đ
             </p>
           </div>
           <div className="flex justify-between">

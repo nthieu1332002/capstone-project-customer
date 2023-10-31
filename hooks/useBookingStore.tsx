@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import Cookies from "js-cookie";
 
 export type Booking = {
   start_station: {
@@ -32,13 +33,15 @@ interface BookingStore {
 }
 
 const useBookingStore = create<BookingStore>((set) => ({
-  booking: undefined,
+  booking: Cookies.get('booking') ? JSON.parse(Cookies.get('booking') || '') : undefined,
 
   set: (bookingItem) => {
     set({ booking: bookingItem });
+    Cookies.set('booking', JSON.stringify(bookingItem), { expires: 1 / 48, path: '' })
   },
 
   remove: () => {
+    Cookies.remove('booking')
     set({ booking: undefined });
   },
 }));

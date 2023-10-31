@@ -1,37 +1,15 @@
-"use client";
+import getServerUser from "@/actions/getServerUser";
+import BookingContent from "@/components/bookings/BookingContent";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import BookingForm from "@/components/bookings/BookingForm";
-import BookingPriceDetail from "@/components/bookings/BookingPriceDetail";
-import useBookingStore from "@/hooks/useBookingStore";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
-const Booking = () => {
-  const { booking } = useBookingStore();
-  console.log(booking);
-  const route = useRouter();
-
-  useEffect(() => {
-    if (!booking) {
-      route.push("/");
-    }
-  }, [booking, route]);
-  return (
-    <>
-      {booking ? (
-        <div className="flex h-full max-w-screen px-5">
-          <main className="flex-grow">
-            <BookingForm booking={booking} />
-          </main>
-          <div className="hidden lg:flex w-[500px] flex-col">
-            <BookingPriceDetail />
-          </div>
-        </div>
-      ) : (
-        "Loading..."
-      )}
-    </>
-  );
+const Booking = async () => {
+  const user = await getServerUser();
+  const cookieStore = cookies();
+  const booking = JSON.parse(cookieStore.get("booking")?.value || "{}");
+  console.log("booking", booking);
+  if (!booking) redirect("error");
+  return <BookingContent user={user} booking={booking} />;
 };
 
 export default Booking;
