@@ -2,7 +2,7 @@
 
 import NoteText from "@/components/NoteText";
 import BookingHeader from "@/components/bookings/BookingHeader";
-import { Divider, Form, Input, InputNumber, Steps } from "antd";
+import { Divider, Form, Input, InputNumber} from "antd";
 import React, { useCallback } from "react";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbPackage, TbUserCircle } from "react-icons/tb";
@@ -10,6 +10,8 @@ import { PiNotePencil } from "react-icons/pi";
 import Button from "@/components/Button";
 import { Booking } from "@/hooks/useBookingStore";
 import { useRouter } from "next/navigation";
+import { Session } from "next-auth";
+import BookingSteps from "./BookingSteps";
 const { TextArea } = Input;
 type FieldType = {
   sender_name: string;
@@ -29,36 +31,26 @@ type FieldType = {
 const phoneNumberPattern = /^[0-9]{10,12}$/;
 type Props = {
   booking?: Booking;
+  user?: Session | null;
 };
 
-const BookingForm = ({booking}: Props) => {
+const BookingForm = ({ booking, user }: Props) => {
+  console.log("user", user);
   const router = useRouter();
-  const handleSubmit = useCallback((values: FieldType) => {
-    console.log("values", values);
-    router.push(`/booking/${booking?.lowest_price}/payment`);
-  }, [booking?.lowest_price, router]);
+  const handleSubmit = useCallback(
+    (values: FieldType) => {
+      router.push(`/booking/${booking?.lowest_price}/payment`);
+    },
+    [booking?.lowest_price, router]
+  );
   return (
     <div className="px-1 md:px-5 lg:px-5 xl:px-32 py-8">
-      <h1 className="text-center text-black font-bold text-2xl">Đơn hàng của bạn</h1>
+      <h1 className="text-center text-black font-bold text-2xl">
+        Đơn hàng của bạn
+      </h1>
 
       <div className="flex items-center justify-center px-5 md:px-32 my-4 md:my-10">
-        <Steps
-          size="small"
-          progressDot
-          current={0}
-          className="font-semibold"
-          items={[
-            {
-              title: <p className="text-primary text-sm"> Chi tiết đơn hàng</p>,
-            },
-            {
-              title: <p className="text-black text-sm">Thanh toán</p>,
-            },
-            {
-              title: <p className="text-black text-sm">Bước cuối cùng</p>,
-            },
-          ]}
-        />
+        <BookingSteps current={0} />
       </div>
       <div className="border-2 rounded-lg p-3 lg:p-10">
         <Form
@@ -67,6 +59,11 @@ const BookingForm = ({booking}: Props) => {
           onFinish={handleSubmit}
           onFinishFailed={(error) => console.log("error", error)}
           autoComplete="on"
+          initialValues={{
+            sender_name: user?.user?.name,
+            sender_phone: user?.user?.phone,
+            sender_email: user?.user?.email,
+          }}
         >
           <BookingHeader name="Thông tin người gửi" icon={RiErrorWarningLine} />
 
@@ -313,7 +310,7 @@ const BookingForm = ({booking}: Props) => {
             <TextArea rows={2} placeholder="VD: Hàng dễ vỡ." />
           </Form.Item>
           <Form.Item>
-            <Button label="Xác nhận" htmlType="submit" />
+            <Button label="Xác nhận" />
           </Form.Item>
         </Form>
       </div>

@@ -201,7 +201,6 @@ const RegisterModal = () => {
                   <Button
                     disabled={disabled}
                     label="Đăng ký"
-                    htmlType="submit"
                   />
                   <p className="text-sm text-center mt-2">
                     Đã có tài khoản?{" "}

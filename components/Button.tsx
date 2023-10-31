@@ -10,7 +10,6 @@ type ButtonProps = {
   outline?: boolean;
   small?: boolean;
   icon?: IconType;
-  htmlType?: "submit" | "reset" | "button";
   className?: string;
 };
 

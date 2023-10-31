@@ -160,7 +160,6 @@ const LoginModal = () => {
                   <Button
                     disabled={disabled}
                     label="Đăng nhập"
-                    htmlType="submit"
                   />
                   <p className="text-sm text-center mt-2">
                     Bạn chưa có tài khoản?{" "}

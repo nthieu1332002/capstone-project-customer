@@ -16,7 +16,6 @@ type Props = {
 };
 
 const SearchList = ({ data, from, to }: Props) => {
-  console.log("data", data);
   const router = useRouter();
   const params = useSearchParams();
   // const handleNavigation = (page: number, pageSize: number) => {
