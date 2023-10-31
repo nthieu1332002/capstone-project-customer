@@ -1,9 +1,10 @@
-
 import BookingPriceDetail from "@/components/bookings/BookingPriceDetail";
 import axios from "axios";
 import qs from "query-string";
 import { redirect } from "next/navigation";
-import { Steps } from "antd";
+import { cookies } from "next/headers";
+import BookingSteps from "@/components/bookings/BookingSteps";
+import { Divider } from "antd";
 
 const BookingIdLayout = async ({
   children,
@@ -22,7 +23,9 @@ const BookingIdLayout = async ({
     { skipNull: true }
   );
   const data = await axios.get(url);
-  if (!data) {
+  const cookieStore = cookies();
+  const booking = JSON.parse(cookieStore.get("booking")?.value || "{}");
+  if (!data || !booking) {
     return redirect("/404");
   }
   return (
@@ -32,31 +35,13 @@ const BookingIdLayout = async ({
           <h1 className="text-black font-bold text-2xl">Đơn hàng của bạn</h1>
 
           <div className="flex items-center justify-center px-32 my-10">
-            <Steps
-              size="small"
-              progressDot
-              current={1}
-              className="font-semibold"
-              items={[
-                {
-                  title: (
-                    <p className="text-primary text-sm"> Chi tiết đơn hàng</p>
-                  ),
-                },
-                {
-                  title: <p className="text-black text-sm">Thanh toán</p>,
-                },
-                {
-                  title: <p className="text-black text-sm">Bước cuối cùng</p>,
-                },
-              ]}
-            />
+            <BookingSteps current={1} />
           </div>
           {children}
         </div>
       </main>
       <div className="hidden lg:flex w-[500px] flex-col">
-        <BookingPriceDetail/>
+        <BookingPriceDetail booking={booking} />
       </div>
     </div>
   );

@@ -97,7 +97,7 @@ const ChangePassword = () => {
             <Input.Password type="password" className="custom-input" />
           </Form.Item>
           <Form.Item>
-            <Button disabled={disabled} label="Cập nhật" htmlType="submit" />
+            <Button disabled={disabled} label="Cập nhật" />
           </Form.Item>
         </Form>
       </div>
