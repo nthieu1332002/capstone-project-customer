@@ -157,7 +157,6 @@ const SearchSideBar = (props: Props) => {
               <Button
                 className="rounded-full"
                 label="Tìm kiếm"
-                htmlType="submit"
               />
             </Form.Item>
           </Form>
