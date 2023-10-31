@@ -1,6 +1,5 @@
 "use client";
 
-import Loading from "@/components/Loading";
 import GoogleMapView from "@/components/maps/GoogleMapView";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
