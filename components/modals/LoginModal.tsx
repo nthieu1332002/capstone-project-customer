@@ -14,13 +14,13 @@ import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { emailPattern, phoneNumberPattern } from "@/lib/constants";
 
 type FieldType = {
   indentifier: string;
   password: string;
 };
-const phoneNumberPattern = /^[0-9]{10,12}$/;
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const LoginModal = () => {
   const [form] = Form.useForm();
   const { isOpen, onClose, type, onOpen } = useAuthModal();

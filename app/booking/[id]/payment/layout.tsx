@@ -24,10 +24,14 @@ const BookingIdLayout = async ({
   );
   const data = await axios.get(url);
   const cookieStore = cookies();
-  const booking = JSON.parse(cookieStore.get("booking")?.value || "{}");
+  const booking = cookieStore.get("booking")?.value || "";
+  const paymentDetail = cookieStore.get("paymentDetail")?.value || "";
   if (!data || !booking) {
     return redirect("/404");
   }
+  const parsedBooking = JSON.parse(booking);
+  const { insurance, sizePrice, totalPrice } = JSON.parse(paymentDetail);
+
   return (
     <div className="flex h-full max-w-screen px-5">
       <main className="flex-grow">
@@ -41,7 +45,12 @@ const BookingIdLayout = async ({
         </div>
       </main>
       <div className="hidden lg:flex w-[500px] flex-col">
-        <BookingPriceDetail booking={booking} />
+        <BookingPriceDetail
+          booking={parsedBooking}
+          insurance={insurance}
+          sizePrice={sizePrice}
+          totalPrice={totalPrice}
+        />
       </div>
     </div>
   );
