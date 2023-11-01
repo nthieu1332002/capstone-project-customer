@@ -1,7 +1,8 @@
 "use client";
 
 import Button from "@/components/Button";
-import { Divider, Form, Input } from "antd";
+import { phoneNumberPattern } from "@/lib/constants";
+import { Form, Input } from "antd";
 import { AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineUser } from "react-icons/hi";
 import { MdOutlineAlternateEmail } from "react-icons/md";
@@ -13,13 +14,12 @@ type FieldType = {
 type Props = {
   user: any;
 };
-const phoneNumberPattern = /^[0-9]{10,12}$/;
 
 const UserProfile = ({ user }: Props) => {
   return (
     <div className="p-5 flex flex-col gap-3 bg-white rounded-md">
       <h1 className="text-2xl font-semibold">Thông tin tài khoản</h1>
-      
+
       <div className="w-full border rounded-lg flex flex-col p-5">
         <Form
           layout="vertical"
