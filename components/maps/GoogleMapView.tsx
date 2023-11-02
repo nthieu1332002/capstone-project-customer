@@ -1,50 +1,50 @@
 "use client";
 
 import {
-    GoogleMap,
-    InfoWindowF,
-    MarkerF,
-    useJsApiLoader,
-  } from "@react-google-maps/api";
-  import React, { memo, useCallback, useEffect, useState } from "react";
-  
-  const markers = [
-    {
-      id: 1,
-      name: "Bến xe Miền Đông Mới",
-      position: { lat: 10.8804117, lng: 106.8131184 },
-    },
-    {
-      id: 2,
-      name: "Bến xe Miền Tây",
-      position: { lat: 10.8239906, lng: 106.5664172 },
-    },
-    {
-      id: 3,
-      name: "Bến xe Miền Tây Mới",
-      position: { lat: 10.6623812, lng: 106.4858158 },
-    },
-    {
-      id: 4,
-      name: "Bến xe Cần Thơ Mới",
-      position: { lat: 10.0041545, lng: 105.7669751 },
-    },
-    {
-      id: 5,
-      name: "Bến xe Vũng Tàu",
-      position: { lat: 10.3505997, lng: 107.0840848 },
-    },
-    {
-      id: 6,
-      name: "Bến xe Long An",
-      position: { lat: 10.5379642, lng: 106.4020228 },
-    },
-  ];
-  const center = { lat: 10.1902924, lng: 105.9420483 };
-type Props = {};
+  GoogleMap,
+  InfoWindowF,
+  MarkerF,
+  useJsApiLoader,
+} from "@react-google-maps/api";
+import React, { memo, useCallback, useEffect, useState } from "react";
+const center = { lat: 10.1902924, lng: 105.9420483 };
 
-const GoogleMapView = (props: Props) => {
+const markers = [
+  {
+    id: 1,
+    name: "Bến xe Miền Đông Mới",
+    position: { lat: 10.8804117, lng: 106.8131184 },
+  },
+  {
+    id: 2,
+    name: "Bến xe Miền Tây",
+    position: { lat: 10.8239906, lng: 106.5664172 },
+  },
+  {
+    id: 3,
+    name: "Bến xe Miền Tây Mới",
+    position: { lat: 10.6623812, lng: 106.4858158 },
+  },
+  {
+    id: 4,
+    name: "Bến xe Cần Thơ Mới",
+    position: { lat: 10.0041545, lng: 105.7669751 },
+  },
+  {
+    id: 5,
+    name: "Bến xe Vũng Tàu",
+    position: { lat: 10.3505997, lng: 107.0840848 },
+  },
+  {
+    id: 6,
+    name: "Bến xe Long An",
+    position: { lat: 10.5379642, lng: 106.4020228 },
+  },
+];
+
+const GoogleMapView = () => {
   const { isLoaded } = useJsApiLoader({
+    id: "google-maps",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
   });
   const [map, setMap] = useState<google.maps.Map | null>(null);

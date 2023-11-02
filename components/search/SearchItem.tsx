@@ -24,7 +24,7 @@ const SearchItem = ({ route }: Props) => {
   return (
     <div className="rounded-3xl border p-4 mb-3">
       <div className="flex gap-5">
-        <div className="relative h-36 w-36 rounded-2xl overflow-hidden">
+        <div className="relative flex-shrink-0 h-36 w-36 rounded-2xl overflow-hidden">
           <Image
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -34,7 +34,7 @@ const SearchItem = ({ route }: Props) => {
             priority
           />
         </div>
-        <div className="flex-grow flex flex-col justify-between ">
+        <div className="flex-grow flex flex-col justify-between">
           <h2 className="font-semibold text-lg">
             {route.start_station.partner.name}
           </h2>

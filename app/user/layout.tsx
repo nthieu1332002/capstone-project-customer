@@ -1,13 +1,13 @@
 import getServerUser from "@/actions/getServerUser";
 import UserSidebar from "@/components/user/UserSidebar";
-import { authAxios } from "@/lib/axios";
+import { axios } from "@/lib/axios";
 import { redirect } from "next/navigation";
 
 const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getServerUser();
 
   if (!user) return redirect("/");
-  const data = await authAxios.get("/api/user");
+  const data = await axios.get("/api/user");
   if (!data) return redirect("/");
   return (
     <div className="min-h-screen pt-[68px] bg-[#eff1f7]">

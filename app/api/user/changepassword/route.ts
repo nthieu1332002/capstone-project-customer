@@ -1,10 +1,10 @@
-import { authAxios } from "@/lib/axios";
+import { axios } from "@/lib/axios";
 import { NextResponse } from "next/server";
 
 export const PUT = async (req: Request) => {
     try {
         const values = await req.json();
-        await authAxios.put("/api/customer/auth/password", values);
+        await axios.put("/api/customer/auth/password", values);
         
         return new NextResponse("Đổi mật khẩu thành công!", { status: 200 });
 
