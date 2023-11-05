@@ -32,7 +32,7 @@ const RegisterModal = () => {
 
   useEffect(() => {
     setShowModal(isModalOpen);
-  }, [isModalOpen, isOpen]);
+  }, [isModalOpen]);
 
   const handleClose = useCallback(() => {
     setShowModal(false);

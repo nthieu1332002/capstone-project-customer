@@ -31,7 +31,7 @@ const LoginModal = () => {
   const router = useRouter();
   useEffect(() => {
     setShowModal(isModalOpen);
-  }, [isModalOpen, isOpen]);
+  }, [isModalOpen]);
 
   const handleClose = useCallback(() => {
     setDisabled(false);
