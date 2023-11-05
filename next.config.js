@@ -13,6 +13,10 @@ const nextConfig = {
             {
                 source: '/user',
                 destination: '/user/profile'
+            },
+            {
+                source: '/booking/success/:path*',
+                destination: '/booking/success'
             }
         ]
     }

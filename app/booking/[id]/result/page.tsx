@@ -1,6 +1,5 @@
 "use client";
-import BookingStatus from "@/components/bookings/BookingStatus";
-import BookingSteps from "@/components/bookings/BookingSteps";
+
 import Image from "next/image";
 import React from "react";
 import vnpay from "@/public/assets/vnpay.png";
@@ -11,9 +10,7 @@ const Result = (props: Props) => {
   return (
     <div className="flex flex-col gap-5 h-full max-w-screen px-40 pt-8 pb-10">
       <h1 className="text-black font-bold text-2xl">Đơn hàng của bạn</h1>
-      <div className="flex items-center justify-center px-5 md:px-32 my-4 md:my-5">
-        <BookingSteps current={2} />
-      </div>
+
       <div className="flex flex-col gap-7 text-sm">
         <h2 className="text-lg font-bold text-primary-color">
           Thông tin vận chuyển

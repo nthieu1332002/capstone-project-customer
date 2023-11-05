@@ -3,8 +3,6 @@ import axios from "axios";
 import qs from "query-string";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import BookingSteps from "@/components/bookings/BookingSteps";
-import { Divider } from "antd";
 
 const BookingIdLayout = async ({
   children,
@@ -38,9 +36,6 @@ const BookingIdLayout = async ({
         <div className="px-32 py-8">
           <h1 className="text-black font-bold text-2xl">Đơn hàng của bạn</h1>
 
-          <div className="flex items-center justify-center px-32 my-10">
-            <BookingSteps current={1} />
-          </div>
           {children}
         </div>
       </main>

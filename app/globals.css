@@ -54,11 +54,13 @@
   background-color: white !important;
   width: 100%;
 }
+
 .custom-search-sidebar>.ant-picker-input span.ant-picker-suffix {
   margin-left: 1px;
   margin-right: 10px;
   order: -1;
 }
+
 .custom-search-sidebar:placeholder-shown {
   font-weight: 500 !important;
 }
@@ -139,6 +141,7 @@
   border-top: 1px solid #e6e6e6;
   color: #999;
 }
+
 .pac-item:hover {
   background-color: rgb(230, 230, 230);
 
@@ -168,5 +171,5 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-      
+
 }
