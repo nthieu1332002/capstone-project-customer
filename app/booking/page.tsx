@@ -4,17 +4,17 @@ import { axios } from "@/lib/axios";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const getPricing = async () => {
-  try {
-    const res = await axios.get("/api/customer/boxSizes");
-    return res.data;
-  } catch (err: any) {
-    throw new Error(err.message);
-  }
-};
+// const getPricing = async () => {
+//   try {
+//     const res = await axios.get("/api/customer/boxSizes");
+//     return res.data;
+//   } catch (err: any) {
+//     throw new Error(err.message);
+//   }
+// };
 
 const Booking = async () => {
-  const pricing = await getPricing();
+  // const pricing = await getPricing();
 
   const user = await getServerUser();
   const cookieStore = cookies();
@@ -24,7 +24,7 @@ const Booking = async () => {
   }
   const parsedBooking = JSON.parse(booking);
   return (
-    <BookingContent user={user} booking={parsedBooking} pricing={pricing} />
+    <BookingContent user={user} booking={parsedBooking} />
   );
 };
 

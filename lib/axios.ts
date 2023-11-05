@@ -2,8 +2,6 @@ import Axios from 'axios';
 import { getServerSession } from "next-auth/next"
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-
-
 export const axios = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_API,
     headers: {

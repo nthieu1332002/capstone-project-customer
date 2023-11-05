@@ -12,8 +12,12 @@ import { Booking } from "@/hooks/useBookingStore";
 import { useRouter } from "next/navigation";
 import { Session } from "next-auth";
 import BookingSteps from "./BookingSteps";
-import { axios } from "@/lib/axios";
 import { phoneNumberPattern } from "@/lib/constants";
+import qs from "query-string";
+import { useEffect } from "react";
+import { useDebouncedCallback } from "use-debounce";
+import axios from "axios";
+
 const { TextArea } = Input;
 type FieldType = {
   sender_name: string;
@@ -33,6 +37,8 @@ type Props = {
   booking: Booking;
   user?: Session | null;
   onChange: (value: number) => void;
+  setSizePrice: (value: number) => void;
+
   totalPrice: number;
   sizePrice: number;
   insurance: number;
@@ -42,32 +48,62 @@ const BookingForm = ({
   booking,
   user,
   onChange,
+  setSizePrice,
   totalPrice,
   sizePrice,
   insurance,
 }: Props) => {
-  console.log("total", totalPrice);
   const router = useRouter();
+  const [form] = Form.useForm();
+  const length = Form.useWatch("length", form);
+  const width = Form.useWatch("width", form);
+  const height = Form.useWatch("height", form);
+  const weight = Form.useWatch("weight", form);
+  const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
+    try {
+      if (length && width && height && weight) {
+        const url = qs.stringifyUrl({
+          url: "/api/booking/get-price",
+          query: {
+            length,
+            width,
+            height,
+            weight,
+            distance: 112,
+          },
+        });
+        const res = await axios.get(url);
+        setSizePrice(res.data);
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching the data:", error);
+    }
+  }, 500);
+
+  useEffect(() => {
+    debouncedHandleFetchPrice();
+  }, [length, width, height, weight, debouncedHandleFetchPrice]);
+
   const handleSubmit = async (values: FieldType) => {
     console.log(values);
-    const data = {
-      ...values,
-      start_station_id: 1,
-      end_station_id: 2,
-      delivery_price: totalPrice,
-      order_routes: [
-        {
-          id: 1,
-          is_selected: true,
-        },
-        {
-          id: 2,
-          is_selected: true,
-        },
-      ],
-    };
-    console.log("data", data);
     try {
+      const data = {
+        ...values,
+        start_station_id: 1,
+        end_station_id: 2,
+        delivery_price: totalPrice,
+        order_routes: [
+          {
+            id: 1,
+            is_selected: true,
+          },
+          {
+            id: 2,
+            is_selected: true,
+          },
+        ],
+      };
+      console.log("data", data);
       const res = await axios.post("/api/customer/orders", data);
       Cookies.set(
         "paymentDetail",
@@ -95,6 +131,8 @@ const BookingForm = ({
       </div>
       <div className="border-2 rounded-lg p-3 lg:p-10">
         <Form
+          form={form}
+          id="booking-form"
           layout="vertical"
           name="booking-form"
           onFinish={handleSubmit}
@@ -350,7 +388,6 @@ const BookingForm = ({
             }
             className="!mb-3 flex-1"
           >
-            {/* <Input placeholder="10,000" onChange={(e: any) => onChange(e.target.value)} className="custom-search-sidebar" /> */}
             <InputNumber
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
