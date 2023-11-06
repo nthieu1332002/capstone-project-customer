@@ -19,7 +19,7 @@ import Button from "@/components/Button";
 import { Booking } from "@/hooks/useBookingStore";
 import { useRouter } from "next/navigation";
 import { Session } from "next-auth";
-import { packageList, phoneNumberPattern } from "@/lib/constants";
+import { packageType, phoneNumberPattern } from "@/lib/constants";
 import qs from "query-string";
 import { useCallback, useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -130,7 +130,7 @@ const BookingForm = ({
 
   return (
     <div className="px-1 md:px-5 lg:px-5 xl:px-32 py-8">
-      <h1 className="text-center text-black font-bold text-2xl">
+      <h1 className="text-center text-black font-bold text-2xl mb-3">
         Đơn hàng của bạn
       </h1>
       <div className="border-2 rounded-lg p-3 lg:p-10">
@@ -416,7 +416,7 @@ const BookingForm = ({
               label={<p className="font-medium text-sm">Loại hàng hóa</p>}
               className="flex-1 custom-search-sidebar"
             >
-              <Select options={packageList} />
+              <Select options={packageType} />
             </Form.Item>
           </div>
 

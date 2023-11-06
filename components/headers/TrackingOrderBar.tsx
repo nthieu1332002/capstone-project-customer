@@ -16,7 +16,7 @@ const TrackingOrderBar = (props: Props) => {
       <Input
         allowClear
         prefix={<BiSearchAlt size="18" className="text-zinc-500" />}
-        placeholder="Nhập mã đơn hàng để tra cứu"
+        placeholder="Tra cứu mã đơn hàng"
         className="custom-search-sidebar"
         onPressEnter={(e) => onSearch(e.currentTarget.value)}
       />
