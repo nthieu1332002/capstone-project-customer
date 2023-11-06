@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import BrandName from "../BrandName";
 import Link from "next/link";
 import NavMenu from "./NavMenu";
 import { Session } from "next-auth";
 import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
-import { BiMenu } from "react-icons/bi";
+import { BiMenu  } from "react-icons/bi";
 import { Dropdown, MenuProps } from "antd";
+import TrackingOrderBar from "./TrackingOrderBar";
 type Props = {
   currentUser: Session | null;
 };
+
 const Header = ({ currentUser }: Props) => {
   const router = useRouter();
   const items: MenuProps["items"] = [
@@ -45,6 +47,7 @@ const Header = ({ currentUser }: Props) => {
       key: "2",
     },
   ];
+
   const menuStyle: React.CSSProperties = {
     boxShadow: "none",
     padding: "2px 20px",
@@ -59,7 +62,7 @@ const Header = ({ currentUser }: Props) => {
                 <BrandName />
               </Link>
             </div>
-            
+
             <div className="hidden lg:flex">
               <NavLink
                 name="Về chúng tôi"
@@ -77,8 +80,10 @@ const Header = ({ currentUser }: Props) => {
                 onClick={() => router.push("/questions")}
               />
             </div>
-            
-            <NavMenu currentUser={currentUser} />
+            <div className="flex gap-3 items-center">
+              <TrackingOrderBar />
+              <NavMenu currentUser={currentUser} />
+            </div>
             <div className="flex lg:hidden px-3 lg:order-2">
               <Dropdown
                 dropdownRender={(menu) => (

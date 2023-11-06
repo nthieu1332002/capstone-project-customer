@@ -54,14 +54,8 @@ export default async function Search({
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
-  const from = searchParams?.from;
-  const to = searchParams?.to;
-  const date = searchParams?.date;
-  const skip = searchParams?.skip;
-  let data = [];
-  if (from && to) {
-    data = await getSearchList({ skip, from, to, date });
-  }
+  const { from, to, date, skip } = searchParams || {};
+  const data = (from && to) ? await getSearchList({ skip, from, to, date }) : [];
   return (
     <div className="py-8 mx-auto px-4 md:px-8 lg:px-16">
       {data.length > 0 ? (

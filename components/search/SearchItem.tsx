@@ -18,8 +18,7 @@ const SearchItem = ({ route }: Props) => {
     remove();
     setTimeout(() => {
       set(route);
-      // router.push("/booking");
-      router.replace(`/booking/success?code=32131312`);
+      router.push("/booking");
     }, 0);
   };
   return (

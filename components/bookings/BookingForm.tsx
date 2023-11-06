@@ -62,9 +62,7 @@ const BookingForm = ({
   user,
   onChange,
   setSizePrice,
-  totalPrice,
-  sizePrice,
-  insurance,
+  totalPrice
 }: Props) => {
   const router = useRouter();
   const [form] = Form.useForm();
@@ -75,7 +73,6 @@ const BookingForm = ({
   const [value, setValue] = useState(1);
 
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
     setValue(e.target.value);
   }, []);
   const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
@@ -117,8 +114,14 @@ const BookingForm = ({
       const res = await axios.post("/api/booking", data);
       console.log(res);
       if (res.status === 200) {
-
-        router.replace(`/booking/success?code=${res.data.attributes.code}`);
+       const url = qs.stringifyUrl({
+          url: 'booking/success',
+          query: {
+            code: res.data.attributes.code,
+            email: res.data.attributes.sender_email,
+          }
+        })
+        router.replace(url);
       }
     } catch (error) {
       console.log("error", error);
@@ -262,6 +265,10 @@ const BookingForm = ({
               validateTrigger="onBlur"
               name="receiver_email"
               rules={[
+                {
+                  required: true,
+                  message: "Email không được bỏ trống.",
+                },
                 {
                   type: "email",
                   message: "Email không đúng định dạng.",
