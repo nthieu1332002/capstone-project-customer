@@ -17,7 +17,7 @@ type Props = {
 
 const UserProfile = ({ user }: Props) => {
   return (
-    <div className="p-5 flex flex-col gap-3 bg-white rounded-md">
+    <div className="p-5 flex flex-col gap-3 bg-white rounded-xl">
       <h1 className="text-2xl font-semibold">Thông tin tài khoản</h1>
 
       <div className="w-full border rounded-lg flex flex-col p-5">

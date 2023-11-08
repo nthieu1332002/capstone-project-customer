@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { MdOutlineHistory, MdOutlineLogout } from "react-icons/md";
+import { MdOutlineLogout } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import NavMenuItem from "../headers/NavMenuItem";
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar } from "antd";
-import { signOut } from "next-auth/react";
 import { RiErrorWarningLine, RiVerifiedBadgeLine } from "react-icons/ri";
 import { cn } from "@/lib/utils";
 import useAuthModal from "@/hooks/useAuthModal";
@@ -84,14 +83,15 @@ const UserSidebar = ({ user }: Props) => {
             return (
               <NavMenuItem
                 key={item.id}
-                onClick={() => item.path ? router.push(item.path) : onOpen("logout")}
+                onClick={() =>
+                  item.path ? router.push(item.path) : onOpen("logout")
+                }
                 icon={item.icon}
                 name={item.name}
                 type={pathname === item.path ? "active" : ""}
               />
             );
           })}
-          
         </div>
       </div>
     </div>

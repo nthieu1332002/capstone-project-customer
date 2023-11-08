@@ -18,16 +18,7 @@ type Props = {
 const SearchList = ({ data, from, to }: Props) => {
   const router = useRouter();
   const params = useSearchParams();
-  // const handleNavigation = (page: number, pageSize: number) => {
-  //   const url = qs.stringifyUrl(
-  //     {
-  //       url: "/search",
-  //       query: { ...Object.fromEntries(params), skip: pageSize * (page - 1) },
-  //     },
-  //     { skipNull: true }
-  //   );
-  //   router.push(url);
-  // };
+
   return (
     <div className="flex flex-col gap-1">
       <div className="flex flex-col mb-3">
@@ -45,15 +36,7 @@ const SearchList = ({ data, from, to }: Props) => {
       {data.map((route, index) => {
         return <SearchItem key={index} route={route} />;
       })}
-      {/* <div className="flex items-center justify-center mt-3">
-        <Pagination
-          defaultCurrent={1}
-          pageSize={data.limit}
-          total={data.total}
-          showSizeChanger={false}
-          onChange={(page, pageSize) => handleNavigation(page, pageSize)}
-        />
-      </div> */}
+     
     </div>
   );
 };

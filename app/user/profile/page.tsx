@@ -1,5 +1,5 @@
-import ChangePassword from "@/components/user/ChangePassword";
-import UserProfile from "@/components/user/UserProfile";
+import ChangePassword from "@/components/users/profiles/ChangePassword";
+import UserProfile from "@/components/users/profiles/UserProfile";
 import { axios } from "@/lib/axios";
 import { Tabs } from "antd";
 

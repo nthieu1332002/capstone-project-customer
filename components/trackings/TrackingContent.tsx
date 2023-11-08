@@ -4,16 +4,10 @@ import dayjs from "dayjs";
 import "dayjs/locale/vi";
 import { GoDotFill } from "react-icons/go";
 import { cn } from "@/lib/utils";
+import { OrderStatusMap } from "@/lib/constants";
 dayjs.locale("vi");
 
-const OrderStatus: { [key: number]: string } = {
-  0: "đã được tạo",
-  1: "đã được xác nhận",
-  2: "đang trên đường vận chuyển",
-  3: "đã đến trạm",
-  4: "đã giao hàng thành công",
-  5: "đã hủy",
-};
+
 
 export type Tracking = {
   details: Array<{
@@ -35,7 +29,7 @@ type Props = {
 const TrackingContent = ({ data, code }: Props) => {
   const lastSegment = data.details[data.details.length - 1];
   const item = data.details.map((item, index) => {
-    const orderStatus = OrderStatus[item.status];
+    const orderStatus = OrderStatusMap[item.status];
     return {
       dot: (
         <GoDotFill
@@ -74,7 +68,7 @@ const TrackingContent = ({ data, code }: Props) => {
             lastSegment.status === 5 ? "text-red-600" : "text-primary-color"
           )}
         >
-          {OrderStatus[lastSegment.status]}
+          {OrderStatusMap[lastSegment.status]}
         </b>{" "}
         vào lúc {dayjs(lastSegment.created_at).format("hh:mm dddd DD/MM/YYYY")}
       </p>

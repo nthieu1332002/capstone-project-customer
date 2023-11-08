@@ -13,7 +13,6 @@ export const axios = Axios.create({
 axios.interceptors.request.use(
     async (config) => {
         const session = await getServerSession(authOptions)
-        console.log("session", session);
         if (!config.headers["Authorization"] && session) {
             config.headers[
                 "Authorization"

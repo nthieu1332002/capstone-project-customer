@@ -1,5 +1,6 @@
 import getServerUser from "@/actions/getServerUser";
-import UserSidebar from "@/components/user/UserSidebar";
+import UserSidebar from "@/components/users/UserSidebar";
+
 import { axios } from "@/lib/axios";
 import { redirect } from "next/navigation";
 
