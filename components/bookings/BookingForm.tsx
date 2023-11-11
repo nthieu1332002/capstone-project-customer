@@ -1,5 +1,4 @@
 "use client";
-import Cookies from "js-cookie";
 
 import NoteText from "@/components/NoteText";
 import BookingHeader from "@/components/bookings/BookingHeader";
@@ -447,10 +446,10 @@ const BookingForm = ({
                   <Image src={vnpay} alt="logo" width={100} />
                 </Radio>
                 <Radio
-                  value={2}
+                  value={0}
                   className={cn(
                     "!py-2 !px-3 border-2 rounded-md w-full max-h-[100px] flex !items-center",
-                    value === 2 && "border-primary-color bg-primary-color/10"
+                    value === 0 && "border-primary-color bg-primary-color/10"
                   )}
                 >
                   <p className="text-lg">Tiền mặt</p>

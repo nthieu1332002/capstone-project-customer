@@ -31,17 +31,17 @@ const TrackingContent = ({ data, code }: Props) => {
   const item = data.details.map((item, index) => {
     const orderStatus = OrderStatusMap[item.status];
     return {
-      dot: (
-        <GoDotFill
-          size="20"
-          className={cn(
-            item.status !== 5 ? "text-red-600" : "",
-            index !== data.details.length - 1
-              ? "text-gray-500"
-              : "text-primary-color animate-ping"
-          )}
-        />
-      ),
+      // dot: (
+      //   <GoDotFill
+      //     size="20"
+      //     className={cn(
+      //       item.status !== 5 ? "text-red-600" : "",
+      //       index !== data.details.length - 1
+      //         ? "text-gray-500"
+      //         : "text-primary-color animate-ping"
+      //     )}
+      //   />
+      // ),
       label: (
         <div className="text-center rounded-sm py-5">
           <p className="font-medium">

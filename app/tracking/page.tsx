@@ -19,30 +19,30 @@ export default async function Search({
   searchParams?: { [key: string]: string | undefined };
 }) {
   const code = searchParams?.code;
-  // const data = code ? await getSearchList({ code }) : {};
-  const data = {
-    details: [
-      {
-        status: 0,
-        created_at: "2023-11-06T04:34:48.000000Z",
-        location: "Hà Nội",
-      },
-      {
-        status: 1,
-        created_at: "2023-11-08T05:34:48.000000Z",
-        location: "Hà Nội",
-      },
-      {
-        status: 2,
-        created_at: "2023-11-16T06:34:48.000000Z",
-        location: "Hà Nội",
-      },
-    ],
-    payment: {
-      status: 0,
-      value: 0,
-    },
-  };
+  const data = code ? await getSearchList({ code }) : {};
+  // const data = {
+  //   details: [
+  //     {
+  //       status: 0,
+  //       created_at: "2023-11-06T04:34:48.000000Z",
+  //       location: "Hà Nội",
+  //     },
+  //     {
+  //       status: 1,
+  //       created_at: "2023-11-08T05:34:48.000000Z",
+  //       location: "Hà Nội",
+  //     },
+  //     {
+  //       status: 2,
+  //       created_at: "2023-11-16T06:34:48.000000Z",
+  //       location: "Hà Nội",
+  //     },
+  //   ],
+  //   payment: {
+  //     status: 0,
+  //     value: 0,
+  //   },
+  // };
   console.log("dât", data);
   return (
     <div className="min-h-screen pt-[68px] bg-slate-50">

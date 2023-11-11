@@ -7,14 +7,15 @@ import dayjs from "dayjs";
 import { OrderStatus, PaymentStatus } from "@/lib/constants";
 import { useSearchParams, useRouter } from "next/navigation";
 import { BiSearchAlt } from "react-icons/bi";
-import CustomDropdown from "@/components/CustomDropdown";
+import CustomFilter from "@/components/CustomFilter";
+import TableAction from "@/components/TableAction";
 
 type Order = {
   code: string;
   created_at: string;
   value: number;
   payment_status: number;
-  payment_method: number;
+  receiver_name: number;
   status: number;
 };
 
@@ -29,16 +30,10 @@ const OrderContent = ({ data }: Props) => {
   const meta = data.meta;
   const columns: ColumnsType<Order> = [
     {
-      title: "#",
-      key: "index",
-      align: "center",
-      render: (value, item, index) => (meta.current_page - 1) * 10 + index + 1,
-    },
-    {
       title: "Mã đơn hàng",
       key: "code",
       dataIndex: "code",
-      render: (text) => <b className="uppercase">{text}</b>,
+      render: (text) => <b className="uppercase">#{text}</b>,
     },
     {
       title: "Ngày",
@@ -48,10 +43,18 @@ const OrderContent = ({ data }: Props) => {
       render: (text) => <p> {dayjs(text).format("DD/MM/YYYY")}</p>,
     },
     {
+      title: "Người nhận",
+      key: "receiver_name",
+      dataIndex: "receiver_name",
+      render: (text) => <p className="font-semibold">{text}</p>,
+    },
+    {
       title: "Số tiền",
       key: "value",
       dataIndex: "value",
-      render: (text) => <p>{new Intl.NumberFormat("en-Us").format(text)}đ</p>,
+      sorter: (a, b) => a.value - b.value,
+
+      render: (text) => <b>{new Intl.NumberFormat("en-Us").format(text)}đ</b>,
     },
     {
       title: "Thanh toán",
@@ -79,12 +82,7 @@ const OrderContent = ({ data }: Props) => {
         </>
       ),
     },
-    {
-      title: "Phương thức",
-      align: "center",
-      key: "payment_method",
-      dataIndex: "payment_method",
-    },
+
     {
       title: "Trạng thái",
       key: "status",
@@ -110,6 +108,14 @@ const OrderContent = ({ data }: Props) => {
           })}
         </>
       ),
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      align: "center",
+      render: (_, record) => {
+        return <TableAction onClickDetail={() => router.push(`/user/order/${record.code}`)}/>;
+      },
     },
   ];
 
@@ -148,7 +154,7 @@ const OrderContent = ({ data }: Props) => {
             onPressEnter={(e) => onSearch(e.currentTarget.value)}
             style={{ width: 230 }}
           />
-          <CustomDropdown/>
+          <CustomFilter />
         </div>
         <Table
           size="middle"

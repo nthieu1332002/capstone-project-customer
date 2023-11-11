@@ -10,13 +10,13 @@ import { useSearchParams, useRouter } from "next/navigation";
 
 type Props = {};
 
-const CustomDropdown = ({}: Props) => {
+const CustomFilter = ({}: Props) => {
   const router = useRouter();
   const params = useSearchParams();
   const between = params.get("delivery_price_between")
   const menuRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [price, setPrice] = useState(between ? between.split(',').map(Number): [0]);
+  const [price, setPrice] = useState(between ? between.split(',').map(Number): [0, 1000000]);
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
@@ -100,4 +100,4 @@ const CustomDropdown = ({}: Props) => {
   );
 };
 
-export default CustomDropdown;
+export default CustomFilter;

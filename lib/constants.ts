@@ -14,7 +14,10 @@ export const PaymentStatusType = [
     { value: 0, label: 'Chưa thanh toán' },
     { value: 1, label: 'Đã thanh toán' },
 ];
-
+export const PaymentMethod = [
+    { value: 0, label: 'tiền mặt' },
+    { value: 1, label: 'vnpay' },
+];
 
 const paidColor = "success";
 const unpaidColor = "warning";
@@ -22,7 +25,7 @@ const unpaidColor = "warning";
 export const OrderStatus = [
     {
         id: 0,
-        status: "Đã tạo",
+        status: "Chờ xác nhận",
         color: "gold",
     },
     {

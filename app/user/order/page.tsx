@@ -34,7 +34,7 @@ const getAllOrders = async ({
     const res = await axios.get(url);
     return res;
   } catch (error) {
-    throw new Error("Failed to fetch data");
+    return null;
   }
 };
 const Order = async ({
@@ -55,7 +55,7 @@ const Order = async ({
   return (
     <div className="p-3 flex flex-col gap-3">
       <h1 className="text-2xl font-semibold">Đơn hàng của bạn</h1>
-      <p className="text-gray-400 text-sm">
+      <p className=" text-sm">
         Theo dõi và quản lý đơn hàng của bạn
       </p>
       <OrderContent data={data} />
