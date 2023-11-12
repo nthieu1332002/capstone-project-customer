@@ -1,12 +1,12 @@
 import { axios } from "@/lib/axios";
 import { NextResponse } from "next/server";
 
-export const PUT = async (req: Request) => {
+export const POST = async (req: Request) => {
     try {
-        const values = await req.json();
-        await axios.put("/api/customer/auth/password", values);
-        
-        return new NextResponse("Đổi mật khẩu thành công!", { status: 200 });
+        const data = await req.json();
+        const res = await axios.post("/api/customer/orders", data);
+        console.log("res", res);
+        return NextResponse.json(res.data);
 
     } catch (error: any) {
         console.log(error);

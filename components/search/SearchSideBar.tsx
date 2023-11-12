@@ -1,7 +1,7 @@
 "use client";
 
 import { DatePicker, Form, Input } from "antd";
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import locale from "antd/es/date-picker/locale/vi_VN";
 import qs from "query-string";
@@ -70,6 +70,7 @@ const SearchSideBar = (props: Props) => {
   return (
     <div className="px-12 pt-6 pb-3 border-b">
       <LoadScript
+        id="search-sidebar"
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string}
         libraries={libraries}
         region="vn"
@@ -77,7 +78,10 @@ const SearchSideBar = (props: Props) => {
       >
         <div className="flex flex-col gap-2">
           <div>
-            <button onClick={() => router.push("/")} className="p-3 rounded-full text-black hover:bg-gray-200 transition">
+            <button
+              onClick={() => router.push("/")}
+              className="p-3 rounded-full text-black hover:bg-gray-200 transition"
+            >
               <IoMdArrowRoundBack size={24} />
             </button>
           </div>
@@ -154,10 +158,7 @@ const SearchSideBar = (props: Props) => {
               />
             </Form.Item>
             <Form.Item>
-              <Button
-                className="rounded-full"
-                label="Tìm kiếm"
-              />
+              <Button className="rounded-full" label="Tìm kiếm" />
             </Form.Item>
           </Form>
         </div>
@@ -166,4 +167,4 @@ const SearchSideBar = (props: Props) => {
   );
 };
 
-export default memo(SearchSideBar);
+export default SearchSideBar;

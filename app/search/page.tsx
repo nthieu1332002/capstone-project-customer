@@ -3,7 +3,7 @@ import SearchList from "@/components/search/SearchList";
 import React from "react";
 import qs from "query-string";
 import { axios } from "@/lib/axios";
-
+import { cache } from 'react'
 export type route = {
   id: number;
   name: string;
@@ -27,7 +27,7 @@ type SearchParams = {
   date?: string;
 };
 
-const getSearchList = async ({ skip, from, to, date }: SearchParams) => {
+const getSearchList = cache(async ({ skip, from, to, date }: SearchParams) => {
   try {
     const url = qs.stringifyUrl(
       {
@@ -47,23 +47,17 @@ const getSearchList = async ({ skip, from, to, date }: SearchParams) => {
   } catch (error) {
     throw new Error("Failed to fetch data");
   }
-};
+});
 
 export default async function Search({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
-  const from = searchParams?.from;
-  const to = searchParams?.to;
-  const date = searchParams?.date;
-  const skip = searchParams?.skip;
-  let data = [];
-  if (from && to) {
-    data = await getSearchList({ skip, from, to, date });
-  }
+  const { from, to, date, skip } = searchParams || {};
+  const data = (from && to) ? await getSearchList({ skip, from, to, date }) : [];
   return (
-    <div className="py-8 px-16">
+    <div className="py-8 mx-auto px-4 md:px-8 lg:px-16">
       {data.length > 0 ? (
         <SearchList data={data} from={from} to={to}/>
       ) : (

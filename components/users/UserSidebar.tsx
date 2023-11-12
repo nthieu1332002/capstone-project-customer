@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { MdOutlineHistory, MdOutlineLogout } from "react-icons/md";
+import { MdOutlineLogout } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import NavMenuItem from "../headers/NavMenuItem";
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar } from "antd";
-import { signOut } from "next-auth/react";
 import { RiErrorWarningLine, RiVerifiedBadgeLine } from "react-icons/ri";
 import { cn } from "@/lib/utils";
 import useAuthModal from "@/hooks/useAuthModal";
@@ -47,8 +46,8 @@ const UserSidebar = ({ user }: Props) => {
   const pathname = usePathname();
   const verified = user?.phone_verified_at || user?.email_verified_at;
   return (
-    <div className="w-[500px]">
-      <div className="flex flex-col rounded-lg border py-3 bg-white">
+    <div className="hidden md:block w-[335px] mr-2">
+      <div className="flex flex-col rounded-lg border py-3 bg-white w-full">
         <div className="flex gap-2 p-4">
           <div className="w-12 h-12 border-[1px] text-white border-neutral-200 flex flex-row items-center justify-center rounded-full">
             <Avatar
@@ -84,14 +83,15 @@ const UserSidebar = ({ user }: Props) => {
             return (
               <NavMenuItem
                 key={item.id}
-                onClick={() => item.path ? router.push(item.path) : onOpen("logout")}
+                onClick={() =>
+                  item.path ? router.push(item.path) : onOpen("logout")
+                }
                 icon={item.icon}
                 name={item.name}
                 type={pathname === item.path ? "active" : ""}
               />
             );
           })}
-          
         </div>
       </div>
     </div>
