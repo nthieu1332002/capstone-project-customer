@@ -33,12 +33,15 @@ const OrderContent = ({ data }: Props) => {
       title: "Mã đơn hàng",
       key: "code",
       dataIndex: "code",
+      fixed: "left",
+      width: 130,
       render: (text) => <b className="uppercase">#{text}</b>,
     },
     {
       title: "Ngày",
       key: "created_at",
       dataIndex: "created_at",
+      width: 120,
       sorter: (a, b) => a.created_at.localeCompare(b.created_at),
       render: (text) => <p> {dayjs(text).format("DD/MM/YYYY")}</p>,
     },
@@ -46,20 +49,22 @@ const OrderContent = ({ data }: Props) => {
       title: "Người nhận",
       key: "receiver_name",
       dataIndex: "receiver_name",
+      width: 200,
       render: (text) => <p className="font-semibold">{text}</p>,
     },
     {
       title: "Số tiền",
       key: "value",
       dataIndex: "value",
+      width: 120,
       sorter: (a, b) => a.value - b.value,
-
       render: (text) => <b>{new Intl.NumberFormat("en-Us").format(text)}đ</b>,
     },
     {
       title: "Thanh toán",
       key: "payment_status",
       dataIndex: "payment_status",
+      width: 150,
       render: (text) => (
         <>
           {PaymentStatus.map((item) => {
@@ -87,6 +92,7 @@ const OrderContent = ({ data }: Props) => {
       title: "Trạng thái",
       key: "status",
       dataIndex: "status",
+      width: 150,
       render: (text) => (
         <>
           {OrderStatus.map((item) => {
@@ -110,11 +116,15 @@ const OrderContent = ({ data }: Props) => {
       ),
     },
     {
-      title: "Action",
       dataIndex: "action",
-      align: "center",
+      fixed: "right",
+      width: 40,
       render: (_, record) => {
-        return <TableAction onClickDetail={() => router.push(`/user/order/${record.code}`)}/>;
+        return (
+          <TableAction
+            onClickDetail={() => router.push(`/user/order/${record.code}`)}
+          />
+        );
       },
     },
   ];
@@ -161,6 +171,7 @@ const OrderContent = ({ data }: Props) => {
           dataSource={orders}
           columns={columns}
           pagination={false}
+          scroll={{ x: 500 }}
         />
         <Pagination
           current={meta.current_page}
