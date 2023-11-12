@@ -6,9 +6,13 @@ import NavMenu from "./NavMenu";
 import { Session } from "next-auth";
 import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
-import { BiMenu  } from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
 import { Dropdown, MenuProps } from "antd";
 import TrackingOrderBar from "./TrackingOrderBar";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import mobile from "@/public/assets/icon-removebg.png";
+
 type Props = {
   currentUser: Session | null;
 };
@@ -57,13 +61,18 @@ const Header = ({ currentUser }: Props) => {
       <div className="py-4 border-b-[1px]">
         <div className="max-w-[2520px] mx-auto xl:px-8 md:px-10 sm:px-2 px-4">
           <div className="flex items-center lg:justify-between gap-3 md:gap-0">
-            <div className="flex items-center gap-3 w-full lg:w-auto">
+            <div className="flex items-center gap-3">
               <Link href="/">
-                <BrandName />
+                <BrandName className="hidden" />
+                <div
+                  className="md:hidden flex items-center justify-center"
+                >
+                  <Image src={mobile} alt="logo" height={30} width={100} />
+                </div>
               </Link>
             </div>
 
-            <div className="hidden lg:flex">
+            <div className="hidden lg:flex ">
               <NavLink
                 name="Về chúng tôi"
                 type="normal"
@@ -80,7 +89,7 @@ const Header = ({ currentUser }: Props) => {
                 onClick={() => router.push("/questions")}
               />
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center ml-auto lg:ml-0">
               <TrackingOrderBar />
               <NavMenu currentUser={currentUser} />
             </div>
