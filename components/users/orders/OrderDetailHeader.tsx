@@ -3,7 +3,7 @@
 import { OrderStatus, PaymentStatus } from "@/lib/constants";
 import { Button, Dropdown, MenuProps, Tag } from "antd";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { Fragment } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 import { FiCalendar } from "react-icons/fi";
@@ -57,7 +57,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
           <div className="flex border-r-2 px-2">
             {PaymentStatus.map((item) => {
               return (
-                <>
+                <Fragment key={item.id}>
                   {item.id ===
                   order.status_history[
                     order.status_history.length - 1
@@ -70,12 +70,13 @@ const OrderDetailHeader = ({ code, order }: Props) => {
                       {item.status}
                     </Tag>
                   ) : null}
-                </>
+                </Fragment>
               );
             })}
             {OrderStatus.map((item) => {
               return (
-                <>
+                <Fragment key={item.id}>
+
                   {item.id === order.payment.status ? (
                     <Tag
                       bordered={false}
@@ -85,7 +86,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
                       {item.status}
                     </Tag>
                   ) : null}
-                </>
+                </Fragment>
               );
             })}
           </div>
@@ -107,7 +108,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
         >
           <button
             onClick={(e: any) => e.preventDefault()}
-            className="border-primary-color text-primary-color bg-white border-2 p-2 rounded-md"
+            className="focus:border-primary-color focus:text-primary-color bg-white border-2 p-2 rounded-md transition"
           >
             <BsThreeDotsVertical />
           </button>

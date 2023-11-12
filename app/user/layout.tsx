@@ -12,10 +12,10 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
   if (!data) return redirect("/");
   return (
     <div className="min-h-screen pt-[68px] bg-[#eff1f7]">
-      <div className="flex gap-8 py-5 xl:px-20 md:px-10 sm:px-2 px-4">
+      <div className="flex py-4 md:py-5 xl:px-20 md:px-10 px-0">
         <UserSidebar user={data} />
 
-        <div className="w-full rounded-lg">{children}</div>
+        <div className="w-full md:w-[calc(100%-343px)] rounded-lg">{children}</div>
       </div>
     </div>
   );

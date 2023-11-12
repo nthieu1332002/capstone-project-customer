@@ -1,6 +1,5 @@
 import getServerUser from "@/actions/getServerUser";
 import BookingContent from "@/components/bookings/BookingContent";
-import { axios } from "@/lib/axios";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

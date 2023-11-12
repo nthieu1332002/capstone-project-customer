@@ -2,7 +2,6 @@ import { Timeline } from "antd";
 import React from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
-import { GoDotFill } from "react-icons/go";
 import { cn } from "@/lib/utils";
 import { OrderStatusMap } from "@/lib/constants";
 dayjs.locale("vi");
@@ -28,20 +27,10 @@ type Props = {
 
 const TrackingContent = ({ data, code }: Props) => {
   const lastSegment = data.details[data.details.length - 1];
-  const item = data.details.map((item, index) => {
+  const item = data.details.map((item) => {
     const orderStatus = OrderStatusMap[item.status];
     return {
-      // dot: (
-      //   <GoDotFill
-      //     size="20"
-      //     className={cn(
-      //       item.status !== 5 ? "text-red-600" : "",
-      //       index !== data.details.length - 1
-      //         ? "text-gray-500"
-      //         : "text-primary-color animate-ping"
-      //     )}
-      //   />
-      // ),
+
       label: (
         <div className="text-center rounded-sm py-5">
           <p className="font-medium">
@@ -73,7 +62,7 @@ const TrackingContent = ({ data, code }: Props) => {
         vào lúc {dayjs(lastSegment.created_at).format("hh:mm dddd DD/MM/YYYY")}
       </p>
       <div className="timeline_container mt-8 px-3 lg:px-40">
-        <Timeline mode="left" reverse items={item} />
+        <Timeline className="timeline_container" mode="left" reverse items={item} />
       </div>
     </div>
   );

@@ -64,7 +64,7 @@
 .custom-search-sidebar:placeholder-shown {
   font-weight: 500 !important;
 }
-div.timeline_container div.ant-timeline-item-label {
+/* div.timeline_container div.ant-timeline-item-label {
   width: calc(13% - 10px) !important;
 }
 
@@ -80,7 +80,7 @@ div.ant-timeline-item-head {
 }
 div.timeline_container .ant-timeline .ant-timeline-item-tail {
   border-inline-start: 4px solid rgba(5, 5, 5, 0.06) !important;
-}
+} */
 .custom-input-number {
   border-radius: 32px !important;
   padding: 0.4rem 0.8rem !important;

@@ -46,8 +46,8 @@ const UserSidebar = ({ user }: Props) => {
   const pathname = usePathname();
   const verified = user?.phone_verified_at || user?.email_verified_at;
   return (
-    <div className="w-[450px]">
-      <div className="flex flex-col rounded-lg border py-3 bg-white">
+    <div className="hidden md:block w-[335px] mr-2">
+      <div className="flex flex-col rounded-lg border py-3 bg-white w-full">
         <div className="flex gap-2 p-4">
           <div className="w-12 h-12 border-[1px] text-white border-neutral-200 flex flex-row items-center justify-center rounded-full">
             <Avatar

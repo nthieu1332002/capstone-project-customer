@@ -22,11 +22,11 @@ import { packageType, phoneNumberPattern } from "@/lib/constants";
 import qs from "query-string";
 import { useCallback, useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import axios from "axios";
 import { cn } from "@/lib/utils";
 import { PiCreditCard } from "react-icons/pi";
 import Image from "next/image";
 import vnpay from "@/public/assets/vnpay.png";
+import { axios } from "@/lib/axios";
 
 const { TextArea } = Input;
 type FieldType = {
@@ -78,7 +78,7 @@ const BookingForm = ({
     try {
       if (length && width && height && weight) {
         const url = qs.stringifyUrl({
-          url: "/api/booking/get-price",
+          url: "/api/customer/prices",
           query: {
             length,
             width,

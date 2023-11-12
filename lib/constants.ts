@@ -55,7 +55,6 @@ export const OrderStatus = [
         id: 5,
         status: "Hoàn thành",
         color: paidColor,
-
     },
     {
         id: 6,

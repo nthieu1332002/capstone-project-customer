@@ -1,15 +1,32 @@
 "use client";
-import { Input, Pagination, Table, Tag } from "antd";
+import { Input, Pagination, Space, Table, Tabs, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import qs from "query-string";
-import React from "react";
+import React, { Fragment } from "react";
 import dayjs from "dayjs";
 import { OrderStatus, PaymentStatus } from "@/lib/constants";
 import { useSearchParams, useRouter } from "next/navigation";
 import { BiSearchAlt } from "react-icons/bi";
 import CustomFilter from "@/components/CustomFilter";
 import TableAction from "@/components/TableAction";
-
+import { DatePicker } from "antd";
+import locale from "antd/es/date-picker/locale/vi_VN";
+locale.lang.shortWeekDays = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+locale.lang.shortMonths = [
+  "T1",
+  "T2",
+  "T3",
+  "T4",
+  "T5",
+  "T6",
+  "T7",
+  "T8",
+  "T9",
+  "T10",
+  "T11",
+  "T12",
+];
+const { RangePicker } = DatePicker;
 type Order = {
   code: string;
   created_at: string;
@@ -21,9 +38,10 @@ type Order = {
 
 type Props = {
   data: any;
+  status?: string;
 };
 
-const OrderContent = ({ data }: Props) => {
+const OrderContent = ({ data, status }: Props) => {
   const router = useRouter();
   const params = useSearchParams();
   const orders: Order[] = data.data;
@@ -69,7 +87,7 @@ const OrderContent = ({ data }: Props) => {
         <>
           {PaymentStatus.map((item) => {
             return (
-              <>
+              <Fragment key={item.id}>
                 {item.id === text ? (
                   <Tag
                     bordered={false}
@@ -81,7 +99,7 @@ const OrderContent = ({ data }: Props) => {
                 ) : (
                   ""
                 )}
-              </>
+              </Fragment>
             );
           })}
         </>
@@ -97,7 +115,7 @@ const OrderContent = ({ data }: Props) => {
         <>
           {OrderStatus.map((item) => {
             return (
-              <>
+              <Fragment key={item.id}>
                 {item.id === text ? (
                   <Tag
                     bordered={false}
@@ -109,7 +127,7 @@ const OrderContent = ({ data }: Props) => {
                 ) : (
                   ""
                 )}
-              </>
+              </Fragment>
             );
           })}
         </>
@@ -130,7 +148,6 @@ const OrderContent = ({ data }: Props) => {
   ];
 
   const handleNavigation = (page: number, pageSize: number) => {
-    console.log("page", page);
     const url = qs.stringifyUrl(
       {
         url: "/user/order",
@@ -152,19 +169,65 @@ const OrderContent = ({ data }: Props) => {
     router.push(url);
   };
 
+  const tabItems = [
+    {
+      key: "",
+      label: <p className="text-sm font-semibold">Tất cả</p>,
+    },
+    ...OrderStatus.map((item) => ({
+      key: item.id.toString(),
+      label: <p className="text-sm font-semibold">{item.status}</p>,
+    })),
+  ];
+  const onChangeStatus = (key: string) => {
+    const url = qs.stringifyUrl(
+      {
+        url: "/user/order",
+        query: { ...Object.fromEntries(params), status: key },
+      },
+      { skipNull: true }
+    );
+    router.push(url);
+  };
+  const onChangeDate = (date: any, dateString: any) => {
+    const format = dateString.toString() === "," ? "" : dateString.toString();
+    const url = qs.stringifyUrl(
+      {
+        url: "/user/order",
+        query: {
+          ...Object.fromEntries(params),
+          created_between: format,
+        },
+      },
+      { skipNull: true }
+    );
+    router.push(url);
+  };
   return (
-    <div className="flex flex-col mt-3 bg-blue-50">
-      <div className="p-5 flex flex-col gap-3 bg-white rounded-xl">
-        <div className="flex justify-between">
+    <div className="flex flex-col mt-3">
+      <div className="px-5 pt-1 bg-white rounded-xl">
+        <Tabs
+          defaultActiveKey={status || ""}
+          items={tabItems}
+          onChange={onChangeStatus}
+        />
+        <div className="flex justify-between mb-3">
           <Input
             allowClear
             prefix={<BiSearchAlt size="18" className="text-zinc-500" />}
             placeholder="Tra cứu mã đơn hàng"
-            className="custom-search-sidebar"
+            className="custom-search-sidebar !w-auto lg!w-60"
             onPressEnter={(e) => onSearch(e.currentTarget.value)}
-            style={{ width: 230 }}
           />
-          <CustomFilter />
+          <Space size={12}>
+            <RangePicker
+              className="!w-20 lg:!w-64"
+              onChange={onChangeDate}
+              locale={locale}
+              placeholder={["Từ", "Đến"]}
+            />
+            <CustomFilter />
+          </Space>
         </div>
         <Table
           size="middle"

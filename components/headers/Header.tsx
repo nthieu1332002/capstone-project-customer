@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { BiMenu } from "react-icons/bi";
 import { Dropdown, MenuProps } from "antd";
 import TrackingOrderBar from "./TrackingOrderBar";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import mobile from "@/public/assets/icon-removebg.png";
 
@@ -67,7 +66,7 @@ const Header = ({ currentUser }: Props) => {
                 <div
                   className="md:hidden flex items-center justify-center"
                 >
-                  <Image src={mobile} alt="logo" height={30} width={100} />
+                  <Image src={mobile} alt="logo" height={30} width={100} priority quality={30}/>
                 </div>
               </Link>
             </div>

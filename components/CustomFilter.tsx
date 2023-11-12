@@ -52,7 +52,7 @@ const CustomFilter = ({}: Props) => {
     <div className="relative" ref={menuRef}>
       <div
         onClick={toggleOpen}
-        className="flex items-center gap-1 flex-wrap border-[1px] p-3 py-1 rounded hover:bg-gray-50 cursor-pointer"
+        className="flex items-center gap-1 flex-nowrap border-[1px] p-3 py-1 rounded hover:bg-gray-50 cursor-pointer"
       >
         <LiaFilterSolid />
         Bộ lọc
