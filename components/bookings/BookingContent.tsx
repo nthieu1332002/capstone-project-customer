@@ -28,7 +28,6 @@ const BookingContent = ({ user, booking }: Props) => {
           user={user}
           onChange={onChange}
           setSizePrice={setSizePrice}
-          totalPrice={totalPrice}
           sizePrice={sizePrice}
           insurance={insurance}
         />
