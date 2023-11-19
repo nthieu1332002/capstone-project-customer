@@ -8,8 +8,6 @@ import { MdOutlineHistory, MdOutlineLogout } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
-import Image from "next/image";
 import useAuthModal from "@/hooks/useAuthModal";
 import { Avatar } from "antd";
 import { cn } from "@/lib/utils";

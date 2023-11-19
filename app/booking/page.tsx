@@ -4,12 +4,17 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const Booking = async () => {
+
   const user = await getServerUser();
   const cookieStore = cookies();
-  const booking = JSON.parse(cookieStore.get("booking")?.value || "{}");
-  console.log("booking", booking);
-  if (!booking) redirect("error");
-  return <BookingContent user={user} booking={booking} />;
+  const booking = cookieStore.get("booking")?.value || "";
+  if (!booking) {
+    redirect("error");
+  }
+  const parsedBooking = JSON.parse(booking);
+  return (
+    <BookingContent user={user} booking={parsedBooking} />
+  );
 };
 
 export default Booking;

@@ -60,6 +60,7 @@ const Search = () => {
   return (
     <div className="absolute flex gap-2 shadow-md bg-white rounded-md pl-8 pr-5 py-5 w-[1000px] bottom-4">
       <LoadScript
+        id="search-homepage"
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string}
         libraries={libraries}
         region="vn"

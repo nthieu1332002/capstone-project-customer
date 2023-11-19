@@ -9,8 +9,8 @@ type Props = {
 
 const BrandName = ({className} : Props) => {
   return (
-    <div className={cn("flex items-center justify-center", className)}>
-      <Image src={name} alt="logo" height={40} width={260}/>
+    <div className={cn("md:flex items-center justify-center", className)}>
+      <Image src={name} alt="logo" width={260} />
     </div>
   );
 };

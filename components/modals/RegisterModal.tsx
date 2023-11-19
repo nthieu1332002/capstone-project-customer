@@ -12,10 +12,10 @@ import { FcGoogle } from "react-icons/fc";
 import SocialButton from "../SocialButton";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { HiOutlineUser } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
 import axios from "axios";
+import { phoneNumberPattern } from "@/lib/constants";
 
 type FieldType = {
   name: string;
@@ -23,7 +23,6 @@ type FieldType = {
   email: string;
   password: string;
 };
-const phoneNumberPattern = /^[0-9]{10,12}$/;
 const RegisterModal = () => {
   const [form] = Form.useForm();
   const { isOpen, onClose, type, onOpen } = useAuthModal();
@@ -33,7 +32,7 @@ const RegisterModal = () => {
 
   useEffect(() => {
     setShowModal(isModalOpen);
-  }, [isModalOpen, isOpen]);
+  }, [isModalOpen]);
 
   const handleClose = useCallback(() => {
     setShowModal(false);
