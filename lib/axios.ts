@@ -1,6 +1,5 @@
+import getServerUser from '@/actions/getServerUser';
 import Axios from 'axios';
-import { getServerSession } from "next-auth/next"
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export const axios = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_API,
@@ -12,7 +11,7 @@ export const axios = Axios.create({
 
 axios.interceptors.request.use(
     async (config) => {
-        const session = await getServerSession(authOptions)
+        const session = await getServerUser();
         if (!config.headers["Authorization"] && session) {
             config.headers[
                 "Authorization"
@@ -25,5 +24,4 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     (response) => response.data,
-    
 );

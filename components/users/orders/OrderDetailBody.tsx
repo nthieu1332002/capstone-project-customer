@@ -1,3 +1,5 @@
+"use client";
+
 import {
   OrderStatus,
   OrderStatusMap,
@@ -10,16 +12,35 @@ import vnpay from "@/public/assets/vnpay.png";
 import cash from "@/public/assets/cash.jpg";
 import { Tag, Timeline } from "antd";
 import dayjs from "dayjs";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { axios } from "@/lib/axios";
+import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 type Props = {
+  code: string;
   order: any;
 };
 
-const OrderDetailBody = ({ order }: Props) => {
+const OrderDetailBody = ({ code, order }: Props) => {
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const handlePayment = async () => {
+    try {
+      const res = await axios.get(`/api/customer/orders/${code}/payments`);
+      console.log("res", res);
+      if (res.status === 400) {
+        toast.error("Đơn hàng này đã được thanh toán.");
+      }
+      router.push(res.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Có lỗi xảy ra, vui lòng thử lại sau!");
+    }
+  };
   const items = order.status_history.map((item: any, index: number) => {
     const orderStatus = OrderStatusMap[item.status];
-
     return {
       children: (
         <div key={index}>
@@ -63,9 +84,7 @@ const OrderDetailBody = ({ order }: Props) => {
             </div>
             <div className="w-96 flex flex-col justify-between">
               <h1 className="font-bold">
-                {order.start_station.name} {order.start_station.name}{" "}
-                {order.start_station.name} - {order.end_station.name}{" "}
-                {order.start_station.name}
+                {order.start_station.name} - {order.end_station.name}
               </h1>
               <div className="flex flex-col gap-2 text-sm font-semibold text-gray-500">
                 <p>
@@ -90,7 +109,19 @@ const OrderDetailBody = ({ order }: Props) => {
           </div>
         </div>
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
-          <h2 className="font-bold">Thanh toán</h2>
+          <h2 className="font-bold">
+            Thanh toán{" "}
+            {order.payment.status === 1 ||
+            order.status_history[0].status === 6 ||
+            order.status_history[0].status === 0 ? null : (
+              <span
+                onClick={() => handlePayment()}
+                className="underline text-primary-color cursor-pointer text-sm font-medium"
+              >
+                (Thanh toán ngay)
+              </span>
+            )}
+          </h2>
           <div className="flex gap-5 mt-4">
             <div className="shadow-sm">
               <Image
@@ -107,14 +138,19 @@ const OrderDetailBody = ({ order }: Props) => {
                 return (
                   <Fragment key={item.id}>
                     {item.id === order.payment.status ? (
-                      <p className="text-gray-500 text-sm font-medium">
+                      <Tag
+                        bordered={false}
+                        className="tag font-medium"
+                        color={item.color}
+                      >
                         {item.status}
-                      </p>
+                      </Tag>
                     ) : null}
                   </Fragment>
                 );
               })}
             </div>
+
             <b className="ml-auto">
               {new Intl.NumberFormat("en-Us").format(order.payment.value)}đ
             </b>
@@ -162,7 +198,7 @@ const OrderDetailBody = ({ order }: Props) => {
           </div>
         </div>
         <h2 className="text-lg font-bold my-2">Hoạt động</h2>
-        <Timeline items={items} reverse />
+        <Timeline items={items} />
       </div>
       <div className="w-[220px]">
         <div className="p-4 bg-white rounded-sm shadow-sm h-[530px] text-sm flex flex-col gap-3">

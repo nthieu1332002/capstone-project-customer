@@ -3,6 +3,7 @@
 import NoteText from "@/components/NoteText";
 import BookingHeader from "@/components/bookings/BookingHeader";
 import {
+  Checkbox,
   Divider,
   Form,
   Input,
@@ -13,7 +14,6 @@ import {
 } from "antd";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbPackage, TbUserCircle } from "react-icons/tb";
-import { PiNotePencil } from "react-icons/pi";
 import Button from "@/components/Button";
 import { Booking } from "@/hooks/useBookingStore";
 import { useRouter } from "next/navigation";
@@ -36,33 +36,26 @@ type FieldType = {
   receiver_name: string;
   receiver_phone: string;
   receiver_email: string;
-  note: string;
-  package_price: number; // giá trị hàng hóa
   weight: number;
   height: number;
   length: number;
   width: number;
-  package_type: 5;
-  payment_method: 1;
+  package_value: number; // giá trị hàng hóa
+  note: string;
+  package_types: number[];
+  payment_method: number;
+  collect_on_delivery: boolean;
 };
 type Props = {
   booking: Booking;
   user?: Session | null;
   onChange: (value: number) => void;
   setSizePrice: (value: number) => void;
-
-  totalPrice: number;
   sizePrice: number;
   insurance: number;
 };
 
-const BookingForm = ({
-  booking,
-  user,
-  onChange,
-  setSizePrice,
-  totalPrice
-}: Props) => {
+const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const router = useRouter();
   const [form] = Form.useForm();
   const length = Form.useWatch("length", form);
@@ -71,12 +64,14 @@ const BookingForm = ({
   const weight = Form.useWatch("weight", form);
   const [value, setValue] = useState(1);
 
+  console.log(length, weight, width, height);
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
     setValue(e.target.value);
   }, []);
   const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
     try {
       if (length && width && height && weight) {
+        console.log("call");
         const url = qs.stringifyUrl({
           url: "/api/customer/prices",
           query: {
@@ -87,7 +82,9 @@ const BookingForm = ({
             distance: 112,
           },
         });
+        console.log("url", url);
         const res = await axios.get(url);
+        console.log("res", res);
         setSizePrice(res.data);
       }
     } catch (error) {
@@ -104,22 +101,19 @@ const BookingForm = ({
     try {
       const data = {
         ...values,
-        start_station_id: 1,
-        end_station_id: 2,
-        delivery_price: totalPrice,
-        order_route_id: 1,
+        order_route_id: 2, ////////////////////////////////
       };
       console.log("data", data);
       const res = await axios.post("/api/booking", data);
       console.log(res);
       if (res.status === 200) {
-       const url = qs.stringifyUrl({
-          url: 'booking/success',
+        const url = qs.stringifyUrl({
+          url: "booking/success",
           query: {
             code: res.data.attributes.code,
             email: res.data.attributes.sender_email,
-          }
-        })
+          },
+        });
         router.replace(url);
       }
     } catch (error) {
@@ -199,6 +193,10 @@ const BookingForm = ({
               validateTrigger="onBlur"
               name="sender_email"
               rules={[
+                {
+                  required: true,
+                  message: "Email không được bỏ trống.",
+                },
                 {
                   type: "email",
                   message: "Email không đúng định dạng.",
@@ -379,7 +377,7 @@ const BookingForm = ({
               label={
                 <p className="font-medium text-sm">Tổng giá trị hàng hóa</p>
               }
-              name="package_price"
+              name="package_value"
               rules={[
                 {
                   type: "number",
@@ -411,23 +409,40 @@ const BookingForm = ({
               />
             </Form.Item>
             <Form.Item<FieldType>
-              name="package_type"
+              name="package_types"
               label={<p className="font-medium text-sm">Loại hàng hóa</p>}
               className="flex-1 custom-search-sidebar"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn loại hàng hóa",
+                },
+              ]}
             >
               <Select options={packageType} />
             </Form.Item>
           </div>
+          <div className="flex flex-col md:flex-row justify-between md:gap-5">
+            <Form.Item<FieldType>
+              label={<p className="font-medium text-sm">Ghi chú</p>}
+              name="note"
+              className="!mb-3 flex-1"
+            >
+              <TextArea rows={2} placeholder="VD: Hàng dễ vỡ." />
+            </Form.Item>
+              <Form.Item<FieldType>
+                label={
+                  <p className="font-medium text-sm">Tùy chọn thanh toán</p>
+                }
+                name="collect_on_delivery"
+                className="!mb-3 flex-1"
+                valuePropName="checked"
+              >
+                <Checkbox>Bên nhận trả phí?</Checkbox>
+              </Form.Item>
+          </div>
 
           <Divider />
-          <BookingHeader name="Ghi chú - Lưu ý" icon={PiNotePencil} />
-          <Form.Item<FieldType>
-            label={<p className="font-medium text-sm">Ghi chú</p>}
-            name="note"
-            className="!mb-3 flex-1"
-          >
-            <TextArea rows={2} placeholder="VD: Hàng dễ vỡ." />
-          </Form.Item>
           <BookingHeader name="Phương thức thanh toán" icon={PiCreditCard} />
           <Form.Item name="payment_method">
             <Radio.Group
