@@ -1,9 +1,7 @@
 "use client";
 
 import {
-  OrderStatus,
   OrderStatusMap,
-  PaymentStatus,
   packageType,
 } from "@/lib/constants";
 
@@ -12,10 +10,7 @@ import vnpay from "@/public/assets/vnpay.png";
 import cash from "@/public/assets/cash.jpg";
 import { Tag, Timeline } from "antd";
 import dayjs from "dayjs";
-import { Fragment, useEffect } from "react";
-import { axios } from "@/lib/axios";
-import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
   code: string;
@@ -24,34 +19,18 @@ type Props = {
 
 const OrderDetailBody = ({ code, order }: Props) => {
   const router = useRouter();
-  const params = useSearchParams();
 
-  const handlePayment = async () => {
-    try {
-      const res = await axios.get(`/api/customer/orders/${code}/payments`);
-      console.log("res", res);
-      if (res.status === 400) {
-        toast.error("Đơn hàng này đã được thanh toán.");
-      }
-      router.push(res.data);
-    } catch (error) {
-      console.log(error);
-      toast.error("Có lỗi xảy ra, vui lòng thử lại sau!");
-    }
-  };
   const items = order.status_history.map((item: any, index: number) => {
-    const orderStatus = OrderStatusMap[item.status];
+    const orderStatus = OrderStatusMap[item.type];
     return {
       children: (
         <div key={index}>
           <p className="uppercase font-medium text-sm text-gray-600 mb-1">
-            Ngày {dayjs(item.created_at).format("DD/MM/YYYY lúc hh:mm:ss")}
+            Ngày {dayjs(item.achievedAt).format("DD/MM/YYYY lúc hh:mm:ss")}
           </p>
           <div className="bg-white p-3 py-2 rounded-md min-h-[70px] shadow-sm">
-            <b className="font-semibold">Đơn hàng {orderStatus}</b>
-            <p className="text-gray-500">
-              {item.location} 126 le van huu, phuong 9 tuy hoa
-            </p>
+            <b className="font-semibold">Đơn hàng {orderStatus} {item.location ? (`tại ${item.location}`) : null}</b>
+            <p className="text-gray-500">{item.address}</p>
           </div>
         </div>
       ),
@@ -59,19 +38,10 @@ const OrderDetailBody = ({ code, order }: Props) => {
   });
 
   return (
-    <div className="flex justify-between">
-      <div className="flex flex-col gap-4">
+    <div className="flex justify-between gap-4">
+      <div className="flex flex-col gap-4 w-[calc(100%-220px)]">
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
-          {OrderStatus.map((item) => {
-            return (
-              <>
-                {item.id === order.payment.status ? (
-                  <h2 className="font-bold">{item.status}</h2>
-                ) : null}
-              </>
-            );
-          })}
-          <div className="flex gap-5 mt-4">
+          <div className="flex gap-5">
             <div className="relative flex-shrink-0 h-36 w-32 rounded-md overflow-hidden">
               <Image
                 fill
@@ -82,30 +52,26 @@ const OrderDetailBody = ({ code, order }: Props) => {
                 priority
               />
             </div>
-            <div className="w-96 flex flex-col justify-between">
+            <div className="flex flex-col justify-between">
               <h1 className="font-bold">
                 {order.start_station.name} - {order.end_station.name}
               </h1>
-              <div className="flex flex-col gap-2 text-sm font-semibold text-gray-500">
+              <div className="flex flex-col gap-4 text-sm font-semibold text-gray-500">
                 <p>
                   Đi từ:
                   <span className="ml-2 text-gray-800">
-                    {order.start_station.address}
+                    {order.start_station.address}.
                   </span>
                 </p>
                 <p>
                   Đến:
                   <span className="ml-2 text-gray-800">
-                    {order.end_station.address}
+                    {order.end_station.address}.
                   </span>
                 </p>
               </div>
             </div>
-            <div className="ml-auto w-44">
-              <p className="text-sm font-semibold text-gray-500">
-                Ghi chú: <span className="text-gray-800">{order.note}</span>
-              </p>
-            </div>
+            
           </div>
         </div>
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
@@ -115,7 +81,6 @@ const OrderDetailBody = ({ code, order }: Props) => {
             order.status_history[0].status === 6 ||
             order.status_history[0].status === 0 ? null : (
               <span
-                onClick={() => handlePayment()}
                 className="underline text-primary-color cursor-pointer text-sm font-medium"
               >
                 (Thanh toán ngay)
@@ -125,41 +90,33 @@ const OrderDetailBody = ({ code, order }: Props) => {
           <div className="flex gap-5 mt-4">
             <div className="shadow-sm">
               <Image
-                src={order.payment.payment_method === 0 ? cash : vnpay}
+                src={order.payment_method === 0 ? cash : vnpay}
                 alt="logo"
                 width={100}
               />
             </div>
             <div className="flex flex-col justify-between font-bold">
               <h3 className="text-black">
-                {order.payment.payment_method === 0 ? "Tiền mặt" : "VNPay"}
+                {order.payment_method === 0 ? "Tiền mặt" : "VNPay"}
               </h3>
-              {PaymentStatus.map((item) => {
-                return (
-                  <Fragment key={item.id}>
-                    {item.id === order.payment.status ? (
-                      <Tag
-                        bordered={false}
-                        className="tag font-medium"
-                        color={item.color}
-                      >
-                        {item.status}
-                      </Tag>
-                    ) : null}
-                  </Fragment>
-                );
-              })}
+              <Tag
+                bordered={false}
+                className="tag font-medium"
+                color={order.is_paid ? "green" : "red"}
+              >
+                {order.is_paid ? "Đã thanh toán" : "Chưa thanh toán"}
+              </Tag>
             </div>
 
             <b className="ml-auto">
-              {new Intl.NumberFormat("en-Us").format(order.payment.value)}đ
+              {new Intl.NumberFormat("en-Us").format(order.delivery_price)}đ
             </b>
           </div>
         </div>
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
           <h2 className="font-bold">Thông tin gói hàng</h2>
           <div className="flex gap-5 mt-4">
-            <div className="flex gap-16 w-full">
+            <div className="flex whitespace-nowrap gap-16 w-full">
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Tổng khối lượng</p>
                 <p className="font-medium">{order.weight} kg</p>
@@ -170,7 +127,7 @@ const OrderDetailBody = ({ code, order }: Props) => {
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều rộng</p>
-                <p className="font-medium">{order.width} 10 cm</p>
+                <p className="font-medium">{order.width} cm</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều cao</p>
@@ -179,13 +136,13 @@ const OrderDetailBody = ({ code, order }: Props) => {
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Trị giá</p>
                 <p className="font-medium">
-                  {new Intl.NumberFormat("en-Us").format(order.package_price)}đ
+                  {new Intl.NumberFormat("en-Us").format(order.package_value)}đ
                 </p>
               </div>
             </div>
           </div>
           <div className="flex gap-1 mt-3">
-            {order.package_type.map((value: number) => {
+            {order.package_types.map((value: number) => {
               {
                 packageType.find((type) => type.value === value)?.label;
               }
@@ -198,10 +155,10 @@ const OrderDetailBody = ({ code, order }: Props) => {
           </div>
         </div>
         <h2 className="text-lg font-bold my-2">Hoạt động</h2>
-        <Timeline items={items} />
+        <Timeline reverse items={items} />
       </div>
       <div className="w-[220px]">
-        <div className="p-4 bg-white rounded-sm shadow-sm h-[530px] text-sm flex flex-col gap-3">
+        <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm flex flex-col gap-3">
           <h2 className="text-lg font-bold">Khách hàng</h2>
           <div className="py-3">
             <p className="text-sm font-semibold mb-3">Người gửi</p>
@@ -228,6 +185,10 @@ const OrderDetailBody = ({ code, order }: Props) => {
                 )}
               </p>
             </div>
+          </div>
+          <div className="py-3 border-t-[1px]">
+            <p className="text-sm font-semibold mb-3">Ghi chú</p>
+            <p>{order.note}</p>
           </div>
         </div>
       </div>

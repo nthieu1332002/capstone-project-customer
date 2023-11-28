@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import NavMenuItem from "./NavMenuItem";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { MdOutlineHistory, MdOutlineLogout } from "react-icons/md";
+import { MdOutlineHistory, MdOutlineLogout, MdPayment } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { Avatar } from "antd";
 import { cn } from "@/lib/utils";
 import { Session } from "next-auth";
+import AuthButton from "../AuthButton";
 
 type NavMenuProps = {
   currentUser?: Session | null;
@@ -85,8 +86,8 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
                 />
                 <NavMenuItem
                   onClick={() => router.push("/")}
-                  icon={<AiOutlineHeart />}
-                  name="Danh sách yêu thích"
+                  icon={ <MdPayment />}
+                  name="Thanh toán của tôi"
                 />
                 <NavMenuItem
                   onClick={() => onOpen("logout")}
@@ -100,8 +101,8 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
         </div>
       ) : (
         <div className="hidden lg:flex items-center gap-5">
-          <NavLink name="Đăng nhập" onClick={() => onOpen("login")} />
-          <NavLink
+          <AuthButton name="Đăng nhập" onClick={() => onOpen("login")} />
+          <AuthButton
             name="Đăng ký"
             onClick={() => onOpen("register")}
             type="button"
