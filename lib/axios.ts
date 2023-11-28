@@ -24,6 +24,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     (response) => response.data,
+<<<<<<< HEAD
     (error) => {
         console.log("error", error);
         if (error.response.status === 401) {
@@ -32,4 +33,6 @@ axios.interceptors.response.use(
         }
         return Promise.reject(error);
     }
+=======
+>>>>>>> b1ab36bf6a0f80e7f9addcc780b0936cd6600bfe
 );

@@ -73,6 +73,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
     try {
       if (length && width && height && weight) {
+        console.log("call");
         const url = qs.stringifyUrl({
           url: "/api/customer/package-price",
           query: {
@@ -83,6 +84,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             distance: 112,
           },
         });
+        console.log("url", url);
         const res = await axios.get(url);
         console.log("res", res);
         setSizePrice(res.data.total_price);
@@ -447,6 +449,25 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             >
               <Checkbox>Bên nhận trả phí?</Checkbox>
             </Form.Item>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between md:gap-5">
+            <Form.Item<FieldType>
+              label={<p className="font-medium text-sm">Ghi chú</p>}
+              name="note"
+              className="!mb-3 flex-1"
+            >
+              <TextArea rows={2} placeholder="VD: Hàng dễ vỡ." />
+            </Form.Item>
+              <Form.Item<FieldType>
+                label={
+                  <p className="font-medium text-sm">Tùy chọn thanh toán</p>
+                }
+                name="collect_on_delivery"
+                className="!mb-3 flex-1"
+                valuePropName="checked"
+              >
+                <Checkbox>Bên nhận trả phí?</Checkbox>
+              </Form.Item>
           </div>
 
           <Divider />
