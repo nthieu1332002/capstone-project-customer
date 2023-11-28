@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { MdOutlineLogout } from "react-icons/md";
-import { AiOutlineHeart } from "react-icons/ai";
+import { MdOutlineLogout, MdPayment } from "react-icons/md";
 import NavMenuItem from "../headers/NavMenuItem";
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar } from "antd";
@@ -25,9 +24,9 @@ const sidebarList = [
   },
   {
     id: 3,
-    name: "Danh sách yêu thích",
+    name: "Thanh toán của tôi",
     path: "/user/favorite",
-    icon: <AiOutlineHeart />,
+    icon:  <MdPayment />,
   },
   {
     id: 4,

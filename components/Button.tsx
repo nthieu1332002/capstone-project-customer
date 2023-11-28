@@ -27,7 +27,7 @@ const Button = ({
       disabled={disabled}
       onClick={onClick}
       className={cn(
-        "relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full border-[1px]",
+        "relative whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full border-[1px]",
         outline
           ? "bg-white border-black text-black"
           : "bg-primary-color text-white",

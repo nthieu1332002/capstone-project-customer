@@ -24,7 +24,7 @@ const Header = ({ currentUser }: Props) => {
         <NavLink
           name="Về chúng tôi"
           type="normal"
-          onClick={() => router.push("/about")}
+          href="/about"
         />
       ),
       key: "0",
@@ -34,7 +34,7 @@ const Header = ({ currentUser }: Props) => {
         <NavLink
           name="Bảng giá"
           type="normal"
-          onClick={() => router.push("/pricing")}
+          href="/pricing"
         />
       ),
       key: "1",
@@ -44,7 +44,7 @@ const Header = ({ currentUser }: Props) => {
         <NavLink
           name="Hỏi đáp"
           type="normal"
-          onClick={() => router.push("/questions")}
+          href="/questions"
         />
       ),
       key: "2",
@@ -75,17 +75,17 @@ const Header = ({ currentUser }: Props) => {
               <NavLink
                 name="Về chúng tôi"
                 type="normal"
-                onClick={() => router.push("/about")}
+                href="/about"
               />
               <NavLink
                 name="Bảng giá"
                 type="normal"
-                onClick={() => router.push("/pricing")}
+                href="/pricing"
               />
               <NavLink
                 name="Hỏi đáp"
                 type="normal"
-                onClick={() => router.push("/questions")}
+                href="/questions"
               />
             </div>
             <div className="flex gap-3 items-center ml-auto lg:ml-0">

@@ -30,10 +30,10 @@ const { RangePicker } = DatePicker;
 type Order = {
   code: string;
   created_at: string;
-  value: number;
+  delivery_price: number;
   payment_status: number;
   receiver_name: number;
-  status: number;
+  latest_order_status: number;
 };
 
 type Props = {
@@ -72,10 +72,10 @@ const OrderContent = ({ data, status }: Props) => {
     },
     {
       title: "Số tiền",
-      key: "value",
-      dataIndex: "value",
+      key: "delivery_price",
+      dataIndex: "delivery_price",
       width: 120,
-      sorter: (a, b) => a.value - b.value,
+      sorter: (a, b) => a.delivery_price - b.delivery_price,
       render: (text) => <b>{new Intl.NumberFormat("en-Us").format(text)}đ</b>,
     },
     {
@@ -108,8 +108,8 @@ const OrderContent = ({ data, status }: Props) => {
 
     {
       title: "Trạng thái",
-      key: "status",
-      dataIndex: "status",
+      key: "latest_order_status",
+      dataIndex: "latest_order_status",
       width: 150,
       render: (text) => (
         <>
@@ -205,7 +205,7 @@ const OrderContent = ({ data, status }: Props) => {
   };
   return (
     <div className="flex flex-col mt-3">
-      <div className="px-5 pt-1 bg-white rounded-xl">
+      <div className="px-5 py-1 bg-white rounded-xl">
         <Tabs
           defaultActiveKey={status || ""}
           items={tabItems}
@@ -236,6 +236,8 @@ const OrderContent = ({ data, status }: Props) => {
           pagination={false}
           scroll={{ x: 500 }}
         />
+        <div className="mt-3 flex justify-end">
+
         <Pagination
           current={meta.current_page}
           pageSize={meta.per_page}
@@ -243,6 +245,7 @@ const OrderContent = ({ data, status }: Props) => {
           showSizeChanger={false}
           onChange={(page, pageSize) => handleNavigation(page, pageSize)}
         />
+        </div>
       </div>
     </div>
   );
