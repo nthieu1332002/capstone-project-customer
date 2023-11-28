@@ -45,7 +45,7 @@ const TrackingContent = ({ data, code }: Props) => {
   return (
     <>
       <div className="text-center">
-        <h1 className="font-bold text-xl">Đơn hàng {code}</h1>
+        <h1 className="font-bold text-xl">Đơn hàng <span className="uppercase">{code}</span></h1>
         <p>
           Đơn hàng{" "}
           <b

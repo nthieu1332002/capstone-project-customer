@@ -45,7 +45,6 @@ const OrderContent = ({ data, status }: Props) => {
   const router = useRouter();
   const params = useSearchParams();
   const orders: Order[] = data.data;
-  console.log(orders);
   const meta = data.meta;
   const columns: ColumnsType<Order> = [
     {

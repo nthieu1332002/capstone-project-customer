@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import NavMenuItem from "./NavMenuItem";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { MdOutlineHistory, MdOutlineLogout } from "react-icons/md";
+import { MdOutlineHistory, MdOutlineLogout, MdPayment } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
@@ -86,8 +86,8 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
                 />
                 <NavMenuItem
                   onClick={() => router.push("/")}
-                  icon={<AiOutlineHeart />}
-                  name="Danh sách yêu thích"
+                  icon={ <MdPayment />}
+                  name="Thanh toán của tôi"
                 />
                 <NavMenuItem
                   onClick={() => onOpen("logout")}

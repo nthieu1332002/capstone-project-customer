@@ -73,9 +73,8 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
     try {
       if (length && width && height && weight) {
-        console.log("call");
         const url = qs.stringifyUrl({
-          url: "/api/customer/prices",
+          url: "/api/customer/package-price",
           query: {
             length,
             width,
@@ -84,10 +83,9 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             distance: 112,
           },
         });
-        console.log("url", url);
         const res = await axios.get(url);
         console.log("res", res);
-        setSizePrice(res.data);
+        setSizePrice(res.data.total_price);
       }
     } catch (error) {
       console.error("An error occurred while fetching the data:", error);
@@ -104,7 +102,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
     try {
       const data = {
         ...values,
-        order_route_id: 5, ////////////////////////////////
+        order_route_id: 5,
       };
       console.log("data", data);
       const res = await axios.post("/api/customer/orders", data);

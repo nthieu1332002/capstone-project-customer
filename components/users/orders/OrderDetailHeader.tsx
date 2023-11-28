@@ -18,7 +18,6 @@ type Props = {
 };
 
 const OrderDetailHeader = ({ code, order }: Props) => {
-  console.log(order);
   const router = useRouter();
   const items: MenuProps["items"] = [
     {

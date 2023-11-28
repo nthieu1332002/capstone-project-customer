@@ -42,11 +42,9 @@ const OrderDetail = async ({ params, searchParams }: Props) => {
     getOrderDetail(params.code),
     getOrderTracking(params.code),
   ]);
-  console.log("tracking", tracking);
   order.attributes.status_history = tracking.milestones;
   if (!order) redirect("error");
   const data = order.attributes;
-  console.log("data", data);
   return (
     <div className="p-3 flex flex-col gap-4">
       {vnp_TransactionStatus === "00" ? (

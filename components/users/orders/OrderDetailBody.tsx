@@ -29,8 +29,8 @@ const OrderDetailBody = ({ code, order }: Props) => {
             Ngày {dayjs(item.achievedAt).format("DD/MM/YYYY lúc hh:mm:ss")}
           </p>
           <div className="bg-white p-3 py-2 rounded-md min-h-[70px] shadow-sm">
-            <b className="font-semibold">Đơn hàng {orderStatus}</b>
-            <p className="text-gray-500">{item.location}</p>
+            <b className="font-semibold">Đơn hàng {orderStatus} {item.location ? (`tại ${item.location}`) : null}</b>
+            <p className="text-gray-500">{item.address}</p>
           </div>
         </div>
       ),
@@ -39,13 +39,9 @@ const OrderDetailBody = ({ code, order }: Props) => {
 
   return (
     <div className="flex justify-between gap-4">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-[calc(100%-220px)]">
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
-          <h2 className="font-bold">
-            {order.is_paid ? "Đã thanh toán" : "Chưa thanh toán"}
-          </h2>
-
-          <div className="flex gap-5 mt-4">
+          <div className="flex gap-5">
             <div className="relative flex-shrink-0 h-36 w-32 rounded-md overflow-hidden">
               <Image
                 fill
@@ -64,13 +60,13 @@ const OrderDetailBody = ({ code, order }: Props) => {
                 <p>
                   Đi từ:
                   <span className="ml-2 text-gray-800">
-                    {order.start_station.address}
+                    {order.start_station.address}.
                   </span>
                 </p>
                 <p>
                   Đến:
                   <span className="ml-2 text-gray-800">
-                    {order.end_station.address}
+                    {order.end_station.address}.
                   </span>
                 </p>
               </div>
@@ -148,10 +144,10 @@ const OrderDetailBody = ({ code, order }: Props) => {
           </div>
         </div>
         <h2 className="text-lg font-bold my-2">Hoạt động</h2>
-        <Timeline items={items} />
+        <Timeline reverse items={items} />
       </div>
       <div className="w-[220px]">
-        <div className="p-4 bg-white rounded-sm shadow-sm h-[530px] text-sm flex flex-col gap-3">
+        <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm flex flex-col gap-3">
           <h2 className="text-lg font-bold">Khách hàng</h2>
           <div className="py-3">
             <p className="text-sm font-semibold mb-3">Người gửi</p>

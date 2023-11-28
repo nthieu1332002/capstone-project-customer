@@ -1,6 +1,8 @@
 import OrderContent from "@/components/users/orders/OrderContent";
 import { axios } from "@/lib/axios";
 import qs from "query-string";
+import Error from "./error";
+import ErrorBoundary from "react";
 
 type SearchParams = {
   code?: string;
@@ -75,8 +77,8 @@ const Order = async ({
   return (
     <div className="p-1 md:p-3 flex flex-col gap-3">
       <h1 className="text-2xl font-semibold">Đơn hàng của bạn</h1>
-      <p className=" text-sm">Theo dõi và quản lý đơn hàng của bạn</p>
-      <OrderContent data={data} status={status}/>
+      <p className="text-sm">Theo dõi và quản lý đơn hàng của bạn</p>
+      <OrderContent data={data} status={status} />
     </div>
   );
 };
