@@ -75,7 +75,18 @@ const OrderDetailBody = ({ code, order }: Props) => {
           </div>
         </div>
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
-          <h2 className="font-bold">Thanh toán</h2>
+          <h2 className="font-bold">
+            Thanh toán{" "}
+            {order.payment.status === 1 ||
+            order.status_history[0].status === 6 ||
+            order.status_history[0].status === 0 ? null : (
+              <span
+                className="underline text-primary-color cursor-pointer text-sm font-medium"
+              >
+                (Thanh toán ngay)
+              </span>
+            )}
+          </h2>
           <div className="flex gap-5 mt-4">
             <div className="shadow-sm">
               <Image
