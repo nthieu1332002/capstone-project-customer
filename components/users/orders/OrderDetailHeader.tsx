@@ -1,7 +1,7 @@
 "use client";
 
 import { OrderStatus, PaymentStatus } from "@/lib/constants";
-import { Button, Dropdown, MenuProps, Tag } from "antd";
+import { Dropdown, MenuProps, Tag } from "antd";
 import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -23,18 +23,18 @@ const OrderDetailHeader = ({ code, order }: Props) => {
   const items: MenuProps["items"] = [
     {
       disabled:
-        order.payment.status !== 0 ||
-        order.status_history[0].status === 6 ||
-        order.status_history[0].status !== 0,
+        order.is_paid ||
+        order.status_history[0].type === 6 ||
+        order.status_history[0].type !== 0,
       label: <div>Chỉnh sửa</div>,
       key: "0",
       icon: <AiOutlineEdit />,
     },
     {
       disabled:
-        order.payment.status === 1 ||
-        order.status_history[0].status === 6 ||
-        order.status_history[0].status === 0,
+        !order.is_paid ||
+        order.status_history[0].type === 6 ||
+        order.status_history[0].type === 0,
       label: <div>Thanh toán ngay</div>,
       key: "1",
       icon: <MdPayment />,
@@ -43,10 +43,9 @@ const OrderDetailHeader = ({ code, order }: Props) => {
       type: "divider",
     },
     {
-      disabled:
-        order.payment.status !== 0 ||
-        order.status_history[0].status === 6 ||
-        order.status_history[0].status !== 0,
+      disabled: order.is_paid ||
+      order.status_history[0].type === 6 ||
+      order.status_history[0].type !== 0,
       label: <div>Hủy</div>,
       key: "3",
       danger: true,
@@ -73,25 +72,17 @@ const OrderDetailHeader = ({ code, order }: Props) => {
             Đơn hàng <span className="text-black uppercase">#{code}</span>
           </h1>
           <div className="flex border-r-2 px-2">
-            {PaymentStatus.map((item) => {
-              return (
-                <Fragment key={item.id}>
-                  {item.id === order.payment.status ? (
-                    <Tag
-                      bordered={false}
-                      className="tag font-medium"
-                      color={item.color}
-                    >
-                      {item.status}
-                    </Tag>
-                  ) : null}
-                </Fragment>
-              );
-            })}
+            <Tag
+              bordered={false}
+              className="tag font-medium"
+              color={order.is_paid ? "green" : "red"}
+            >
+              {order.is_paid ? "Đã thanh toán" : "Chưa thanh toán"}
+            </Tag>
             {OrderStatus.map((item) => {
               return (
                 <Fragment key={item.id}>
-                  {item.id === order.status_history[0].status ? (
+                  {item.id === order.status_history[0].type ? (
                     <Tag
                       bordered={false}
                       className="tag font-medium"
@@ -107,7 +98,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
           <div className="flex gap-2 items-center text-sm px-1 font-medium">
             <FiCalendar size={18} className="text-gray-400" />
             <p>
-              {dayjs(order.status_history[0].created_at).format(
+              {dayjs(order.status_history[0].achievedAt).format(
                 "DD/MM/YYYY lúc HH:mm"
               )}
             </p>

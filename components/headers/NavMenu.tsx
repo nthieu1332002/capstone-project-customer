@@ -12,6 +12,7 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { Avatar } from "antd";
 import { cn } from "@/lib/utils";
 import { Session } from "next-auth";
+import AuthButton from "../AuthButton";
 
 type NavMenuProps = {
   currentUser?: Session | null;
@@ -100,8 +101,8 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
         </div>
       ) : (
         <div className="hidden lg:flex items-center gap-5">
-          <NavLink name="Đăng nhập" onClick={() => onOpen("login")} />
-          <NavLink
+          <AuthButton name="Đăng nhập" onClick={() => onOpen("login")} />
+          <AuthButton
             name="Đăng ký"
             onClick={() => onOpen("register")}
             type="button"

@@ -27,6 +27,7 @@ import { PiCreditCard } from "react-icons/pi";
 import Image from "next/image";
 import vnpay from "@/public/assets/vnpay.png";
 import { axios } from "@/lib/axios";
+import toast from "react-hot-toast";
 
 const { TextArea } = Input;
 type FieldType = {
@@ -63,6 +64,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const height = Form.useWatch("height", form);
   const weight = Form.useWatch("weight", form);
   const [value, setValue] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   console.log(length, weight, width, height);
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
@@ -98,27 +100,30 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
 
   const handleSubmit = async (values: FieldType) => {
     console.log(values);
+    setLoading(true);
     try {
       const data = {
         ...values,
-        order_route_id: 2, ////////////////////////////////
+        order_route_id: 5, ////////////////////////////////
       };
       console.log("data", data);
-      const res = await axios.post("/api/booking", data);
+      const res = await axios.post("/api/customer/orders", data);
       console.log(res);
-      if (res.status === 200) {
+      if (res.data ) {
         const url = qs.stringifyUrl({
           url: "booking/success",
           query: {
-            code: res.data.attributes.code,
-            email: res.data.attributes.sender_email,
+            code: res.data.code,
+            email: res.data.email,
           },
         });
         router.replace(url);
       }
     } catch (error) {
       console.log("error", error);
+      toast.error("Có lỗi xảy ra, tạo đơn hàng thất bại!");
     }
+    setLoading(false);
   };
 
   return (
@@ -139,8 +144,10 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             sender_name: user?.user?.name,
             sender_phone: user?.user?.phone,
             sender_email: user?.user?.email,
+            package_value: 0,
             package_type: 0,
             payment_method: 1,
+            collect_on_delivery: false
           }}
         >
           <BookingHeader name="Thông tin người gửi" icon={RiErrorWarningLine} />
@@ -286,9 +293,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
 
           <div className="flex flex-col md:flex-row md:gap-5">
             <Form.Item<FieldType>
-              label={
-                <p className="font-medium text-sm">Tổng khối lượng (gam)</p>
-              }
+              label={<p className="font-medium text-sm">Tổng khối lượng (g)</p>}
               name="weight"
               rules={[
                 {
@@ -419,7 +424,13 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                 },
               ]}
             >
-              <Select options={packageType} />
+              <Select
+                mode="multiple"
+                options={packageType}
+                filterOption={(input, option) =>
+                  (option?.label.toLowerCase() ?? "").includes(input.toLowerCase())
+                }
+              />
             </Form.Item>
           </div>
           <div className="flex flex-col md:flex-row justify-between md:gap-5">
@@ -430,16 +441,14 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             >
               <TextArea rows={2} placeholder="VD: Hàng dễ vỡ." />
             </Form.Item>
-              <Form.Item<FieldType>
-                label={
-                  <p className="font-medium text-sm">Tùy chọn thanh toán</p>
-                }
-                name="collect_on_delivery"
-                className="!mb-3 flex-1"
-                valuePropName="checked"
-              >
-                <Checkbox>Bên nhận trả phí?</Checkbox>
-              </Form.Item>
+            <Form.Item<FieldType>
+              label={<p className="font-medium text-sm">Tùy chọn thanh toán</p>}
+              name="collect_on_delivery"
+              className="!mb-3 flex-1"
+              valuePropName="checked"
+            >
+              <Checkbox>Bên nhận trả phí?</Checkbox>
+            </Form.Item>
           </div>
 
           <Divider />
@@ -474,7 +483,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
           </Form.Item>
 
           <Form.Item>
-            <Button label="Xác nhận" />
+            <Button disabled={loading} label="Xác nhận" />
           </Form.Item>
         </Form>
       </div>

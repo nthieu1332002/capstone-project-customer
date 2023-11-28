@@ -17,7 +17,7 @@ const getOrderDetail = async (code: string) => {
 };
 const getOrderTracking = async (code: string) => {
   try {
-    const res = await axios.get(`/api/customer/orders/tracking/${code}`);
+    const res = await axios.get(`/api/customer/orders/${code}/tracking`);
 
     return res.data;
   } catch (error) {
@@ -42,7 +42,8 @@ const OrderDetail = async ({ params, searchParams }: Props) => {
     getOrderDetail(params.code),
     getOrderTracking(params.code),
   ]);
-  order.attributes.status_history = tracking.details;
+  console.log("tracking", tracking);
+  order.attributes.status_history = tracking.milestones;
   if (!order) redirect("error");
   const data = order.attributes;
   console.log("data", data);
