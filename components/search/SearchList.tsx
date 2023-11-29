@@ -16,9 +16,6 @@ type Props = {
 };
 
 const SearchList = ({ data, from, to }: Props) => {
-  const router = useRouter();
-  const params = useSearchParams();
-
   return (
     <div className="flex flex-col gap-1">
       <div className="flex flex-col mb-3">

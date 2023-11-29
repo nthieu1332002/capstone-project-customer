@@ -1,7 +1,6 @@
 "use client";
 
 export default function Error() {
-  const data = {};
   return (
     <div className="p-1 md:p-3 flex flex-col gap-3">
       <h1 className="text-2xl font-semibold">Đơn hàng của bạn</h1>

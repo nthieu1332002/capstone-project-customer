@@ -11,6 +11,8 @@ import dayjs from "dayjs";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { MdPayment } from "react-icons/md";
+import { axios } from "@/lib/axios";
+import toast from "react-hot-toast";
 
 type Props = {
   code: string;
@@ -23,18 +25,19 @@ const OrderDetailHeader = ({ code, order }: Props) => {
     {
       disabled:
         order.is_paid ||
-        order.status_history[0].type === 6 ||
-        order.status_history[0].type !== 0,
+        order.status_history[order.status_history.length-1].type === 6 ||
+        order.status_history[order.status_history.length-1].type !== 0,
       label: <div>Chỉnh sửa</div>,
       key: "0",
       icon: <AiOutlineEdit />,
     },
     {
       disabled:
-        !order.is_paid ||
-        order.status_history[0].type === 6 ||
-        order.status_history[0].type === 0,
-      label: <div>Thanh toán ngay</div>,
+        order.is_paid ||
+        order.status_history[order.status_history.length-1].type === 6 ||
+        order.status_history[order.status_history.length-1].type === 0 ||
+        order.payment_method === 0,
+      label: <div onClick={() =>handlePayment()}>Thanh toán ngay</div>,
       key: "1",
       icon: <MdPayment />,
     },
@@ -43,14 +46,26 @@ const OrderDetailHeader = ({ code, order }: Props) => {
     },
     {
       disabled: order.is_paid ||
-      order.status_history[0].type === 6 ||
-      order.status_history[0].type !== 0,
+      order.status_history[order.status_history.length-1].type === 6 ||
+      order.status_history[order.status_history.length-1].type !== 0,
       label: <div>Hủy</div>,
       key: "3",
       danger: true,
       icon: <AiOutlineDelete className="delete" />,
     },
   ];
+  const handlePayment = async () => {
+    try {
+      const res = await axios.get(`/api/customer/orders/${code}/payments/vnpay/url`);
+      if (res.status === 400) {
+        toast.error("Đơn hàng này đã được thanh toán.");
+      }
+      router.push(res.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Có lỗi xảy ra, vui lòng thử lại sau!");
+    }
+  };
   return (
     <div className="flex flex-col gap-1">
       <div>
@@ -81,7 +96,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
             {OrderStatus.map((item) => {
               return (
                 <Fragment key={item.id}>
-                  {item.id === order.status_history[0].type ? (
+                  {item.id === order.status_history[order.status_history.length-1].type ? (
                     <Tag
                       bordered={false}
                       className="tag font-medium"
@@ -97,7 +112,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
           <div className="flex gap-2 items-center text-sm px-1 font-medium">
             <FiCalendar size={18} className="text-gray-400" />
             <p>
-              {dayjs(order.status_history[0].achievedAt).format(
+              {dayjs(order.status_history[order.status_history.length-1].achievedAt).format(
                 "DD/MM/YYYY lúc HH:mm"
               )}
             </p>

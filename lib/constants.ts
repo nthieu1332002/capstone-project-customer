@@ -2,12 +2,12 @@ export const phoneNumberPattern = /^[0-9]{10,11}$/;
 export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const packageType = [
-    { value: 0, label: 'Hàng dễ vỡ' },
-    { value: 1, label: 'Điện tử' },
-    { value: 2, label: 'Giấy tờ' },
-    { value: 3, label: 'Hóa chất' },
-    { value: 4, label: 'Thực phẩm' },
-    { value: 5, label: 'Khác' },
+    { value: 0, label: 'Hàng phổ thông' },
+    { value: 1, label: 'Thực phẩm' },
+    { value: 2, label: 'Hóa chất' },
+    { value: 3, label: 'Giấy tờ' },
+    { value: 4, label: 'Điện tử' },
+    { value: 5, label: 'Hàng dễ vỡ' },
 ];
 
 export const PaymentStatusType = [
@@ -25,31 +25,29 @@ const unpaidColor = "warning";
 export const OrderStatus = [
     {
         id: 0,
-        status: "Chờ xác nhận",
+        status: "Đã tạo",
         color: "gold",
     },
     {
         id: 1,
         status: "Đã xác nhận",
         color: "lime",
-
     },
     {
         id: 2,
-        status: "Đang vận chuyển",
+        status: "Đã nhận",
         color: "magenta",
     },
     {
         id: 3,
-        status: "Đã đến trạm",
-        color: "#108ee9",
+        status: "Đang vận chuyển",
+        color: "magenta",
 
     },
     {
         id: 4,
-        status: "Chờ nhận hàng",
-        color: "yellow",
-
+        status: "Đã đến trạm",
+        color: "#108ee9",
     },
     {
         id: 5,
@@ -77,9 +75,9 @@ export const PaymentStatus = [
 export const OrderStatusMap: { [key: number]: string } = {
     0: "đã được tạo",
     1: "đã được xác nhận",
-    2: "đang trên đường vận chuyển",
-    3: "đã đến trạm",
-    4: "đang chờ nhận hàng",
+    2: "đã được nhà xe nhận",
+    3: "đang trên đường vận chuyển",
+    4: "đã đến trạm",
     5: "đã giao hàng thành công",
     6: "đã hủy",
 };
