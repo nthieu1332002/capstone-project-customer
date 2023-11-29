@@ -32,7 +32,7 @@ type Order = {
   created_at: string;
   delivery_price: number;
   payment_status: number;
-  receiver_name: number;
+  receiver_name: string;
   latest_order_status: number;
 };
 
@@ -67,6 +67,8 @@ const OrderContent = ({ data, status }: Props) => {
       title: "Người nhận",
       key: "receiver_name",
       dataIndex: "receiver_name",
+      sorter: (a, b) => a.receiver_name.localeCompare(b.receiver_name),
+
       width: 200,
       render: (text) => <p className="font-semibold">{text}</p>,
     },
@@ -82,6 +84,9 @@ const OrderContent = ({ data, status }: Props) => {
       title: "Thanh toán",
       key: "payment_status",
       dataIndex: "payment_status",
+      sorter: (a, b) =>
+        a.payment_status.toString().localeCompare(b.payment_status.toString()),
+
       width: 150,
       render: (text) => (
         <>
@@ -110,6 +115,11 @@ const OrderContent = ({ data, status }: Props) => {
       title: "Trạng thái",
       key: "latest_order_status",
       dataIndex: "latest_order_status",
+      sorter: (a, b) =>
+        a.latest_order_status
+          .toString()
+          .localeCompare(b.latest_order_status.toString()),
+
       width: 150,
       render: (text) => (
         <>
@@ -237,14 +247,13 @@ const OrderContent = ({ data, status }: Props) => {
           scroll={{ x: 500 }}
         />
         <div className="mt-3 flex justify-end">
-
-        <Pagination
-          current={meta.current_page}
-          pageSize={meta.per_page}
-          total={meta.total}
-          showSizeChanger={false}
-          onChange={(page, pageSize) => handleNavigation(page, pageSize)}
-        />
+          <Pagination
+            current={meta.current_page}
+            pageSize={meta.per_page}
+            total={meta.total}
+            showSizeChanger={false}
+            onChange={(page, pageSize) => handleNavigation(page, pageSize)}
+          />
         </div>
       </div>
     </div>

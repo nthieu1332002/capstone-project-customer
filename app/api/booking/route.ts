@@ -5,7 +5,6 @@ export const POST = async (req: Request) => {
     try {
         const data = await req.json();
         const res = await axios.post("/api/customer/orders", data);
-        console.log("res", res);
         return NextResponse.json(res.data);
 
     } catch (error: any) {

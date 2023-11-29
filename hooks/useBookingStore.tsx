@@ -2,6 +2,7 @@ import { create } from "zustand";
 import Cookies from "js-cookie";
 
 export type Booking = {
+  id: number;
   start_station: {
     id: number;
     name: string;
@@ -24,7 +25,10 @@ export type Booking = {
       name: string;
     };
   };
-  lowest_price: 120000;
+  lowest_price: number;
+  total_distance: number;
+  note: string;
+  acceptable_package_types: number[];
 };
 interface BookingStore {
   booking?: Booking;
