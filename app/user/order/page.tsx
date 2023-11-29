@@ -73,7 +73,6 @@ const Order = async ({
     page,
     per_page,
   });
-  console.log(data);
   return (
     <div className="p-1 md:p-3 flex flex-col gap-3">
       <h1 className="text-2xl font-semibold">Đơn hàng của bạn</h1>

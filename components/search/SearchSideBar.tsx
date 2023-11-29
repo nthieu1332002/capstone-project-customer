@@ -57,7 +57,6 @@ const SearchSideBar = () => {
         },
         { skipNull: true }
       );
-        console.log(url);
       router.push(url);
     } catch (error) {}
   };

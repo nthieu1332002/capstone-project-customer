@@ -30,9 +30,6 @@ const Search = () => {
   const [to, setTo] = useState<string>("");
   const [packages, setPackages] = useState<string[]>();
   const router = useRouter();
-  console.log(packages);
-
-
   const handleSearch = async () => {
     if (!from || !to || !packages) {
       return;
