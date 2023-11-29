@@ -65,15 +65,12 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const weight = Form.useWatch("weight", form);
   const [value, setValue] = useState(1);
   const [loading, setLoading] = useState(false);
-
-  console.log(length, weight, width, height);
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
     setValue(e.target.value);
   }, []);
   const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
     try {
       if (length && width && height && weight) {
-        console.log("call");
         const url = qs.stringifyUrl({
           url: "/api/customer/package-price",
           query: {
@@ -81,12 +78,10 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             width,
             height,
             weight,
-            distance: 112,
+            distance: booking.total_distance,
           },
         });
-        console.log("url", url);
         const res = await axios.get(url);
-        console.log("res", res);
         setSizePrice(res.data.total_price);
       }
     } catch (error) {
@@ -449,42 +444,6 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             >
               <Checkbox>Bên nhận trả phí?</Checkbox>
             </Form.Item>
-          </div>
-          <div className="flex flex-col md:flex-row justify-between md:gap-5">
-            <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Ghi chú</p>}
-              name="note"
-              className="!mb-3 flex-1"
-            >
-              <TextArea rows={2} placeholder="VD: Hàng dễ vỡ." />
-            </Form.Item>
-            <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Tùy chọn thanh toán</p>}
-              name="collect_on_delivery"
-              className="!mb-3 flex-1"
-              valuePropName="checked"
-            >
-              <Checkbox>Bên nhận trả phí?</Checkbox>
-            </Form.Item>
-          </div>
-          <div className="flex flex-col md:flex-row justify-between md:gap-5">
-            <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Ghi chú</p>}
-              name="note"
-              className="!mb-3 flex-1"
-            >
-              <TextArea rows={2} placeholder="VD: Hàng dễ vỡ." />
-            </Form.Item>
-              <Form.Item<FieldType>
-                label={
-                  <p className="font-medium text-sm">Tùy chọn thanh toán</p>
-                }
-                name="collect_on_delivery"
-                className="!mb-3 flex-1"
-                valuePropName="checked"
-              >
-                <Checkbox>Bên nhận trả phí?</Checkbox>
-              </Form.Item>
           </div>
 
           <Divider />

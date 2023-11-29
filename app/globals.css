@@ -83,7 +83,9 @@
 .dropdown-list {
   position: absolute;
   z-index: 50;
-  height: 300px;
+  height: auto;
+  max-height: 300px;
+  width: 300px;
   overflow-y: scroll;
   padding: 0.5rem;
   border-radius: 1rem;
@@ -103,10 +105,10 @@
 }
 
 .dropdown-list__item {
-  padding: 0.8rem;
-  font-size: 1rem;
+  padding: 0.5rem 0.5rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .dropdown-list__item:hover {

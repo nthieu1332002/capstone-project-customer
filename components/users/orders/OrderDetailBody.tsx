@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  OrderStatusMap,
-  packageType,
-} from "@/lib/constants";
+import { OrderStatusMap, packageType } from "@/lib/constants";
 
 import Image from "next/image";
 import vnpay from "@/public/assets/vnpay.png";
@@ -17,9 +14,7 @@ type Props = {
   order: any;
 };
 
-const OrderDetailBody = ({ code, order }: Props) => {
-  const router = useRouter();
-
+const OrderDetailBody = ({ order }: Props) => {
   const items = order.status_history.map((item: any, index: number) => {
     const orderStatus = OrderStatusMap[item.type];
     return {
@@ -29,7 +24,10 @@ const OrderDetailBody = ({ code, order }: Props) => {
             Ngày {dayjs(item.achievedAt).format("DD/MM/YYYY lúc hh:mm:ss")}
           </p>
           <div className="bg-white p-3 py-2 rounded-md min-h-[70px] shadow-sm">
-            <b className="font-semibold">Đơn hàng {orderStatus} {item.location ? (`tại ${item.location}`) : null}</b>
+            <b className="font-semibold">
+              Đơn hàng {orderStatus}{" "}
+              {item.location ? `tại ${item.location}` : null}
+            </b>
             <p className="text-gray-500">{item.address}</p>
           </div>
         </div>
@@ -71,22 +69,10 @@ const OrderDetailBody = ({ code, order }: Props) => {
                 </p>
               </div>
             </div>
-            
           </div>
         </div>
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
-          <h2 className="font-bold">
-            Thanh toán{" "}
-            {order.payment.status === 1 ||
-            order.status_history[0].status === 6 ||
-            order.status_history[0].status === 0 ? null : (
-              <span
-                className="underline text-primary-color cursor-pointer text-sm font-medium"
-              >
-                (Thanh toán ngay)
-              </span>
-            )}
-          </h2>
+          <h2 className="font-bold">Thanh toán</h2>
           <div className="flex gap-5 mt-4">
             <div className="shadow-sm">
               <Image
@@ -108,9 +94,13 @@ const OrderDetailBody = ({ code, order }: Props) => {
               </Tag>
             </div>
 
-            <b className="ml-auto">
-              {new Intl.NumberFormat("en-Us").format(order.delivery_price)}đ
-            </b>
+            <div className="ml-auto">
+              <p className="font-normal">
+                ({order.collect_on_delivery ? "Trả sau" : "Trả trước"})
+              </p>
+
+              <b>{new Intl.NumberFormat("en-Us").format(order.delivery_price)}đ</b>
+            </div>
           </div>
         </div>
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
