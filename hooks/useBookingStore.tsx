@@ -2,6 +2,7 @@ import { create } from "zustand";
 import Cookies from "js-cookie";
 
 export type Booking = {
+  id: number;
   start_station: {
     id: number;
     name: string;

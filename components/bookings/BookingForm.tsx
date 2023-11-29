@@ -65,6 +65,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const weight = Form.useWatch("weight", form);
   const [value, setValue] = useState(1);
   const [loading, setLoading] = useState(false);
+  const newPackageType = packageType.filter(item => booking.acceptable_package_types.includes(item.value));
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
     setValue(e.target.value);
   }, []);
@@ -94,14 +95,12 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   }, [length, width, height, weight, debouncedHandleFetchPrice]);
 
   const handleSubmit = async (values: FieldType) => {
-    console.log(values);
     setLoading(true);
     try {
       const data = {
         ...values,
-        order_route_id: 5,
+        order_route_id: booking.id,
       };
-      console.log("data", data);
       const res = await axios.post("/api/customer/orders", data);
       console.log(res);
       if (res.data ) {
@@ -309,7 +308,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Dài (cm)</p>}
+              label={<p className="font-medium text-sm">Dài (mm)</p>}
               name="length"
               rules={[
                 {
@@ -330,7 +329,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Rộng (cm)</p>}
+              label={<p className="font-medium text-sm">Rộng (mm)</p>}
               name="width"
               rules={[
                 {
@@ -351,7 +350,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Cao (cm)</p>}
+              label={<p className="font-medium text-sm">Cao (mm)</p>}
               name="height"
               rules={[
                 {
@@ -421,7 +420,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             >
               <Select
                 mode="multiple"
-                options={packageType}
+                options={newPackageType}
                 filterOption={(input, option) =>
                   (option?.label.toLowerCase() ?? "").includes(input.toLowerCase())
                 }

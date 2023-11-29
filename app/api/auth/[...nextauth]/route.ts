@@ -17,7 +17,6 @@ export const authOptions: AuthOptions = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("credentials", credentials);
         if (!credentials?.indentifier || !credentials?.password) {
           throw new Error("[ALL] Invalid credentials");
         }
@@ -26,7 +25,6 @@ export const authOptions: AuthOptions = {
           password: credentials?.password,
           device_name: "customer_web"
         })
-        console.log("res", res);
         const user = res.data.customer;
         return { ...user, accessToken: res.data.access_token }
       }

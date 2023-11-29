@@ -50,7 +50,6 @@ const getSearchList = cache(
         },
         { skipNull: true }
       );
-      console.log("urk", url);
       const res = await axios.get(url);
       return res.data;
     } catch (error) {
