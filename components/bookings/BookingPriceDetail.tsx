@@ -49,12 +49,6 @@ const BookingPriceDetail = ({
         </div>
         <div className="px-4 py-3 flex flex-col gap-3 text-sm">
           <div className="flex justify-between">
-            <p>Giá cơ bản</p>
-            <p>
-              {new Intl.NumberFormat("en-Us").format(booking.lowest_price)}đ
-            </p>
-          </div>
-          <div className="flex justify-between">
             <p>Giá theo khối lượng</p>
             <p> {new Intl.NumberFormat("en-Us").format(sizePrice)}đ</p>
           </div>
