@@ -14,7 +14,7 @@ const PERCENT_INSURANCE = 0.005;
 const BookingContent = ({ user, booking }: Props) => {
   const [insurance, setInsurance] = useState(0);
   const [sizePrice, setSizePrice] = useState(0);
-  const totalPrice = booking.lowest_price + insurance + sizePrice;
+  const totalPrice = insurance + sizePrice;
   const onChange = useCallback((value: number) => {
     setInsurance(
       value >= MIN_INSURANCE ? Math.round(value * PERCENT_INSURANCE) : 0
