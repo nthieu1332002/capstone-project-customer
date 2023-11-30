@@ -109,19 +109,19 @@ const OrderDetailBody = ({ order }: Props) => {
             <div className="flex whitespace-nowrap gap-16 w-full">
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Tổng khối lượng</p>
-                <p className="font-medium">{order.weight} kg</p>
+                <p className="font-medium">{order.weight} g</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều dài</p>
-                <p className="font-medium">{order.length} cm</p>
+                <p className="font-medium">{order.length} mm</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều rộng</p>
-                <p className="font-medium">{order.width} cm</p>
+                <p className="font-medium">{order.width} mm</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều cao</p>
-                <p className="font-medium">{order.height} cm</p>
+                <p className="font-medium">{order.height} mm</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Trị giá</p>

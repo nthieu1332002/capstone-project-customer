@@ -65,7 +65,9 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const weight = Form.useWatch("weight", form);
   const [value, setValue] = useState(1);
   const [loading, setLoading] = useState(false);
-  const newPackageType = packageType.filter(item => booking.acceptable_package_types.includes(item.value));
+  const newPackageType = packageType.filter((item) =>
+    booking.acceptable_package_types.includes(item.value)
+  );
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
     setValue(e.target.value);
   }, []);
@@ -103,7 +105,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
       };
       const res = await axios.post("/api/customer/orders", data);
       console.log(res);
-      if (res.data ) {
+      if (res.data) {
         const url = qs.stringifyUrl({
           url: "booking/success",
           query: {
@@ -140,8 +142,8 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             sender_email: user?.user?.email,
             package_value: 0,
             package_type: 0,
-            payment_method: 1,
-            collect_on_delivery: false
+            payment_method: 0,
+            collect_on_delivery: false,
           }}
         >
           <BookingHeader name="Thông tin người gửi" icon={RiErrorWarningLine} />
@@ -422,7 +424,9 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                 mode="multiple"
                 options={newPackageType}
                 filterOption={(input, option) =>
-                  (option?.label.toLowerCase() ?? "").includes(input.toLowerCase())
+                  (option?.label.toLowerCase() ?? "").includes(
+                    input.toLowerCase()
+                  )
                 }
               />
             </Form.Item>
@@ -455,15 +459,6 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             >
               <div className="w-full flex justify-between gap-5">
                 <Radio
-                  value={1}
-                  className={cn(
-                    "!py-2 !px-3 border-2 rounded-md w-full max-h-[100px] flex !items-center",
-                    value === 1 && "border-primary-color bg-primary-color/10"
-                  )}
-                >
-                  <Image src={vnpay} alt="logo" width={100} />
-                </Radio>
-                <Radio
                   value={0}
                   className={cn(
                     "!py-2 !px-3 border-2 rounded-md w-full max-h-[100px] flex !items-center",
@@ -471,6 +466,16 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                   )}
                 >
                   <p className="text-lg">Tiền mặt</p>
+                </Radio>
+
+                <Radio
+                  value={1}
+                  className={cn(
+                    "!py-2 !px-3 border-2 rounded-md w-full max-h-[100px] flex !items-center",
+                    value === 1 && "border-primary-color bg-primary-color/10"
+                  )}
+                >
+                  <Image src={vnpay} alt="logo" width={100} />
                 </Radio>
               </div>
             </Radio.Group>
