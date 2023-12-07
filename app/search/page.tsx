@@ -44,17 +44,6 @@ const getSearchList = async ({
   package_types,
 }: SearchParams) => {
   try {
-    console.log(
-      start_city_code,
-      start_district_code,
-      end_city_code,
-      end_district_code,
-      start_latitude,
-      start_longitude,
-      end_latitude,
-      end_longitude,
-      package_types
-    );
     const url = qs.stringifyUrl(
       {
         url: "/api/customer/route/search",

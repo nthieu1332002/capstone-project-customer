@@ -5,13 +5,11 @@ import { OrderStatusMap, packageType } from "@/lib/constants";
 import Image from "next/image";
 import vnpay from "@/public/assets/vnpay.png";
 import cash from "@/public/assets/cash.jpg";
-import { Button, Tag, Timeline } from "antd";
+import { Tag, Timeline } from "antd";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
 import { OrderDetail } from "./OrderDetailHeader";
 import { cn } from "@/lib/utils";
 import { convertUnit } from "@/lib/transfer-unit";
-import AuthButton from "@/components/AuthButton";
 
 type Props = {
   code: string;

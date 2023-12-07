@@ -1,6 +1,6 @@
 "use client";
 
-import { OrderStatus, PaymentStatus } from "@/lib/constants";
+import { OrderStatus } from "@/lib/constants";
 import { Dropdown, MenuProps, Tag } from "antd";
 import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
@@ -10,10 +10,10 @@ import { FiCalendar } from "react-icons/fi";
 import dayjs from "dayjs";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { MdPayment } from "react-icons/md";
 import { axios } from "@/lib/axios";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
+import useCancelModal from "@/hooks/useCancelModal";
 
 export type OrderDetail = {
   start_station: {
@@ -62,9 +62,8 @@ type Props = {
 
 const OrderDetailHeader = ({ code, order }: Props) => {
   const router = useRouter();
-  const handleCancelOrder = async() => {
-    
-  }
+  const { onOpen } = useCancelModal();
+
   const items: MenuProps["items"] = [
     {
       disabled: order.is_paid || order.is_confirmed || order.is_cancelled,
@@ -77,13 +76,13 @@ const OrderDetailHeader = ({ code, order }: Props) => {
     },
     {
       disabled: order.is_paid || order.is_confirmed || order.is_cancelled,
-      label: <div onClick={handleCancelOrder}>Hủy</div>,
+      label: <div onClick={() => onOpen(order.code)}>Hủy</div>,
       key: "1",
       danger: true,
       icon: <AiOutlineDelete className="delete" />,
     },
   ];
- 
+
   const handlePayment = async () => {
     try {
       const res = await axios.get(
@@ -112,9 +111,9 @@ const OrderDetailHeader = ({ code, order }: Props) => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between">
-        <div className="flex gap-1 md:gap-2 items-start lg:items-center lg:flex-row ">
-          <h1 className="text-sm md:text-2xl font-bold text-slate-500">
+      <div className="flex whitespace-nowrap flex-col md:flex-row justify-between">
+        <div className="flex gap-1 md:gap-2 items-start flex-col md:flex-row lg:items-center lg:flex-row ">
+          <h1 className="text-base md:text-2xl font-bold text-slate-500">
             Đơn hàng <span className="text-black uppercase">#{code}</span>
           </h1>
           <div className="flex border-r-2 px-2">
@@ -153,9 +152,14 @@ const OrderDetailHeader = ({ code, order }: Props) => {
         </div>
         <div className="flex gap-2">
           <button
-          onClick={handlePayment}
+            onClick={handlePayment}
             type="button"
-            disabled={false}
+            disabled={
+              order.is_paid ||
+              !order.is_confirmed ||
+              order.is_cancelled ||
+              order.payment_method === 0
+            }
             className={cn(
               " rounded-md text-white p-2 text-sm",
               order.is_paid ||

@@ -43,7 +43,7 @@ const SearchItem = ({ route }: Props) => {
               <Tooltip placement="right" title={route.start_station.address}>
                 {route.start_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  (cách bạn {convertUnit(route.start_station.distance_to_sender)} km)
+                  {route.start_station.distance_to_sender ? (`cách bạn ${convertUnit(route.start_station.distance_to_sender)} km`): null}
                 </span>
               </Tooltip>
             </li>
@@ -54,7 +54,7 @@ const SearchItem = ({ route }: Props) => {
               <Tooltip placement="right" title={route.end_station.address}>
                 {route.end_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  (cách điểm đến {convertUnit(route.end_station.distance_to_receiver)} km)
+                {route.start_station.distance_to_sender ? (`cách điểm đến ${convertUnit(route.end_station.distance_to_receiver)} km`): null}
                 </span>
               </Tooltip>
             </li>
