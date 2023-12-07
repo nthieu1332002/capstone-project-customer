@@ -15,16 +15,6 @@ const getOrderDetail = async (code: string) => {
     throw new Error("failed to get order detail");
   }
 };
-const getOrderTracking = async (code: string) => {
-  try {
-    const res = await axios.get(`/api/customer/orders/${code}/tracking`);
-
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("failed to get order detail");
-  }
-};
 
 type Props = {
   params: {
@@ -38,20 +28,13 @@ const OrderDetail = async ({ params, searchParams }: Props) => {
   const { vnp_TransactionStatus } = searchParams || {};
 
   if (!profile) redirect("error");
-  const [order, tracking] = await Promise.all([
-    getOrderDetail(params.code),
-    getOrderTracking(params.code),
-  ]);
-  order.attributes.status_history = tracking.milestones;
+  const order = await getOrderDetail(params.code);
   if (!order) redirect("error");
   const data = order.attributes;
   return (
     <div className="p-3 flex flex-col gap-4">
       {vnp_TransactionStatus === "00" ? (
-        <BookingStatus
-          content="Thanh toán thành công"
-          status="success"
-        />
+        <BookingStatus content="Thanh toán thành công" status="success" />
       ) : null}
       <OrderDetailHeader code={params.code} order={data} />
       <OrderDetailBody code={params.code} order={data} />

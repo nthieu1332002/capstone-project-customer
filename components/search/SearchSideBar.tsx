@@ -1,7 +1,7 @@
 "use client";
 
-import { Form, Input, Select } from "antd";
-import React, { useCallback, useState } from "react";
+import { Select } from "antd";
+import React, { useCallback, useState, useTransition } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import qs from "query-string";
 
@@ -9,13 +9,8 @@ import { FaLocationArrow, FaLocationDot } from "react-icons/fa6";
 import Button from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import DebouceInputAntd from "./DebouceInputAntd";
-import { packageType } from "@/lib/constants";
+import { packageList } from "@/lib/constants";
 import { getCoordinates } from "./Search";
-
-type FieldType = {
-  from: string;
-  to: string;
-};
 
 const SearchSideBar = () => {
   const searchParams = useSearchParams();
@@ -25,15 +20,13 @@ const SearchSideBar = () => {
   const package_types = searchParams.get("package_types") || undefined;
   const [from, setFrom] = useState<string>(fromParam || "");
   const [to, setTo] = useState<string>(toParam || "");
+  const [isPending, startTransition] = useTransition();
   const [packages, setPackages] = useState<string[] | undefined>(
     package_types?.split(",") || undefined
   );
-  const init = packageType
-    .filter((item) => packages?.includes(item.value.toString()))
-    .map((item) => item.label);
   const router = useRouter();
-
   const handleSubmit = async () => {
+    console.log("Submit");
     if (!from || !to || !packages) {
       return;
     }
@@ -42,23 +35,30 @@ const SearchSideBar = () => {
         getCoordinates(from),
         getCoordinates(to),
       ]);
-      const url = qs.stringifyUrl(
-        {
-          url: "/search",
-          query: {
-            from,
-            to,
-            start_latitude: start.lat,
-            start_longitude: start.lng,
-            end_latitude: end.lat,
-            end_longitude: end.lng,
-            package_types: packages.toString(),
+      console.log("start", start);
+      console.log("end", end);
+      startTransition(() => {
+        const url = qs.stringifyUrl(
+          {
+            url: "/search",
+            query: {
+              from,
+              to,
+              start_latitude: start.lat,
+              start_longitude: start.lng,
+              end_latitude: end.lat,
+              end_longitude: end.lng,
+              package_types: packages.toString(),
+            },
           },
-        },
-        { skipNull: true }
-      );
-      router.push(url);
-    } catch (error) {}
+          { skipNull: true }
+        );
+        console.log("url", url);
+        router.replace(url);
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   const handleChange = useCallback((value: string[]) => {
     setPackages(value);
@@ -102,11 +102,11 @@ const SearchSideBar = () => {
         <Select
           id="packages"
           mode="multiple"
-          options={packageType}
+          options={packageList}
           filterOption={(input, option) =>
             (option?.label.toLowerCase() ?? "").includes(input.toLowerCase())
           }
-          defaultValue={init}
+          defaultValue={packages}
           onChange={handleChange}
           className="custom-search"
           placeholder="Chọn loại hàng"
@@ -114,6 +114,7 @@ const SearchSideBar = () => {
           allowClear
         />
         <Button
+          disabled={isPending || !from || !to || packages?.length === 0}
           onClick={handleSubmit}
           className="rounded-full mt-3"
           label="Tìm kiếm"

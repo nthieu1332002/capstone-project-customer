@@ -1,8 +1,6 @@
 import OrderContent from "@/components/users/orders/OrderContent";
 import { axios } from "@/lib/axios";
 import qs from "query-string";
-import Error from "./error";
-import ErrorBoundary from "react";
 
 type SearchParams = {
   code?: string;

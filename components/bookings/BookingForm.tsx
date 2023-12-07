@@ -28,6 +28,7 @@ import Image from "next/image";
 import vnpay from "@/public/assets/vnpay.png";
 import { axios } from "@/lib/axios";
 import toast from "react-hot-toast";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 const { TextArea } = Input;
 type FieldType = {
@@ -63,7 +64,8 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const width = Form.useWatch("width", form);
   const height = Form.useWatch("height", form);
   const weight = Form.useWatch("weight", form);
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
+  const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const newPackageType = packageType.filter((item) =>
     booking.acceptable_package_types.includes(item.value)
@@ -71,6 +73,10 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
     setValue(e.target.value);
   }, []);
+  const onChangePayOnDelivery = useCallback((e: CheckboxChangeEvent) => {
+    setValue(0)
+    setChecked(e.target.checked);
+  }, [])
   const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
     try {
       if (length && width && height && weight) {
@@ -142,8 +148,8 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             sender_email: user?.user?.email,
             package_value: 0,
             package_type: 0,
-            payment_method: 0,
-            collect_on_delivery: false,
+            payment_method: value,
+            collect_on_delivery: checked,
           }}
         >
           <BookingHeader name="Thông tin người gửi" icon={RiErrorWarningLine} />
@@ -388,8 +394,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
               tooltip={
                 <p className="text-sm w-full">
                   Giá trị hàng hóa là căn cứ xác định giá trị bồi thường nếu xảy
-                  ra sự cố (giá trị bồi thường tối đa 10.000.000₫). Toàn bộ đơn
-                  hàng của GHN bắt buộc đóng phi khai giá hàng hóa, mức phí như
+                  ra sự cố (giá trị bồi thường tối đa 10.000.000₫). Phí khai giá hàng hóa (nếu có) được tính như
                   sau:
                   <br />
                   + Giá trị hàng hóa &lt; 1.000.000đ: Miễn phí
@@ -445,7 +450,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
               className="!mb-3 flex-1"
               valuePropName="checked"
             >
-              <Checkbox>Bên nhận trả phí?</Checkbox>
+              <Checkbox onChange={onChangePayOnDelivery}>Bên nhận trả phí?</Checkbox>
             </Form.Item>
           </div>
 
@@ -472,8 +477,10 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                   value={1}
                   className={cn(
                     "!py-2 !px-3 border-2 rounded-md w-full max-h-[100px] flex !items-center",
-                    value === 1 && "border-primary-color bg-primary-color/10"
+                    value === 1 && "border-primary-color bg-primary-color/10",
+                    checked && "border-gray-300 bg-gray-300"
                   )}
+                  disabled={checked}
                 >
                   <Image src={vnpay} alt="logo" width={100} />
                 </Radio>

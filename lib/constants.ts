@@ -10,6 +10,15 @@ export const packageType = [
     { value: 5, label: 'Hàng dễ vỡ' },
 ];
 
+export const packageList = [
+    { value: 'Hàng phổ thông', label: 'Hàng phổ thông' },
+    { value: 'Thực phẩm', label: 'Thực phẩm' },
+    { value: 'Hóa chất', label: 'Hóa chất' },
+    { value: 'Giấy tờ', label: 'Giấy tờ' },
+    { value: 'Điện tử', label: 'Điện tử' },
+    { value: 'Hàng dễ vỡ', label: 'Hàng dễ vỡ' },
+];
+
 export const PaymentStatusType = [
     { value: 0, label: 'Chưa thanh toán' },
     { value: 1, label: 'Đã thanh toán' },
@@ -30,32 +39,28 @@ export const OrderStatus = [
     },
     {
         id: 1,
-        status: "Đã xác nhận",
+        status: "Đã được nhận",
         color: "lime",
     },
     {
         id: 2,
-        status: "Đã nhận",
+        status: "Đã xuất phát khỏi",
         color: "magenta",
     },
     {
         id: 3,
-        status: "Đang vận chuyển",
+        status: "Đã đến",
         color: "magenta",
 
     },
     {
         id: 4,
-        status: "Đã đến trạm",
-        color: "#108ee9",
+        status: "đã đến tay người nhận",
+        color: paidColor,
+
     },
     {
         id: 5,
-        status: "Hoàn thành",
-        color: paidColor,
-    },
-    {
-        id: 6,
         status: "Đã hủy",
         color: "red",
     },

@@ -1,9 +1,10 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BookingForm from "./BookingForm";
 import BookingPriceDetail from "./BookingPriceDetail";
 import { Booking } from "@/hooks/useBookingStore";
 import { Session } from "next-auth";
+import useAuthModal from "@/hooks/useAuthModal";
 type Props = {
   user?: Session | null;
   booking: Booking;
@@ -15,6 +16,13 @@ const BookingContent = ({ user, booking }: Props) => {
   const [insurance, setInsurance] = useState(0);
   const [sizePrice, setSizePrice] = useState(0);
   const totalPrice = insurance + sizePrice;
+  const { onOpen } = useAuthModal();
+
+  useEffect(() => {
+    console.log("open");
+    onOpen("suggest")
+  }, [onOpen]);
+
   const onChange = useCallback((value: number) => {
     setInsurance(
       value >= MIN_INSURANCE ? Math.round(value * PERCENT_INSURANCE) : 0
