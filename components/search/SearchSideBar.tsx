@@ -9,17 +9,42 @@ import { FaLocationArrow, FaLocationDot } from "react-icons/fa6";
 import Button from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import DebouceInputAntd from "./DebouceInputAntd";
-import { packageList } from "@/lib/constants";
+import { LocationType, locationList, packageList } from "@/lib/constants";
 import { getCoordinates } from "./Search";
 
 const SearchSideBar = () => {
   const searchParams = useSearchParams();
+  const initialValue = {
+    code: "",
+    parent_code: "",
+    path_with_type: "",
+  };
+  const fromParam = searchParams.get("from");
+  const toParam = searchParams.get("to");
+  const start_city_code = searchParams.get("start_city_code");
+  const start_district_code = searchParams.get("start_district_code");
 
-  const fromParam = searchParams.get("from") || undefined;
-  const toParam = searchParams.get("to") || undefined;
-  const package_types = searchParams.get("package_types") || undefined;
+  const end_city_code = searchParams.get("end_city_code");
+  const end_district_code = searchParams.get("end_district_code");
+
+  const package_types = searchParams.get("package_types");
+  const [locationFrom, setLocationFrom] = useState<LocationType>(
+    locationList.find(
+      (location) =>
+        location.code === start_district_code &&
+        location.parent_code === start_city_code
+    ) || initialValue
+  );
+  const [locationTo, setLocationTo] = useState<LocationType>(
+    locationList.find(
+      (location) =>
+        location.code === end_district_code &&
+        location.parent_code === end_city_code
+    ) || initialValue
+  );
   const [from, setFrom] = useState<string>(fromParam || "");
   const [to, setTo] = useState<string>(toParam || "");
+
   const [isPending, startTransition] = useTransition();
   const [packages, setPackages] = useState<string[] | undefined>(
     package_types?.split(",") || undefined
@@ -27,7 +52,7 @@ const SearchSideBar = () => {
   const router = useRouter();
   const handleSubmit = async () => {
     console.log("Submit");
-    if (!from || !to || !packages) {
+    if (((!from || !to) && (!locationFrom || !locationTo)) || !packages) {
       return;
     }
     try {
@@ -42,12 +67,16 @@ const SearchSideBar = () => {
           {
             url: "/search",
             query: {
-              from,
-              to,
-              start_latitude: start.lat,
-              start_longitude: start.lng,
-              end_latitude: end.lat,
-              end_longitude: end.lng,
+              from: from || locationFrom.path_with_type,
+              to: to || locationTo.path_with_type,
+              start_city_code: locationFrom.parent_code,
+              start_district_code: locationFrom.code,
+              end_city_code: locationTo.parent_code,
+              end_district_code: locationTo.code,
+              start_latitude: start?.lat,
+              start_longitude: start?.lng,
+              end_latitude: end?.lat,
+              end_longitude: end?.lng,
               package_types: packages.toString(),
             },
           },
@@ -83,8 +112,16 @@ const SearchSideBar = () => {
           id="from"
           prefix={<FaLocationDot className="text-zinc-500" />}
           placeholder="Chọn điểm xuất phát"
-          value={from}
+          value={from || locationFrom.path_with_type}
           setValue={(e) => setFrom(e)}
+          onChangeAddress={(value) => {
+            setFrom(value);
+            setLocationFrom(initialValue);
+          }}
+          onChangeLocation={(value) => {
+            setFrom("");
+            setLocationFrom(value);
+          }}
         />
         <label htmlFor="to" className="font-semibold text-sm">
           Điểm đến
@@ -93,8 +130,16 @@ const SearchSideBar = () => {
           id="to"
           prefix={<FaLocationArrow className="text-zinc-500" />}
           placeholder="Chọn điểm đến"
-          value={to}
+          value={to || locationTo.path_with_type}
           setValue={(e) => setTo(e)}
+          onChangeAddress={(value) => {
+            setTo(value);
+            setLocationTo(initialValue);
+          }}
+          onChangeLocation={(value) => {
+            setTo("");
+            setLocationTo(value);
+          }}
         />
         <label htmlFor="packages" className="font-semibold text-sm">
           Loại hàng
@@ -114,7 +159,11 @@ const SearchSideBar = () => {
           allowClear
         />
         <Button
-          disabled={isPending || !from || !to || packages?.length === 0}
+          disabled={
+            isPending ||
+            ((!from || !to) && (!locationFrom || !locationTo)) ||
+            packages?.length === 0
+          }
           onClick={handleSubmit}
           className="rounded-full mt-3"
           label="Tìm kiếm"

@@ -86,8 +86,12 @@ export const OrderStatusMap: { [key: number]: string } = {
     5: "đã giao hàng thành công",
     6: "đã hủy",
 };
-
-export const locationList = [
+export type LocationType = {
+    code: string,
+    parent_code: string,
+    path_with_type: string
+}
+export const locationList: LocationType[] = [
     {
         code: '760',
         parent_code: '79',

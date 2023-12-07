@@ -11,11 +11,14 @@ import DebouceInput from "./DebouceInput";
 import { Select } from "antd";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { packageList } from "@/lib/constants";
+import { LocationType, packageList } from "@/lib/constants";
 
 const apiKey = process.env.NEXT_PUBLIC_GOONG_API_KEY;
 export const getCoordinates = async (location: string) => {
   try {
+    if (!location) {
+      return null;
+    }
     const res = await axios.get(
       `https://rsapi.goong.io/geocode?address=${location}&api_key=${apiKey}`
     );
@@ -28,10 +31,19 @@ export const getCoordinates = async (location: string) => {
 const Search = () => {
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
+  const initialValue = {
+    code: "",
+    parent_code: "",
+    path_with_type: "",
+  };
+  const [locationFrom, setLocationFrom] = useState<LocationType>(initialValue);
+  const [locationTo, setLocationTo] = useState<LocationType>(initialValue);
+
   const [packages, setPackages] = useState<string[]>();
   const router = useRouter();
   const handleSearch = async () => {
-    if (!from || !to || !packages) {
+    if (((!from || !to) && (!locationFrom || !locationTo)) || !packages) {
+
       return;
     }
     try {
@@ -43,20 +55,25 @@ const Search = () => {
         {
           url: "/search",
           query: {
-            from,
-            to,
-            start_latitude: start.lat,
-            start_longitude: start.lng,
-            end_latitude: end.lat,
-            end_longitude: end.lng,
-            package_types: packages,
+            from: from || locationFrom.path_with_type,
+            to: to || locationTo.path_with_type,
+            start_city_code: locationFrom.parent_code,
+            start_district_code: locationFrom.code,
+            end_city_code: locationTo.parent_code,
+            end_district_code: locationTo.code,
+            start_latitude: start?.lat,
+            start_longitude: start?.lng,
+            end_latitude: end?.lat,
+            end_longitude: end?.lng,
+            package_types: packages.toString(),
           },
         },
         { skipNull: true }
       );
+      console.log("url", url);
       router.push(url);
     } catch (error) {
-      console.error(error);
+      console.error("error handle", error);
     }
   };
 
@@ -74,9 +91,16 @@ const Search = () => {
               <label htmlFor="from"> Nơi xuất phát</label>
               <DebouceInput
                 placeholder="Chọn điểm xuất phát"
-                value={from}
-                onChange={(e: any) => setFrom(e.target.value)}
-                onChangeLocation={(value: string) => setFrom(value)}
+                value={from || locationFrom.path_with_type}
+                onChange={(e) => setFrom(e.target.value)}
+                onChangeAddress={(value) => {
+                  setFrom(value);
+                  setLocationFrom(initialValue);
+                }}
+                onChangeLocation={(value) => {
+                  setFrom("");
+                  setLocationFrom(value);
+                }}
               />
             </div>
           </div>
@@ -86,9 +110,16 @@ const Search = () => {
               <label htmlFor="to">Điểm đến</label>
               <DebouceInput
                 placeholder="Chọn điểm đến"
-                value={to}
-                onChange={(e: any) => setTo(e.target.value)}
-                onChangeLocation={(value: string) => setTo(value)}
+                value={to || locationTo.path_with_type}
+                onChange={(e) => setTo(e.target.value)}
+                onChangeAddress={(value) => {
+                  setTo(value);
+                  setLocationTo(initialValue);
+                }}
+                onChangeLocation={(value) => {
+                  setTo("");
+                  setLocationTo(value);
+                }}
               />
             </div>
           </div>

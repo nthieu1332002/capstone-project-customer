@@ -21,6 +21,10 @@ export type route = {
 };
 
 type SearchParams = {
+  start_city_code?: string;
+  start_district_code?: string;
+  end_city_code?: string;
+  end_district_code?: string;
   start_latitude?: string;
   start_longitude?: string;
   end_latitude?: string;
@@ -29,6 +33,10 @@ type SearchParams = {
 };
 
 const getSearchList = async ({
+  start_city_code,
+  start_district_code,
+  end_city_code,
+  end_district_code,
   start_latitude,
   start_longitude,
   end_latitude,
@@ -40,6 +48,10 @@ const getSearchList = async ({
       {
         url: "/api/customer/route/search",
         query: {
+          start_city_code,
+          start_district_code,
+          end_city_code,
+          end_district_code,
           start_latitude,
           start_longitude,
           end_latitude,
@@ -59,43 +71,39 @@ const getSearchList = async ({
 export default async function Search({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | undefined };
+  searchParams: { [key: string]: string | undefined };
 }) {
-  const {
-    from,
-    to,
-    start_latitude,
-    start_longitude,
-    end_latitude,
-    end_longitude,
-    package_types,
-  } = searchParams || {};
-  console.log("package_types", package_types);
+  const from = searchParams.from;
+  const to = searchParams.to;
+  const start_city_code = searchParams.start_city_code;
+  const start_district_code = searchParams.start_district_code;
+  const end_city_code = searchParams.end_city_code;
+  const end_district_code = searchParams.end_district_code;
+  const start_latitude = searchParams.start_latitude;
+  const start_longitude = searchParams.start_longitude;
+  const end_latitude = searchParams.end_latitude;
+  const end_longitude = searchParams.end_longitude;
+  const package_types = searchParams.package_types;
   const filteredType = packageType
     .filter((item) => package_types?.includes(item.label))
     .map((item) => item.value)
     .toString();
-  const data =
-    from &&
-    to &&
-    start_latitude &&
-    start_longitude &&
-    end_latitude &&
-    end_longitude &&
-    filteredType
-      ? await getSearchList({
-          start_latitude,
-          start_longitude,
-          end_latitude,
-          end_longitude,
-          package_types: filteredType,
-        })
-      : [];
+  const data = await getSearchList({
+    start_city_code,
+    start_district_code,
+    end_city_code,
+    end_district_code,
+    start_latitude,
+    start_longitude,
+    end_latitude,
+    end_longitude,
+    package_types: filteredType,
+  });
   console.log("dât", data);
   return (
     <div className="py-8 mx-auto px-4 md:px-8 lg:px-16">
       {data.length > 0 ? (
-          <SearchList data={data} from={from} to={to} />
+        <SearchList data={data} from={from} to={to} />
       ) : (
         <p>Không có kết quả được tìm thấy.</p>
       )}

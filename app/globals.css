@@ -84,8 +84,8 @@
   position: absolute;
   z-index: 50;
   height: auto;
-  max-height: 300px;
-  width: 300px;
+  max-height: 500px;
+  width: 350px;
   overflow-y: scroll;
   padding: 0.5rem;
   border-radius: 1rem;
@@ -101,11 +101,13 @@
 }
 
 .dropdown-list__header {
+  font-weight: 400;
+  color: gray;
   padding: 0.5rem 0.4rem;
 }
 
 .dropdown-list__item {
-  padding: 0.5rem 0.5rem;
+  padding: 0.6rem 0.5rem;
   font-size: 0.9rem;
   cursor: pointer;
   border-radius: 8px;
