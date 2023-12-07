@@ -1,13 +1,9 @@
 "use client";
 
-import { route } from "@/app/search/page";
-import { Pagination, Select } from "antd";
-import React, { useCallback } from "react";
-import { BiChevronDown } from "react-icons/bi";
+import React from "react";
 import SearchItem from "./SearchItem";
-import { useRouter, useSearchParams } from "next/navigation";
-import qs from "query-string";
 import { Booking } from "@/hooks/useBookingStore";
+import { Badge } from "antd";
 
 type Props = {
   data: Booking[];
@@ -31,9 +27,14 @@ const SearchList = ({ data, from, to }: Props) => {
         ) : null}
       </div>
       {data.map((route, index) => {
-        return <SearchItem key={index} route={route} />;
+        return route.note ? (
+          <Badge.Ribbon key={index} color="purple" text={route.note}>
+            <SearchItem route={route} />
+          </Badge.Ribbon>
+        ) : (
+          <SearchItem key={index} route={route} />
+        );
       })}
-     
     </div>
   );
 };

@@ -27,11 +27,6 @@ const TableAction = ({
       icon: <AiOutlineEye />,
     },
     {
-      label: <div onClick={onClickEdit}>Chỉnh sửa</div>,
-      key: "1",
-      icon: <AiOutlineEdit />,
-    },
-    {
       type: "divider",
     },
     {
@@ -40,7 +35,7 @@ const TableAction = ({
           Hủy
         </div>
       ),
-      key: "3",
+      key: "1",
       danger: true,
       icon: <AiOutlineDelete className="delete" />,
     },
