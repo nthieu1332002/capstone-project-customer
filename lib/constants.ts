@@ -30,7 +30,14 @@ export const PaymentMethod = [
 
 const paidColor = "success";
 const unpaidColor = "warning";
-
+export const OrderStatusMap: { [key: number]: string } = {
+    0: "đã được tạo",
+    1: "đã được xác nhận tại",
+    2: "đã xuất phát khỏi",
+    3: "đã đến",
+    4: "đã giao hàng thành công",
+    5: "đã hủy",
+};
 export const OrderStatus = [
     {
         id: 0,
@@ -39,25 +46,23 @@ export const OrderStatus = [
     },
     {
         id: 1,
-        status: "Đã được nhận",
+        status: "Đã xác nhận",
         color: "lime",
     },
     {
         id: 2,
-        status: "Đã xuất phát khỏi",
+        status: "Đang vận chuyển",
         color: "magenta",
     },
     {
         id: 3,
-        status: "Đã đến",
-        color: "magenta",
-
+        status: "Đã đến trạm",
+        color: "blue",
     },
     {
         id: 4,
-        status: "đã đến tay người nhận",
+        status: "Hoàn thành",
         color: paidColor,
-
     },
     {
         id: 5,
@@ -77,15 +82,7 @@ export const PaymentStatus = [
         color: paidColor,
     },
 ]
-export const OrderStatusMap: { [key: number]: string } = {
-    0: "đã được tạo",
-    1: "đã được xác nhận",
-    2: "đã được nhà xe nhận",
-    3: "đang trên đường vận chuyển",
-    4: "đã đến trạm",
-    5: "đã giao hàng thành công",
-    6: "đã hủy",
-};
+
 export type LocationType = {
     code: string,
     parent_code: string,

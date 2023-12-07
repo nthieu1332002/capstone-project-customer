@@ -10,11 +10,8 @@ export type Tracking = {
   checkpoints: Array<{
     name: string;
     address: string;
-    type: string;
-    statuses: Array<{
-      status: number;
-      achieved_at: string;
-    }>;
+    status: number;
+    achieved_at: string;
   }>;
 };
 
@@ -27,19 +24,28 @@ const TrackingContent = ({ data, code }: Props) => {
   console.log("dât", data);
   const lastSegment = data.checkpoints[data.checkpoints.length - 1];
   const item = data.checkpoints.map((item, index) => {
-    const orderStatus = OrderStatusMap[item.statuses[0].status];
+    const orderStatus = OrderStatusMap[item.status];
     return {
       children: (
         <div key={index}>
           <p className="uppercase font-medium text-base text-gray-600 mb-1">
-            Ngày {dayjs(item.achieved_at).format("DD/MM/YYYY lúc hh:mm:ss")}
+            Ngày {dayjs(item.achieved_at).format("DD/MM/YYYY lúc HH:mm:ss")}
           </p>
           <div className="bg-white p-3 py-2 text-lg rounded-md min-h-[70px] shadow-sm">
             <b className="font-semibold">
-              Đơn hàng {orderStatus}{" "}
-              {item.name ? `tại ${item.name}` : null}{" "}
+              Đơn hàng{" "}
+              <span
+                className={cn(
+                  item.status === 5
+                    ? "text-red-600"
+                    : "text-primary-color"
+                )}
+              >
+                {orderStatus}
+              </span>{" "}
+              {item.name ? ` ${item.name}` : null}{" "}
             </b>
-            
+
             <p className="text-gray-500">{item.address}</p>
           </div>
         </div>
@@ -56,10 +62,10 @@ const TrackingContent = ({ data, code }: Props) => {
           Đơn hàng{" "}
           <b
             className={cn(
-              lastSegment.type === 5 ? "text-red-600" : "text-primary-color"
+              lastSegment.status === 5 ? "text-red-600" : "text-primary-color"
             )}
           >
-            {OrderStatusMap[lastSegment.type]}
+            {OrderStatusMap[lastSegment.status]}
           </b>{" "}
           vào lúc{" "}
           {dayjs(lastSegment.achieved_at).format("hh:mm dddd DD/MM/YYYY")}

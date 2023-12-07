@@ -1,4 +1,4 @@
-export function toKm(distanceInMeters: number): string {
+export function convertUnit(distanceInMeters: number): string {
     const distanceInKilometers = distanceInMeters / 1000;
     const formattedDistance = new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 1,

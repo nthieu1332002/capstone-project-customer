@@ -6,7 +6,7 @@ import React from "react";
 import Button from "../Button";
 import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
-import { toKm } from "@/lib/transfer-unit";
+import { convertUnit } from "@/lib/transfer-unit";
 
 type Props = {
   route: Booking;
@@ -43,18 +43,18 @@ const SearchItem = ({ route }: Props) => {
               <Tooltip placement="right" title={route.start_station.address}>
                 {route.start_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  (cách bạn {toKm(route.start_station.distance_to_sender)} km)
+                  (cách bạn {convertUnit(route.start_station.distance_to_sender)} km)
                 </span>
               </Tooltip>
             </li>
             <div className="ml-[1px] border-l-[3px] border-dotted pl-6">
-              <p className="text-sm text-gray-600">{toKm(route.total_distance)} km</p>
+              <p className="text-sm text-gray-600">{convertUnit(route.total_distance)} km</p>
             </div>
             <li className="font-medium">
               <Tooltip placement="right" title={route.end_station.address}>
                 {route.end_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  (cách điểm đến {toKm(route.end_station.distance_to_receiver)} km)
+                  (cách điểm đến {convertUnit(route.end_station.distance_to_receiver)} km)
                 </span>
               </Tooltip>
             </li>
