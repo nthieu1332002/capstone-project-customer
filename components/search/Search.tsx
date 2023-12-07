@@ -9,9 +9,9 @@ import { IoIosSend } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import DebouceInput from "./DebouceInput";
 import { Select } from "antd";
-import { packageType } from "@/lib/constants";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { packageList } from "@/lib/constants";
 
 const apiKey = process.env.NEXT_PUBLIC_GOONG_API_KEY;
 export const getCoordinates = async (location: string) => {
@@ -49,7 +49,7 @@ const Search = () => {
             start_longitude: start.lng,
             end_latitude: end.lat,
             end_longitude: end.lng,
-            package_types: packages.toString(),
+            package_types: packages,
           },
         },
         { skipNull: true }
@@ -99,7 +99,7 @@ const Search = () => {
               <Select
                 id="packages"
                 mode="multiple"
-                options={packageType}
+                options={packageList}
                 filterOption={(input, option) =>
                   (option?.label.toLowerCase() ?? "").includes(
                     input.toLowerCase()

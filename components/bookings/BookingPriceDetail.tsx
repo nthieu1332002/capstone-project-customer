@@ -1,4 +1,5 @@
 import { Booking } from "@/hooks/useBookingStore";
+import { toKm } from "@/lib/transfer-unit";
 import { BsTruck } from "react-icons/bs";
 import { PiMoney } from "react-icons/pi";
 import { RiTruckFill } from "react-icons/ri";
@@ -35,7 +36,7 @@ const BookingPriceDetail = ({
             <ul className="flex flex-col gap-2 mt-2 list-disc list-inside">
               <li>{booking.start_station.name}</li>
               <div className="ml-[1px] border-l-[3px] border-dotted pl-6">
-                <p className="text-gray-600">{booking.total_distance} m</p>
+                <p className="text-gray-600">{toKm(booking.total_distance)} km</p>
               </div>
               <li>{booking.end_station.name}</li>
             </ul>
@@ -48,12 +49,6 @@ const BookingPriceDetail = ({
           <p>Chi tiết giá</p>
         </div>
         <div className="px-4 py-3 flex flex-col gap-3 text-sm">
-          <div className="flex justify-between">
-            <p>Giá cơ bản</p>
-            <p>
-              {new Intl.NumberFormat("en-Us").format(booking.lowest_price)}đ
-            </p>
-          </div>
           <div className="flex justify-between">
             <p>Giá theo khối lượng</p>
             <p> {new Intl.NumberFormat("en-Us").format(sizePrice)}đ</p>

@@ -5,7 +5,6 @@ import Link from "next/link";
 import NavMenu from "./NavMenu";
 import { Session } from "next-auth";
 import NavLink from "./NavLink";
-import { useRouter } from "next/navigation";
 import { BiMenu } from "react-icons/bi";
 import { Dropdown, MenuProps } from "antd";
 import TrackingOrderBar from "./TrackingOrderBar";
@@ -17,7 +16,6 @@ type Props = {
 };
 
 const Header = ({ currentUser }: Props) => {
-  const router = useRouter();
   const items: MenuProps["items"] = [
     {
       label: (
