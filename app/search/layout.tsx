@@ -1,7 +1,7 @@
 
 import SearchSideBar from "@/components/search/SearchSideBar";
 
-const MainLayout = async ({ children }: { children: React.ReactNode }) => {
+const SearchLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen pt-[68px]">
       <div className="flex h-full max-w-screen">
@@ -13,4 +13,4 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
     </div>
   );
 };
-export default MainLayout;
+export default SearchLayout;

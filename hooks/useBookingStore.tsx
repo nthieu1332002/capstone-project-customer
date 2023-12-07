@@ -7,7 +7,7 @@ export type Booking = {
     id: number;
     name: string;
     address: string;
-    city_code: number;
+    city_code: string;
     distance_to_sender: number;
     partner: {
       id: number;

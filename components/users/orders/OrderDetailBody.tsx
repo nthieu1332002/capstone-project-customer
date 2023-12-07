@@ -7,26 +7,35 @@ import vnpay from "@/public/assets/vnpay.png";
 import cash from "@/public/assets/cash.jpg";
 import { Tag, Timeline } from "antd";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
+import { OrderDetail } from "./OrderDetailHeader";
+import { cn } from "@/lib/utils";
+import { convertUnit } from "@/lib/transfer-unit";
 
 type Props = {
   code: string;
-  order: any;
+  order: OrderDetail;
 };
 
 const OrderDetailBody = ({ order }: Props) => {
-  const items = order.status_history.map((item: any, index: number) => {
-    const orderStatus = OrderStatusMap[item.type];
+  const items = order.checkpoints.map((item, index) => {
+    const orderStatus = OrderStatusMap[item.status];
     return {
       children: (
         <div key={index}>
           <p className="uppercase font-medium text-sm text-gray-600 mb-1">
-            Ngày {dayjs(item.achievedAt).format("DD/MM/YYYY lúc hh:mm:ss")}
+            Ngày {dayjs(item.achieved_at).format("DD/MM/YYYY lúc HH:mm:ss")}
           </p>
           <div className="bg-white p-3 py-2 rounded-md min-h-[70px] shadow-sm">
             <b className="font-semibold">
-              Đơn hàng {orderStatus}{" "}
-              {item.location ? `tại ${item.location}` : null}
+              Đơn hàng{" "}
+              <span
+                className={cn(
+                  item.status === 5 ? "text-red-600" : "text-primary-color"
+                )}
+              >
+                {orderStatus}
+              </span>{" "}
+              {item.name ? ` ${item.name}` : null}{" "}
             </b>
             <p className="text-gray-500">{item.address}</p>
           </div>
@@ -36,8 +45,8 @@ const OrderDetailBody = ({ order }: Props) => {
   });
 
   return (
-    <div className="flex justify-between gap-4">
-      <div className="flex flex-col gap-4 w-[calc(100%-220px)]">
+    <div className="flex flex-col md:flex-row md:justify-between gap-4">
+      <div className="flex flex-col gap-4 w-full md:w-[calc(100%-220px)]">
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
           <div className="flex gap-5">
             <div className="relative flex-shrink-0 h-36 w-32 rounded-md overflow-hidden">
@@ -99,7 +108,9 @@ const OrderDetailBody = ({ order }: Props) => {
                 ({order.collect_on_delivery ? "Trả sau" : "Trả trước"})
               </p>
 
-              <b>{new Intl.NumberFormat("en-Us").format(order.delivery_price)}đ</b>
+              <b>
+                {new Intl.NumberFormat("en-Us").format(order.delivery_price)}đ
+              </b>
             </div>
           </div>
         </div>
@@ -109,19 +120,19 @@ const OrderDetailBody = ({ order }: Props) => {
             <div className="flex whitespace-nowrap gap-16 w-full">
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Tổng khối lượng</p>
-                <p className="font-medium">{order.weight} g</p>
+                <p className="font-medium">{convertUnit(order.weight)} kg</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều dài</p>
-                <p className="font-medium">{order.length} mm</p>
+                <p className="font-medium">{convertUnit(order.length)} m</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều rộng</p>
-                <p className="font-medium">{order.width} mm</p>
+                <p className="font-medium">{convertUnit(order.width)} m</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Chiều cao</p>
-                <p className="font-medium">{order.height} mm</p>
+                <p className="font-medium">{convertUnit(order.height)} m</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-gray-500">Trị giá</p>
@@ -147,7 +158,7 @@ const OrderDetailBody = ({ order }: Props) => {
         <h2 className="text-lg font-bold my-2">Hoạt động</h2>
         <Timeline reverse items={items} />
       </div>
-      <div className="w-[220px]">
+      <div className="w-full md:w-[220px]">
         <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm flex flex-col gap-3">
           <h2 className="text-lg font-bold">Khách hàng</h2>
           <div className="py-3">

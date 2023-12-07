@@ -21,7 +21,7 @@ const LogoutModal = () => {
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
-      okText={<p className="text-red-500 border-red-500">Xác nhận</p>}
+      okText={<span className="text-red-500 border-red-500">Xác nhận</span>}
       cancelText="Hủy"
       footer={(_, { OkBtn, CancelBtn }) => (
         <>

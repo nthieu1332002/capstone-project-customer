@@ -1,11 +1,12 @@
 "use client";
 
-import { Badge, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
 import Button from "../Button";
 import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
+import { convertUnit } from "@/lib/transfer-unit";
 
 type Props = {
   route: Booking;
@@ -22,7 +23,6 @@ const SearchItem = ({ route }: Props) => {
     }, 0);
   };
   return (
-    <Badge.Ribbon color="purple" text={route.note}>
 
     <div className="rounded-3xl border p-4 mb-3">
       <div className="flex gap-5">
@@ -43,24 +43,25 @@ const SearchItem = ({ route }: Props) => {
               <Tooltip placement="right" title={route.start_station.address}>
                 {route.start_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  (cách bạn {route.start_station.distance_to_sender} m)
+                  {route.start_station.distance_to_sender ? (`cách bạn ${convertUnit(route.start_station.distance_to_sender)} km`): null}
                 </span>
               </Tooltip>
             </li>
             <div className="ml-[1px] border-l-[3px] border-dotted pl-6">
-              <p className="text-sm text-gray-600">{route.total_distance} m</p>
+              <p className="text-sm text-gray-600">{convertUnit(route.total_distance)} km</p>
             </div>
             <li className="font-medium">
               <Tooltip placement="right" title={route.end_station.address}>
                 {route.end_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  (cách điểm đến {route.end_station.distance_to_receiver} m)
+                {route.start_station.distance_to_sender ? (`cách điểm đến ${convertUnit(route.end_station.distance_to_receiver)} km`): null}
                 </span>
               </Tooltip>
             </li>
           </ul>
         </div>
         <div className="flex flex-col justify-end items-center">
+          <p className="font-medium">Giá chỉ từ</p>
           <p className="text-lg font-bold text-primary-color">
             {new Intl.NumberFormat("en-Us").format(route.lowest_price)}đ
           </p>
@@ -72,7 +73,6 @@ const SearchItem = ({ route }: Props) => {
         </div>
       </div>
     </div>
-    </Badge.Ribbon>
   );
 };
 
