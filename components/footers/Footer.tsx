@@ -27,7 +27,7 @@ const Footer = (props: Props) => {
         <div className="flex flex-col gap-3 text-white text-sm">
           <h2 className="text-base font-bold">Về Chành xe miền Tây</h2>
           <Link href="/" className="hover:underline">
-            Về chúng tôi
+            Chính sách
           </Link>
           <Link href="/" className="hover:underline">
             Bảng giá

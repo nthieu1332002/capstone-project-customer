@@ -12,8 +12,6 @@ const ConfirmCancelModal = () => {
   const [isPending, startTransition] = useTransition();
 
   const isModalOpen = isOpen;
-  console.log("code", code);
-  console.log("iden", identifier);
   const router = useRouter();
   const handleOk = async () => {
     startTransition(async () => {
@@ -21,7 +19,6 @@ const ConfirmCancelModal = () => {
         const res = await axios.put(`/api/customer/orders/${code}/cancelled`, {
           identifier,
         });
-        console.log("res", res);
         if (res.status === 200) {
           toast.success("Hủy đơn hàng thành công!");
           onClose();

@@ -40,9 +40,9 @@ const Header = ({ currentUser }: Props) => {
     {
       label: (
         <NavLink
-          name="Hỏi đáp"
+          name="Chính sách"
           type="normal"
-          href="/questions"
+          href="/policy"
         />
       ),
       key: "2",
@@ -81,9 +81,9 @@ const Header = ({ currentUser }: Props) => {
                 href="/pricing"
               />
               <NavLink
-                name="Hỏi đáp"
+                name="Chính sách"
                 type="normal"
-                href="/questions"
+                href="/policy"
               />
             </div>
             <div className="flex gap-3 items-center ml-auto lg:ml-0">
