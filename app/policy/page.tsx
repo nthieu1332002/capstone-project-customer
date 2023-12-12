@@ -1,14 +1,25 @@
+import { Metadata } from "next";
 import Image from "next/image";
 
 type Props = {};
 
+export const metadata: Metadata = {
+  title: "Chính sách bồi thường",
+  description:
+    "Chính sách bồi thường của chành xe miền tây, chúng tôi cung cấp rõ ràng tất cả trường hợp và chi tiết giá trị bồi thường.",
+  alternates: {
+    canonical: "/policy",
+  },
+};
 const Policy = (props: Props) => {
   return (
     <div className="min-h-screen">
       <div className="pt-[68px] h-full max-w-screen py-8 mx-auto px-4 md:px-12 lg:px-40">
-        <h1 className="py-5 text-4xl font-bold text-center border-b-2">CHÍNH SÁCH BỒI THƯỜNG</h1>
-        <section className="py-3 w-full border-b-[1px]">
-          <h2 className="text-3xl font-bold uppercase mb-3">I. Thuật ngữ</h2>
+        <h1 className="py-5 text-4xl font-bold text-center bg-primary-color text-white">
+          CHÍNH SÁCH BỒI THƯỜNG
+        </h1>
+        <section className="py-3 w-full">
+          <h2 className="text-2xl font-bold uppercase mb-3">I. Thuật ngữ</h2>
           <div className="space-y-4">
             <p>
               <strong>“CXMT”</strong> có nghĩa là Công ty Cổ phần Dịch vụ Giao
@@ -49,8 +60,8 @@ const Policy = (props: Props) => {
             </p>
           </div>
         </section>
-        <section className="py-3 w-full border-b-[1px]">
-          <h2 className="text-3xl font-bold uppercase mb-3">
+        <section className="py-3 w-full">
+          <h2 className="text-2xl font-bold uppercase mb-3">
             II. KHAI BÁO GIÁ TRỊ HÀNG HÓA
           </h2>
           <div className="space-y-4">
@@ -88,8 +99,8 @@ const Policy = (props: Props) => {
             </ul>
           </div>
         </section>
-        <section className="py-3 w-full border-b-[1px]">
-          <h2 className="text-3xl font-bold uppercase mb-3">
+        <section className="py-3 w-full">
+          <h2 className="text-2xl font-bold uppercase mb-3">
             III. BỒI THƯỜNG BỞI CXMT
           </h2>
           <h3 className="text-2xl font-bold mb-2">
@@ -98,12 +109,12 @@ const Policy = (props: Props) => {
           <div className="space-y-4">
             <p>
               CXMT sẽ chịu trách nhiệm bồi thường cho Khách hàng nếu Bưu gửi bị
-              hư hỏng, mất mát hoặc thất lạc xảy ra trong quá trình CXMT cung ứng
-              Dịch vụ gây ra do lỗi của CXMT. Trách nhiệm của CXMT chỉ giới hạn
-              trong thiệt hại và tổn thất trực tiếp và thực tế gây ra cho hoặc
-              liên quan đến Bưu gửi. Các loại thiệt hại hoặc tổn thất khác (bao
-              gồm nhưng không hạn chế bởi tổn thất lợi nhuận, thu nhập, cơ hội
-              kinh doanh) sẽ bị loại trừ.
+              hư hỏng, mất mát hoặc thất lạc xảy ra trong quá trình CXMT cung
+              ứng Dịch vụ gây ra do lỗi của CXMT. Trách nhiệm của CXMT chỉ giới
+              hạn trong thiệt hại và tổn thất trực tiếp và thực tế gây ra cho
+              hoặc liên quan đến Bưu gửi. Các loại thiệt hại hoặc tổn thất khác
+              (bao gồm nhưng không hạn chế bởi tổn thất lợi nhuận, thu nhập, cơ
+              hội kinh doanh) sẽ bị loại trừ.
             </p>
             <p>
               <strong>
@@ -159,16 +170,16 @@ const Policy = (props: Props) => {
             </p>
             <ul className="list-disc list-outside pl-10">
               <li>
-                (i) CXMT sẽ bồi thường cho trường hợp Bưu gửi bị hư hỏng mà không
-                có nghĩa vụ phải truy cứu nguyên nhân của các hư hỏng đó;
+                (i) CXMT sẽ bồi thường cho trường hợp Bưu gửi bị hư hỏng mà
+                không có nghĩa vụ phải truy cứu nguyên nhân của các hư hỏng đó;
               </li>
               <li>
-                (ii) Mức độ hư hỏng của Bưu gửi sẽ do CXMT có toàn quyền xác minh
-                và quyết định; (ii) Trong trường hợp Bưu gửi bị hư hỏng trên 50%
-                thì CXMT sẽ được quyền sở hữu hàng hóa trong Bưu gửi đó. Khách
-                hàng cam kết sẽ, đồng ý vô điều kiện và tuân theo mọi yêu cầu
-                của CXMT, để ký kết các tài liệu cần thiết cho mục đích chuyển
-                quyền sở hữu đối với hàng hoá đó.
+                (ii) Mức độ hư hỏng của Bưu gửi sẽ do CXMT có toàn quyền xác
+                minh và quyết định; (ii) Trong trường hợp Bưu gửi bị hư hỏng
+                trên 50% thì CXMT sẽ được quyền sở hữu hàng hóa trong Bưu gửi
+                đó. Khách hàng cam kết sẽ, đồng ý vô điều kiện và tuân theo mọi
+                yêu cầu của CXMT, để ký kết các tài liệu cần thiết cho mục đích
+                chuyển quyền sở hữu đối với hàng hoá đó.
               </li>
             </ul>
             <p>
@@ -207,21 +218,21 @@ const Policy = (props: Props) => {
             />
           </div>
         </section>
-        <section className="py-3 w-full border-b-[1px] mb-3">
-          <h2 className="text-3xl font-bold uppercase mb-3">
+        <section className="py-3 w-full mb-3">
+          <h2 className="text-2xl font-bold uppercase mb-3">
             IV. BỒI THƯỜNG BỞI KHÁCH HÀNG
           </h2>
           <div className="space-y-4">
             <p>
               Khách hàng thừa nhận và đồng ý sẽ bồi thường, bảo vệ và giữ cho
               CXMT và cổ đông, giám đốc, người quản lý, nhân viên, nhà thầu, tư
-              vấn của CXMT (các “Bên được bồi thường của CXMT”) không bị ảnh hưởng
-              và tránh khỏi bất kỳ và mọi thiệt hại, tổn thất, chi phí và phí
-              (bao gồm phí pháp lý), yêu cầu, trách nhiệm, khiếu kiện, lệnh, yêu
-              cầu, hành động của cơ quan nhà nước có thẩm quyền, có thể được đưa
-              ra chống lại hoặc phải gánh chịu bởi CXMT và các Bên được bồi
-              thường của CXMT, là hậu quả của hoặc phát sinh từ hoặc có liên quan
-              đến:
+              vấn của CXMT (các “Bên được bồi thường của CXMT”) không bị ảnh
+              hưởng và tránh khỏi bất kỳ và mọi thiệt hại, tổn thất, chi phí và
+              phí (bao gồm phí pháp lý), yêu cầu, trách nhiệm, khiếu kiện, lệnh,
+              yêu cầu, hành động của cơ quan nhà nước có thẩm quyền, có thể được
+              đưa ra chống lại hoặc phải gánh chịu bởi CXMT và các Bên được bồi
+              thường của CXMT, là hậu quả của hoặc phát sinh từ hoặc có liên
+              quan đến:
             </p>
             <ul className="list-disc list-outside pl-10">
               <li>
@@ -244,18 +255,18 @@ const Policy = (props: Props) => {
           </div>
         </section>
         <section className="py-3 w-full mb-3">
-          <h2 className="text-3xl font-bold uppercase mb-3">
+          <h2 className="text-2xl font-bold uppercase mb-3">
             V. Miễn trừ trách nhiệm
           </h2>
           <div className="space-y-4">
             <p>
-              Khách hàng thừa nhận và đồng ý CXMT sẽ được miễn trừ trách nhiệm và
-              sẽ vô can đối với bất kỳ và mọi thiệt hại, tổn thất, mất mát, hư
-              hỏng, bồi thường, chậm trễ, yêu cầu, trách nhiệm, khiếu kiện, hành
-              động của Khách hàng và/hoặc cơ quan nhà nước có thẩm quyền có thể
-              được đưa ra chống lại hoặc phải gánh chịu bởi CXMT và các Bên được
-              bồi thường của CXMT liên quan đến Bưu gửi được gây ra bởi, phát
-              sinh từ, hoặc liên quan đến:
+              Khách hàng thừa nhận và đồng ý CXMT sẽ được miễn trừ trách nhiệm
+              và sẽ vô can đối với bất kỳ và mọi thiệt hại, tổn thất, mất mát,
+              hư hỏng, bồi thường, chậm trễ, yêu cầu, trách nhiệm, khiếu kiện,
+              hành động của Khách hàng và/hoặc cơ quan nhà nước có thẩm quyền có
+              thể được đưa ra chống lại hoặc phải gánh chịu bởi CXMT và các Bên
+              được bồi thường của CXMT liên quan đến Bưu gửi được gây ra bởi,
+              phát sinh từ, hoặc liên quan đến:
             </p>
             <ul className="list-disc list-outside pl-10">
               <li>
@@ -320,16 +331,16 @@ const Policy = (props: Props) => {
                 đồng ý rằng Khách hàng đã từ bỏ mọi quyền và quyền yêu cầu và
                 CXMT sẽ được miễn trừ khỏi mọi yêu cầu, trách nhiệm, khiếu kiện
                 liên quan đến Bưu gửi. Để tránh hiểu lầm, sau 06 (sáu) tháng kể
-                từ lần trả cuối cùng nêu trên, CXMT sẽ được quyền sở hữu hàng hoá
-                trong Bưu gửi đó và rằng, Khách hàng cam kết không có bất kỳ
+                từ lần trả cuối cùng nêu trên, CXMT sẽ được quyền sở hữu hàng
+                hoá trong Bưu gửi đó và rằng, Khách hàng cam kết không có bất kỳ
                 khiếu nại, khiếu kiện nào về vấn đề này.
               </li>
               <li>
                 Trong trường hợp một phần thiệt hại, tổn thất xảy ra do Khách
                 hàng vi phạm, Khách hàng thừa nhận và đồng ý sẽ từ bỏ quyền yêu
-                cầu đối với, và CXMT sẽ không có trách nhiệm bồi thường cho, phần
-                thiệt hại, tổn thất tương ứng với mức độ thiệt hại do Khách hàng
-                gây ra.
+                cầu đối với, và CXMT sẽ không có trách nhiệm bồi thường cho,
+                phần thiệt hại, tổn thất tương ứng với mức độ thiệt hại do Khách
+                hàng gây ra.
               </li>
               <li>
                 Bưu gửi đã được phát và Người nhận không có ý kiến khi nhận Bưu
@@ -341,6 +352,7 @@ const Policy = (props: Props) => {
             </ul>
           </div>
         </section>
+        <p className="text-end mb-3">Hết.</p>
       </div>
     </div>
   );
