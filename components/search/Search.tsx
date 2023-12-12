@@ -82,10 +82,10 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="absolute flex gap-2 shadow-md bg-white rounded-md pl-8 pr-5 py-5 w-[1000px] bottom-4">
-      <div className="border-[1px] w-full py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer">
-        <div className="flex items-center justify-between text-sm font-semibold mx-1">
-          <div className="flex items-center gap-2 px-6 w-full">
+    <div className="absolute flex gap-2 shadow-md bg-white rounded-md pl-8 pr-5 py-5 w-[calc(100%-1rem)] lg:w-[1000px] bottom-4">
+      <div className="md:border-[1px] w-full py-2 md:rounded-full shadow-sm hover:shadow-md transition cursor-pointer">
+        <div className="flex flex-col gap-3 md:flex-row items-center justify-between text-sm font-semibold mx-1">
+          <div className="flex items-center gap-2 px-3 md:px-6 w-full">
             <GoLocation size="18" />
             <div className="relative flex flex-col w-full">
               <label htmlFor="from"> Nơi xuất phát</label>
@@ -104,7 +104,7 @@ const Search = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 px-6 w-full border-x">
+          <div className="flex items-center gap-2 px-3 md:px-6 w-full md:border-x">
             <TbLocation size="18" />
             <div className="relative flex flex-col w-full">
               <label htmlFor="to">Điểm đến</label>
@@ -123,7 +123,7 @@ const Search = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 px-6 w-full">
+          <div className="flex items-center gap-2 px-3 md:px-6 w-full">
             <GoPackage size="18" />
             <div className="relative flex flex-col w-full">
               <label htmlFor="packages">Loại hàng</label>

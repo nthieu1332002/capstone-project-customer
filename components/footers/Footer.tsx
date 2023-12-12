@@ -1,7 +1,6 @@
 import React from "react";
 import BrandName from "../BrandName";
 
-import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { BsFacebook, BsMessenger } from "react-icons/bs";
@@ -26,31 +25,31 @@ const Footer = (props: Props) => {
         </div>
         <div className="flex flex-col gap-3 text-white text-sm">
           <h2 className="text-base font-bold">Về Chành xe miền Tây</h2>
-          <Link href="/" className="hover:underline">
+          <Link href="/about" className="hover:underline">
             Về chúng tôi
           </Link>
-          <Link href="/" className="hover:underline">
+          <Link href="/pricing" className="hover:underline">
             Bảng giá
           </Link>
-          <Link href="/" className="hover:underline">
-            Hỏi đáp
+          <Link href="/policy" className="hover:underline">
+            Chính sách
           </Link>
         </div>
         <div className="flex flex-col gap-3 text-white text-sm">
           <h2 className="text-base font-bold">Chính sách</h2>
-          <Link href="/" className="hover:underline">
+          <Link href="/policy" className="hover:underline">
             Chính sách trả hàng
           </Link>
-          <Link href="/" className="hover:underline">
+          <Link href="/policy" className="hover:underline">
             Công nghệ
           </Link>
-          <Link href="/" className="hover:underline">
+          <Link href="/policy" className="hover:underline">
             Quy định chung
           </Link>
-          <Link href="/" className="hover:underline">
+          <Link href="/policy" className="hover:underline">
             Quy trình giao hàng
           </Link>
-          <Link href="/" className="hover:underline">
+          <Link href="/policy" className="hover:underline">
             Quy trình gửi hàng
           </Link>
         </div>
