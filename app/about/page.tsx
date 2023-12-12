@@ -6,9 +6,14 @@ type Props = {};
 export const metadata: Metadata = {
   title: "Giới thiệu",
   description:
-    "Chành xe miền tây là hệ thống kết nối, vận chuyển hàng hóa thông qua hệ thống kết nối nhà chành mà vị trí chính là thành phố Hồ Chí Minh và các tỉnh miền tây.",
+    "Chành xe Miền Tây - Hệ thống vận chuyển hàng hóa và đặt vé chành xe từ TP.Hồ Chí Minh đến các tỉnh Miền Tây. Dịch vụ uy tín, chi phí rẻ nhất.",
   alternates: {
     canonical: "/about",
+  },
+  openGraph: {
+    title: "Giới thiệu",
+    description:
+      "Chành xe Miền Tây - Hệ thống vận chuyển hàng hóa và đặt vé chành xe từ TP.Hồ Chí Minh đến các tỉnh Miền Tây. Dịch vụ uy tín, chi phí rẻ nhất.",
   },
 };
 const About = (props: Props) => {
