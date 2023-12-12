@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/policy",
   },
+  openGraph: {
+    title: "Chính sách bồi thường",
+    description:
+      "Chính sách bồi thường của chành xe miền tây, chúng tôi cung cấp rõ ràng tất cả trường hợp và chi tiết giá trị bồi thường.",
+  },
 };
 const Policy = (props: Props) => {
   return (
