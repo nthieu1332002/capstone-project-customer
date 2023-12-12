@@ -1,7 +1,17 @@
 import getServerUser from "@/actions/getServerUser";
 import TrackingContent from "@/components/trackings/TrackingContent";
 import { axios } from "@/lib/axios";
+import { Metadata } from "next";
 import { cache } from "react";
+
+export const metadata: Metadata = {
+  title: "Tra cứu đơn hàng",
+  description:
+    "Chành xe miền tây cung cấp tính năng theo dõi đơn hàng, quý khách có thể theo dõi đơn hàng của mình tại đây.",
+  alternates: {
+    canonical: "/tracking",
+  },
+};
 
 const getTracking = cache(async ({ code }: { code: string }) => {
   try {

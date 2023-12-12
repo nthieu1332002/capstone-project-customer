@@ -2,6 +2,15 @@ import ChangePassword from "@/components/users/profiles/ChangePassword";
 import UserProfile from "@/components/users/profiles/UserProfile";
 import { axios } from "@/lib/axios";
 import { Tabs } from "antd";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Tài khoản",
+  description:
+    "Chành xe miền tây là hệ thống kết nối, vận chuyển hàng hóa thông qua hệ thống kết nối nhà chành mà vị trí chính là thành phố Hồ Chí Minh và các tỉnh miền tây.",
+  alternates: {
+    canonical: "/user/profile",
+  },
+};
 
 const Profile = async () => {
   const data = await axios.get("/api/user");
