@@ -1,6 +1,16 @@
 import OrderContent from "@/components/users/orders/OrderContent";
 import { axios } from "@/lib/axios";
+import { Metadata } from "next";
 import qs from "query-string";
+
+export const metadata: Metadata = {
+  title: "Đơn hàng",
+  description:
+    "Chành xe miền tây là hệ thống kết nối, vận chuyển hàng hóa thông qua hệ thống kết nối nhà chành mà vị trí chính là thành phố Hồ Chí Minh và các tỉnh miền tây.",
+  alternates: {
+    canonical: "/user/order",
+  },
+};
 
 type SearchParams = {
   code?: string;

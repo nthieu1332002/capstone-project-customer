@@ -16,7 +16,10 @@ import Footer from "@/components/footers/Footer";
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Chành Xe Miền Tây - Vận chuyển siêu nhanh, Giá siêu tốt",
+  title: {
+    default: "Chành Xe Miền Tây - Vận chuyển siêu nhanh, Giá siêu tốt",
+    template: `%s | Chành Xe Miền Tây - Vận chuyển siêu nhanh, Giá siêu tốt`,
+  },
   description:
     "Chành xe Miền Tây - Công ty giao nhận đầu tiên tại Việt Nam được thành lập năm 2023, với sứ mệnh phục vụ nhu cầu vận chuyển chuyên nghiệp của các đối tác Thương mại điện tử trên toàn quốc. GHN cam kết mang đến cho khách hàng những trải nghiệm dịch vụ giao nhận nhanh, an toàn, hiệu quả giúp người bán hàng bán được nhiều hơn, người mua hàng hài lòng hơn.",
 };

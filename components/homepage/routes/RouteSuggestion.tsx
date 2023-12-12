@@ -11,8 +11,8 @@ const routes = [
   },
   {
     key: 2,
-    route: "Sài Gòn - Long An",
-    image: "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"
+    route: "Sài Gòn - An Giang",
+    image: "https://res.cloudinary.com/dad0fircy/image/upload/v1702368915/capstone/chaudoc_hzatuo.jpg"
   },
   {
     key: 3,
@@ -21,8 +21,8 @@ const routes = [
   },
   {
     key: 4,
-    route: "Sài Gòn - Vũng Tàu",
-    image: "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"
+    route: "Sài Gòn - Cà Mau",
+    image: "https://res.cloudinary.com/dad0fircy/image/upload/v1702369020/capstone/dulichCaMau01-1649220925-3009-1649240147_cm1lye.jpg"
   },
 ];
 
