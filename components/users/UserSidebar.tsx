@@ -8,6 +8,7 @@ import { Avatar } from "antd";
 import { RiErrorWarningLine, RiVerifiedBadgeLine } from "react-icons/ri";
 import { cn } from "@/lib/utils";
 import useAuthModal from "@/hooks/useAuthModal";
+import { User } from "./profiles/UserProfile";
 
 const sidebarList = [
   {
@@ -36,14 +37,14 @@ const sidebarList = [
 ];
 
 type Props = {
-  user: any;
+  user: User
 };
 
 const UserSidebar = ({ user }: Props) => {
   const { onOpen } = useAuthModal();
   const router = useRouter();
   const pathname = usePathname();
-  const verified = user?.phone_verified_at || user?.email_verified_at;
+  // const verified = user.status === 0;
   return (
     <div className="hidden md:block w-[335px] mr-2">
       <div className="flex flex-col rounded-lg border py-3 bg-white w-full">
@@ -53,12 +54,13 @@ const UserSidebar = ({ user }: Props) => {
               style={{ backgroundColor: "#3ebde0", verticalAlign: "middle" }}
               size="large"
             >
-              {user?.email?.substring(0, 5)}
+              {user.email.substring(0, 5)}
             </Avatar>
           </div>
           <div className="">
-            <strong className="text-base">{user?.name}</strong>
-            <span
+            <strong className="text-base">{user.name}</strong>
+            <p>{user.phone}</p>
+            {/* <span
               className={cn(
                 "flex gap-2 items-center",
                 verified ? "text-primary-color" : "text-red-500"
@@ -73,7 +75,7 @@ const UserSidebar = ({ user }: Props) => {
                   <RiErrorWarningLine size={15} /> Chưa xác thực
                 </>
               )}
-            </span>
+            </span> */}
           </div>
         </div>
         <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>

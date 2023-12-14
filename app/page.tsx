@@ -2,6 +2,20 @@ import Search from "@/components/search/Search";
 import RouteSuggestion from "@/components/homepage/routes/RouteSuggestion";
 import HubSection from "@/components/homepage/hubs/HubSection";
 import WhyChoosing from "@/components/homepage/WhyChoosing";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Trang chủ | Chành Xe Miền Tây - Vận chuyển siêu nhanh, Giá siêu tốt",
+  description:
+    "Chành xe Miền Tây - Hệ thống vận chuyển hàng hóa và đặt vé chành xe từ TP.Hồ Chí Minh đến các tỉnh Miền Tây. Dịch vụ uy tín, chi phí rẻ nhất.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Trang chủ | Chành Xe Miền Tây - Vận chuyển siêu nhanh, Giá siêu tốt",
+    description:
+      "Chành xe Miền Tây - Hệ thống vận chuyển hàng hóa và đặt vé chành xe từ TP.Hồ Chí Minh đến các tỉnh Miền Tây. Dịch vụ uy tín, chi phí rẻ nhất.",
+  },
+};
 const Home = () => {
   return (
     <div className="min-h-screen">

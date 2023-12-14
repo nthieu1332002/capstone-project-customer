@@ -32,7 +32,7 @@ const choosingList = [
 
 const WhyChoosing = () => {
   return (
-    <div className="mx-auto lg:px-20 sm:px-2 px-4 py-5 md:py-10">
+    <div className="mx-auto lg:px-20 sm:px-2 px-4 py-5 md:py-10 bg-slate-100">
       <h1 className="font-bold text-2xl md:text-3xl text-center mb-3 md:mb-8">
         Sự lựa chọn hoàn hảo
       </h1>
