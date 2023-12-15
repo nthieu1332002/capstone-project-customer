@@ -4,12 +4,13 @@ import OrderDetailBody from "@/components/users/orders/OrderDetailBody";
 import OrderDetailHeader from "@/components/users/orders/OrderDetailHeader";
 import { axios } from "@/lib/axios";
 import { redirect } from "next/navigation";
+import { revalidatePath } from 'next/cache'
 
 const getOrderDetail = async (code: string) => {
   try {
     const res = await axios.get(`/api/customer/orders/${code}`);
 
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.log(error);
     throw new Error("failed to get order detail");
@@ -26,7 +27,11 @@ type Props = {
 const OrderDetail = async ({ params, searchParams }: Props) => {
   const profile = await getServerUser();
   const { vnp_TransactionStatus } = searchParams || {};
+  
+  if (vnp_TransactionStatus) {
+    revalidatePath('/user/oder/[slug]', 'layout')
 
+  }
   if (!profile) redirect("error");
   const order = await getOrderDetail(params.code);
   if (!order) redirect("error");

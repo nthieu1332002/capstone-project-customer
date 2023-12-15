@@ -3,32 +3,33 @@ import useCancelModal from "@/hooks/useCancelModal";
 import { axios } from "@/lib/axios";
 import { Modal } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useTransition } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { RiErrorWarningLine } from "react-icons/ri";
 
 const ConfirmCancelModal = () => {
   const { isOpen, onClose, code, identifier } = useCancelModal();
-  const [isPending, startTransition] = useTransition();
-
+  const [loading, setLoading] = useState(false);
   const isModalOpen = isOpen;
   const router = useRouter();
   const handleOk = async () => {
-    startTransition(async () => {
-      try {
-        const res = await axios.put(`/api/customer/orders/${code}/cancelled`, {
-          identifier,
-        });
-        if (res.status === 200) {
-          toast.success("Hủy đơn hàng thành công!");
-          onClose();
-        }
+    setLoading(true);
+    try {
+      const res = await axios.put(`/api/customer/orders/${code}/cancelled`, {
+        identifier,
+      });
+      console.log(res);
+      if (res.status === 200) {
+        toast.success("Hủy đơn hàng thành công!");
         router.refresh();
-      } catch (error) {
-        toast.error("Hủy đơn hàng thất bại!");
-        onClose();
       }
-    });
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message)
+      toast.error("Hủy đơn hàng thất bại!");
+    }
+    setLoading(false);
+    onClose();
   };
 
   const handleCancel = () => {
@@ -41,7 +42,7 @@ const ConfirmCancelModal = () => {
       onCancel={handleCancel}
       okText={<span className="text-red-500 border-red-500">Xác nhận</span>}
       cancelText="Hủy"
-      confirmLoading={isPending}
+      confirmLoading={loading}
       footer={(_, { OkBtn, CancelBtn }) => (
         <>
           <CancelBtn />

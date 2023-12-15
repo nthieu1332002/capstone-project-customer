@@ -5,8 +5,6 @@ import NavMenuItem from "./NavMenuItem";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { MdOutlineHistory, MdOutlineLogout, MdPayment } from "react-icons/md";
-import { AiOutlineHeart } from "react-icons/ai";
-import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
 import useAuthModal from "@/hooks/useAuthModal";
 import { Avatar } from "antd";
@@ -85,7 +83,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
                   name="Đơn hàng của tôi"
                 />
                 <NavMenuItem
-                  onClick={() => router.push("/")}
+                  onClick={() => router.push("/user/payment")}
                   icon={ <MdPayment />}
                   name="Thanh toán của tôi"
                 />

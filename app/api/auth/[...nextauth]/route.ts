@@ -25,16 +25,20 @@ export const authOptions: AuthOptions = {
           password: credentials?.password,
           device_name: "customer_web"
         })
-        const user = res.data.customer;
-        return { ...user, accessToken: res.data.access_token }
+        const user = res.data.data.customer;
+        return { ...user, accessToken: res.data.data.access_token }
       }
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      
       if (user) {
         token.phone = user.phone
         token.accessToken = user.accessToken
+      }
+      if (trigger === "update") {
+        return { ...token, ...session.user };
       }
       return token
     },

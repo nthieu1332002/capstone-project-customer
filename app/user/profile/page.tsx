@@ -29,7 +29,7 @@ const Profile = async () => {
           {
             label: <p className="font-semibold">Thông tin tài khoản</p>,
             key: "1",
-            children: <UserProfile user={data.attributes} />,
+            children: <UserProfile user={data} />,
           },
           {
             label: <p className="font-semibold">Mật khẩu & bảo mật</p>,

@@ -10,6 +10,7 @@ import { HiOutlineUser } from "react-icons/hi";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react"
 
 export type User  = {
   name: string;
@@ -30,21 +31,31 @@ type Props = {
 
 const UserProfile = ({ user }: Props) => {
   const [form] = Form.useForm();
+  const { data: session, update} = useSession()
   const router = useRouter();
   const [disabled, setDisabled] = useState(false);
   const handleSubmit = async (values: FieldType) => {
-    console.log(values);
     setDisabled(true);
 
     try {
       const res = await axios.put("/api/user/update-profile", values);
       if (res.status === 200) {
-        form.resetFields();
+        await update({
+          ...session,
+          user: {
+            ...session,
+            email: values.email,
+            name: values.name,
+            phone: values.phone,
+          },
+        });
         toast.success("Cập nhật thông tin thành công!");
         router.refresh();
       }
     } catch (error: any) {
+      console.log("Error", error);
       toast.error("Cập nhật thông tin thất bại!");
+      toast.error(error.response.data)
     }
     setDisabled(false);
   };
@@ -122,7 +133,7 @@ const UserProfile = ({ user }: Props) => {
             />
           </Form.Item>
           <Form.Item>
-            <Button label="Cập nhật" />
+            <Button disabled={disabled} label="Cập nhật" />
           </Form.Item>
         </Form>
       </div>

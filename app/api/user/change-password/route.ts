@@ -9,8 +9,6 @@ export const PUT = async (req: Request) => {
         return new NextResponse("Đổi mật khẩu thành công!", { status: 200 });
 
     } catch (error: any) {
-        console.log(error);
         return new NextResponse(error.response.data.message, { status: error.response.status })
-
     }
 }

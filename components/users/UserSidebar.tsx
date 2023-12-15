@@ -26,7 +26,7 @@ const sidebarList = [
   {
     id: 3,
     name: "Thanh toán của tôi",
-    path: "/user/favorite",
+    path: "/user/payment",
     icon:  <MdPayment />,
   },
   {
