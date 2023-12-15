@@ -13,7 +13,7 @@ export async function POST(req: Request) {
             });
         }
         const res = await axios.post('/api/customer/register', data)
-        return NextResponse.json(res.data);
+        return NextResponse.json(res.data.data);
 
     } catch (error: any) {
         console.log(error.response.data.message);

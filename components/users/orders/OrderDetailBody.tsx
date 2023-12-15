@@ -17,6 +17,7 @@ type Props = {
 };
 
 const OrderDetailBody = ({ order }: Props) => {
+  console.log(order);
   const items = order.checkpoints.map((item, index) => {
     const orderStatus = OrderStatusMap[item.status];
     return {

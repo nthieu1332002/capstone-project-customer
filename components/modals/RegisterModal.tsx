@@ -57,7 +57,6 @@ const RegisterModal = () => {
           handleClose()
         }
       } catch (error: any) {
-        console.log("error", error.response.data);
         setDisabled(false);
         toast.error(error.response.data);
       }

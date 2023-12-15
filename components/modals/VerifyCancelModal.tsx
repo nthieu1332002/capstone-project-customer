@@ -10,7 +10,7 @@ type Props = {
   code?: string;
 };
 type FieldType = {
-  indentifier: string;
+  identifier: string;
 };
 const VerifyCancelModal = ({ isModalOpen, handleCancel, code }: Props) => {
   const { onOpen } = useCancelModal();
@@ -40,7 +40,7 @@ const VerifyCancelModal = ({ isModalOpen, handleCancel, code }: Props) => {
       >
         <Form.Item<FieldType>
           label="Email / Số điện thoại"
-          name="indentifier"
+          name="identifier"
           rules={[
             {
               required: true,

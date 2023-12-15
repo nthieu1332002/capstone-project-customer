@@ -61,9 +61,8 @@ const getSearchList = async ({
       },
       { skipNull: true, skipEmptyString: true }
     );
-    console.log("url", url);
     const res = await axios.get(url);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     throw new Error("Failed to fetch data");
   }
@@ -99,7 +98,6 @@ export default async function Search({
     end_longitude,
     package_types: filteredType,
   });
-  console.log("dât", data);
   return (
     <div className="py-8 mx-auto px-4 md:px-8 lg:px-16">
       {data.length > 0 ? (

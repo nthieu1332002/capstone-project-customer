@@ -2,7 +2,6 @@ import getServerUser from "@/actions/getServerUser";
 import TrackingContent from "@/components/trackings/TrackingContent";
 import { axios } from "@/lib/axios";
 import { Metadata } from "next";
-import { cache } from "react";
 
 export const metadata: Metadata = {
   title: "Tra cứu đơn hàng",
@@ -13,14 +12,14 @@ export const metadata: Metadata = {
   },
 };
 
-const getTracking = cache(async ({ code }: { code: string }) => {
+const getTracking = async ({ code }: { code: string }) => {
   try {
     const res = await axios.get(`/api/customer/orders/${code}/tracking/`);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     throw new Error("Failed to fetch data");
   }
-});
+};
 
 export default async function Tracking({
   searchParams,
