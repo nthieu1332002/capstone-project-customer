@@ -87,13 +87,13 @@ const OrderDetailHeader = ({ code, order }: Props) => {
     try {
       const res = await axios.get(
         `/api/customer/orders/${code}/payments/vnpay/url`
-      );
+        );
+        console.log("res", res);
       if (res.status === 400) {
         toast.error("Đơn hàng này đã được thanh toán.");
       }
-      router.push(res.data);
+      router.push(res.data.data);
     } catch (error) {
-      console.log(error);
       toast.error("Có lỗi xảy ra, vui lòng thử lại sau!");
     }
   };
@@ -124,6 +124,15 @@ const OrderDetailHeader = ({ code, order }: Props) => {
             >
               {order.is_paid ? "Đã thanh toán" : "Chưa thanh toán"}
             </Tag>
+            {order.is_confirmed ? (
+              <Tag
+                bordered={false}
+                className="tag font-medium"
+                color="green"
+              >
+                Đã xác thực
+              </Tag>
+            ) : null}
             {OrderStatus.map((item) => {
               return (
                 <Fragment key={item.id}>

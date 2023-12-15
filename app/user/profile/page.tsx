@@ -3,6 +3,8 @@ import UserProfile from "@/components/users/profiles/UserProfile";
 import { axios } from "@/lib/axios";
 import { Tabs } from "antd";
 import { Metadata } from "next";
+import { getProfile } from "../layout";
+import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "Tài khoản",
   description:
@@ -13,8 +15,8 @@ export const metadata: Metadata = {
 };
 
 const Profile = async () => {
-  const data = await axios.get("/api/user");
-
+  const data = await getProfile()
+  if (!data) return redirect("/");
   return (
     <div className="p-3 flex flex-col gap-3">
       <h1 className="text-2xl font-semibold">Cài đặt</h1>

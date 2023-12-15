@@ -26,7 +26,6 @@ type Props = {
 };
 
 const TrackingContent = ({ data, code, currentUser }: Props) => {
-  console.log("dât", data);
   const [isOpen, setIsOpen] = React.useState(false);
   const lastSegment = data.checkpoints[data.checkpoints.length - 1];
   const item = data.checkpoints.map((item, index) => {

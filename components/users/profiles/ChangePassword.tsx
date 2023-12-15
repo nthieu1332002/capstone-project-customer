@@ -19,14 +19,14 @@ const ChangePassword = () => {
     setDisabled(true);
 
     try {
-      const res = await axios.put("/api/user/changepassword", values);
+      const res = await axios.put("/api/user/change-password", values);
       if (res.status === 200) {
         form.resetFields();
         toast.success("Đổi mật khẩu thành công!");
       }
     } catch (error: any) {
-      // toast.error("Đổi mật khẩu thất bại!")
       toast.error(error.response.data);
+      toast.error("Đổi mật khẩu thất bại!")
     }
     setDisabled(false);
   };

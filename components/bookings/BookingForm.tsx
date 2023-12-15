@@ -67,32 +67,37 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const [value, setValue] = useState(0);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const newPackageType = packageType.filter(item => booking.acceptable_package_types.includes(item.value));
+  const [error, setError] = useState("");
+  const newPackageType = packageType.filter((item) =>
+    booking.acceptable_package_types.includes(item.value)
+  );
   const onChangePayment = useCallback((e: RadioChangeEvent) => {
     setValue(e.target.value);
   }, []);
   const onChangePayOnDelivery = useCallback((e: CheckboxChangeEvent) => {
-    setValue(0)
+    setValue(0);
     setChecked(e.target.checked);
-  }, [])
+  }, []);
   const debouncedHandleFetchPrice = useDebouncedCallback(async () => {
     try {
+      setError("");
       if (length && width && height && weight) {
         const url = qs.stringifyUrl({
           url: "/api/customer/package-price",
           query: {
-            length,
-            width,
-            height,
-            weight,
+            height: height * 10,
+            width: width * 10,
+            length: length * 10,
+            weight: weight * 1000,
             distance: booking.total_distance,
           },
         });
         const res = await axios.get(url);
-        setSizePrice(res.data.total_price);
+        setSizePrice(res.data.data.total_price);
       }
-    } catch (error) {
-      console.error("An error occurred while fetching the data:", error);
+    } catch (error: any) {
+      setError(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   }, 500);
 
@@ -105,22 +110,24 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
     try {
       const data = {
         ...values,
+        height: values.height * 10,
+        width: values.width * 10,
+        length: values.length * 10,
+        weight: values.weight * 1000,
         order_route_id: booking.id,
       };
       const res = await axios.post("/api/customer/orders", data);
-      console.log(res);
-      if (res.data) {
+      if (res.data.data) {
         const url = qs.stringifyUrl({
           url: "booking/success",
           query: {
-            code: res.data.code,
-            email: res.data.email,
+            code: res.data.data.code,
+            email: res.data.data.email,
           },
         });
         router.replace(url);
       }
     } catch (error) {
-      console.log("error", error);
       toast.error("Có lỗi xảy ra, tạo đơn hàng thất bại!");
     }
     setLoading(false);
@@ -293,7 +300,9 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
 
           <div className="flex flex-col md:flex-row md:gap-5">
             <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Tổng khối lượng (g)</p>}
+              label={
+                <p className="font-medium text-sm">Tổng khối lượng (kg)</p>
+              }
               name="weight"
               rules={[
                 {
@@ -309,12 +318,13 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                 }
                 style={{ width: "100%" }}
                 min={0}
+                max={50}
                 placeholder="10"
                 className="custom-input-number"
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Dài (mm)</p>}
+              label={<p className="font-medium text-sm">Dài (cm)</p>}
               name="length"
               rules={[
                 {
@@ -330,12 +340,13 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                 }
                 style={{ width: "100%" }}
                 min={0}
+                max={100}
                 placeholder="10"
                 className="custom-input-number"
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Rộng (mm)</p>}
+              label={<p className="font-medium text-sm">Rộng (cm)</p>}
               name="width"
               rules={[
                 {
@@ -351,12 +362,13 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                 }
                 style={{ width: "100%" }}
                 min={0}
+                max={100}
                 placeholder="10"
                 className="custom-input-number"
               />
             </Form.Item>
             <Form.Item<FieldType>
-              label={<p className="font-medium text-sm">Cao (mm)</p>}
+              label={<p className="font-medium text-sm">Cao (cm)</p>}
               name="height"
               rules={[
                 {
@@ -371,12 +383,14 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 min={0}
+                max={100}
                 style={{ width: "100%" }}
                 placeholder="10"
                 className="custom-input-number"
               />
             </Form.Item>
           </div>
+          <p className="text-center text-sm text-red-500">{error}</p>
           <div className="flex flex-col md:flex-row justify-between md:gap-5">
             <Form.Item<FieldType>
               label={
@@ -392,8 +406,8 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
               tooltip={
                 <p className="text-sm w-full">
                   Giá trị hàng hóa là căn cứ xác định giá trị bồi thường nếu xảy
-                  ra sự cố (giá trị bồi thường tối đa 10.000.000₫). Phí khai giá hàng hóa (nếu có) được tính như
-                  sau:
+                  ra sự cố (giá trị bồi thường tối đa 10.000.000₫). Phí khai giá
+                  hàng hóa (nếu có) được tính như sau:
                   <br />
                   + Giá trị hàng hóa &lt; 1.000.000đ: Miễn phí
                   <br />+ Giá trị hàng hóa &gt;= 1.000.000₫ (tối đa là
@@ -407,6 +421,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 min={0}
+                max={5000000}
                 onChange={(value: any) => onChange(value)}
                 style={{ width: "100%" }}
                 className="custom-search-sidebar"
@@ -448,7 +463,9 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
               className="!mb-3 flex-1"
               valuePropName="checked"
             >
-              <Checkbox onChange={onChangePayOnDelivery}>Bên nhận trả phí?</Checkbox>
+              <Checkbox onChange={onChangePayOnDelivery}>
+                Bên nhận trả phí?
+              </Checkbox>
             </Form.Item>
           </div>
 

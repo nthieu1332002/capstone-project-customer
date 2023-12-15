@@ -51,7 +51,7 @@ const getAllOrders = async ({
       { skipNull: true }
     );
     const res = await axios.get(url);
-    return res;
+    return res.data;
   } catch (error) {
     return null;
   }

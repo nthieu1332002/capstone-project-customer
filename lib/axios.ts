@@ -23,13 +23,8 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-    (response) => response.data,
+    (response) => response,
     (error) => {
-        console.log("error", error);
-        if (error.response.status === 401) {
-            // window.location.href = "/login";
-            console.log("cc");
-        }
         return Promise.reject(error);
     }
 );

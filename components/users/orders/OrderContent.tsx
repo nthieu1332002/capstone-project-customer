@@ -34,6 +34,11 @@ type Order = {
   payment_status: number;
   receiver_name: string;
   latest_order_status: number;
+  is_confirmed: boolean;
+  is_cancelled: boolean;
+  cancelled_at: string | null;
+  can_be_updated: boolean;
+  can_be_cancelled: boolean;
 };
 
 type Props = {
@@ -144,13 +149,15 @@ const OrderContent = ({ data, status }: Props) => {
       ),
     },
     {
-      dataIndex: "action",
+      key: "operation",
       fixed: "right",
       width: 40,
       render: (_, record) => {
         return (
           <TableAction
-            onClickDetail={() => router.push(`/user/order/${record.code}`)}
+            code={record.code}
+            editable={record.can_be_updated}
+            cancelable={record.can_be_cancelled}
           />
         );
       },
