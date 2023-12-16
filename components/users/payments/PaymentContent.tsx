@@ -6,6 +6,10 @@ import dayjs from "dayjs";
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
+
+import vnpay from "@/public/assets/vnpay.png";
+import cash from "@/public/assets/cash.jpg";
 type Payment = {
   id: number;
   order_code: string;
@@ -45,40 +49,22 @@ const PaymentContent = ({ data }: Props) => {
   const meta = data.meta;
   const columns: ColumnsType<Payment> = [
     {
-      title: "ID",
-      key: "id",
-      dataIndex: "id",
-      fixed: "left",
-      width: 130,
-      sorter: (a, b) => a.value - b.value,
-      render: (text) => <b className="uppercase">{text}</b>,
-    },
-    {
-      title: "Mã thanh toán",
-      key: "vnpay_transaction_code",
-      dataIndex: "vnpay_transaction_code",
-      fixed: "left",
-      width: 130,
-      sorter: (a, b) => a.value - b.value,
-      render: (text) => <b className="uppercase">{text}</b>,
-    },
-    {
-      title: "Mã đơn hàng",
+      title: "Giao dịch",
       key: "order_code",
-      dataIndex: "order_code",
-      render: (text) => (
-        <Link href={`/user/order/${text}`} className="uppercase">
-          #{text}
-        </Link>
+      dataIndex: ["order_code", "vnpay_transaction_code"],
+      render: (text, record) => (
+        <>
+          <p className="font-bold text-sm">
+            Đơn hàng{" "}
+            <Link href={`/user/order/${record.order_code}`} target="_blank" className="uppercase">
+              #{record.order_code}
+            </Link>
+          </p>
+          {record.vnpay_transaction_code ? (
+            <p className="text-sm">Mã VNPay: {record.vnpay_transaction_code}</p>
+          ) : null}
+        </>
       ),
-    },
-    {
-      title: "Ngày",
-      key: "created_at",
-      dataIndex: "created_at",
-      width: 120,
-      sorter: (a, b) => a.created_at.localeCompare(b.created_at),
-      render: (text) => <p> {dayjs(text).format("DD/MM/YYYY")}</p>,
     },
     {
       title: "Giá trị",
@@ -89,10 +75,24 @@ const PaymentContent = ({ data }: Props) => {
       render: (text) => <b>{new Intl.NumberFormat("en-Us").format(text)}đ</b>,
     },
     {
+      title: "Thời gian",
+      key: "created_at",
+      dataIndex: "created_at",
+      sorter: (a, b) => a.created_at.localeCompare(b.created_at),
+      render: (text) => <p> {dayjs(text).format("DD/MM/YYYY")}</p>,
+    },
+    {
       title: "Phương thức thanh toán",
       key: "payment_method",
       dataIndex: "payment_method",
-      render: (text) => <p>{text}</p>,
+      render: (text) => (
+        <Image
+          src={text=== 0 ? cash : vnpay}
+          alt="logo"
+          width={100}
+          priority
+        />
+      ),
     },
   ];
   return (
