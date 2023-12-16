@@ -14,17 +14,20 @@ import { axios } from "@/lib/axios";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import useCancelModal from "@/hooks/useCancelModal";
+import useEditModal from "@/hooks/useEditModal";
 
 export type OrderDetail = {
   start_station: {
     id: number;
     name: string;
     address: string;
+    image_url: string;
   };
   end_station: {
     id: number;
     name: string;
     address: string;
+    image_url: string;
   };
   code: string;
   sender_name: string;
@@ -63,11 +66,12 @@ type Props = {
 const OrderDetailHeader = ({ code, order }: Props) => {
   const router = useRouter();
   const { onOpen } = useCancelModal();
+  const { onOpen: openEdit } = useEditModal();
 
   const items: MenuProps["items"] = [
     {
       disabled: order.is_paid || order.is_confirmed || order.is_cancelled,
-      label: <div>Chỉnh sửa</div>,
+      label: <div onClick={() => openEdit(code)}>Chỉnh sửa</div>,
       key: "0",
       icon: <AiOutlineEdit />,
     },
@@ -87,8 +91,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
     try {
       const res = await axios.get(
         `/api/customer/orders/${code}/payments/vnpay/url`
-        );
-        console.log("res", res);
+      );
       if (res.status === 400) {
         toast.error("Đơn hàng này đã được thanh toán.");
       }

@@ -13,6 +13,7 @@ export type Booking = {
       id: number;
       name: string;
     };
+    image_url: string;
   };
   end_station: {
     id: number;
@@ -24,6 +25,7 @@ export type Booking = {
       id: number;
       name: string;
     };
+    image_url: string;
   };
   lowest_price: number;
   total_distance: number;
@@ -37,15 +39,20 @@ interface BookingStore {
 }
 
 const useBookingStore = create<BookingStore>((set) => ({
-  booking: Cookies.get('booking') ? JSON.parse(Cookies.get('booking') || '') : undefined,
+  booking: Cookies.get("booking")
+    ? JSON.parse(Cookies.get("booking") || "")
+    : undefined,
 
   set: (bookingItem) => {
     set({ booking: bookingItem });
-    Cookies.set('booking', JSON.stringify(bookingItem), { expires: 1 / 48, path: '' })
+    Cookies.set("booking", JSON.stringify(bookingItem), {
+      expires: 1 / 48,
+      path: "",
+    });
   },
 
   remove: () => {
-    Cookies.remove('booking')
+    Cookies.remove("booking");
     set({ booking: undefined });
   },
 }));

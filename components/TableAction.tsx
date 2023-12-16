@@ -4,6 +4,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import Link from "next/link";
 import useCancelModal from "@/hooks/useCancelModal";
+import useEditModal from "@/hooks/useEditModal";
 
 interface ITableActionProps {
   disabled?: boolean;
@@ -19,6 +20,8 @@ const TableAction = ({
   cancelable,
 }: ITableActionProps) => {
   const { onOpen } = useCancelModal();
+  const { onOpen: openEdit } = useEditModal();
+
 
   const items: MenuProps["items"] = [
     {
@@ -28,7 +31,7 @@ const TableAction = ({
     },
     {
       key: 1,
-      label: <div onClick={() => handleDelete()}>Chỉnh sửa</div>,
+      label: <div onClick={() => openEdit(code)}>Chỉnh sửa</div>,
       icon: <AiOutlineEdit />,
       disabled: !editable,
     },
