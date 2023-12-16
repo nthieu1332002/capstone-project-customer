@@ -52,6 +52,10 @@ const TableAction = ({
     },
   ];
 
+  const handleDelete = () => {
+    console.log("cancel");
+  };
+
   return (
     <Dropdown
       menu={{
