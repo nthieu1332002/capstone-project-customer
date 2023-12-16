@@ -34,7 +34,7 @@ export const OrderStatusMap: { [key: number]: string } = {
     1: "đã được tiếp nhận tại",
     2: "đã xuất phát khỏi",
     3: "đã đến",
-    4: "đã giao hàng thành công",
+    4: "đã giao hàng thành công tại",
     5: "đã hủy",
 };
 export const OrderStatus = [
@@ -62,7 +62,17 @@ export const OrderStatus = [
         id: 4,
         status: "Hoàn thành",
         color: paidColor,
-    }
+    },
+    {
+        id: 5,
+        status: "Đã hủy",
+        color: "red",
+    },
+    {
+        id: 6,
+        status: "Đã xác nhận",
+        color: "cyan",
+    },
 ];
 export const PaymentStatus = [
     {

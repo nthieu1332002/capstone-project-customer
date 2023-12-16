@@ -14,16 +14,12 @@ type Props = {
 
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
-  const { set, remove } = useBookingStore();
+  const { set } = useBookingStore();
   const chooseBooking = (route: Booking) => {
-    remove();
-    setTimeout(() => {
-      set(route);
-      router.push("/booking");
-    }, 0);
+    set(route);
+    router.push("/booking");
   };
   return (
-
     <div className="rounded-3xl border p-4 mb-3">
       <div className="flex gap-5">
         <div className="relative flex-shrink-0 h-36 w-36 rounded-2xl overflow-hidden">
@@ -31,7 +27,7 @@ const SearchItem = ({ route }: Props) => {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
-            src="https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"
+            src={route.start_station.image_url || "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"}
             alt=""
             priority
           />
@@ -43,18 +39,28 @@ const SearchItem = ({ route }: Props) => {
               <Tooltip placement="right" title={route.start_station.address}>
                 {route.start_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  {route.start_station.distance_to_sender ? (`cách bạn ${convertUnit(route.start_station.distance_to_sender)} km`): null}
+                  {route.start_station.distance_to_sender
+                    ? `cách bạn ${convertUnit(
+                        route.start_station.distance_to_sender
+                      )} km`
+                    : null}
                 </span>
               </Tooltip>
             </li>
             <div className="ml-[1px] border-l-[3px] border-dotted pl-6">
-              <p className="text-sm text-gray-600">{convertUnit(route.total_distance)} km</p>
+              <p className="text-sm text-gray-600">
+                {convertUnit(route.total_distance)} km
+              </p>
             </div>
             <li className="font-medium">
               <Tooltip placement="right" title={route.end_station.address}>
                 {route.end_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                {route.start_station.distance_to_sender ? (`cách điểm đến ${convertUnit(route.end_station.distance_to_receiver)} km`): null}
+                  {route.start_station.distance_to_sender
+                    ? `cách điểm đến ${convertUnit(
+                        route.end_station.distance_to_receiver
+                      )} km`
+                    : null}
                 </span>
               </Tooltip>
             </li>

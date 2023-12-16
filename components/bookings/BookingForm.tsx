@@ -15,7 +15,7 @@ import {
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbPackage, TbUserCircle } from "react-icons/tb";
 import Button from "@/components/Button";
-import { Booking } from "@/hooks/useBookingStore";
+import useBookingStore, { Booking } from "@/hooks/useBookingStore";
 import { useRouter } from "next/navigation";
 import { Session } from "next-auth";
 import { packageType, phoneNumberPattern } from "@/lib/constants";
@@ -59,6 +59,8 @@ type Props = {
 
 const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   const router = useRouter();
+  const { remove } = useBookingStore();
+
   const [form] = Form.useForm();
   const length = Form.useWatch("length", form);
   const width = Form.useWatch("width", form);
@@ -125,6 +127,7 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
             email: res.data.data.email,
           },
         });
+        remove();
         router.replace(url);
       }
     } catch (error) {

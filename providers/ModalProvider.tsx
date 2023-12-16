@@ -1,5 +1,6 @@
 "use client";
 import ConfirmCancelModal from "@/components/modals/ConfirmCancelModal";
+import EditModal from "@/components/modals/EditModal";
 import LoginModal from "@/components/modals/LoginModal";
 import LogoutModal from "@/components/modals/LogoutModal";
 import RegisterModal from "@/components/modals/RegisterModal";
@@ -16,12 +17,13 @@ const ModalProvider = () => {
     return null;
   }
   return (
-    <div>
+    <>
       <LoginModal />
       <RegisterModal />
       <LogoutModal/>
       <ConfirmCancelModal/>
-    </div>
+      <EditModal/>
+    </>
   );
 };
 
