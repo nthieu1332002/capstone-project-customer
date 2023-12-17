@@ -50,6 +50,7 @@ export type OrderDetail = {
   is_confirmed: boolean;
   is_cancelled: boolean;
   cancelled_at: string | null;
+  cancelled_reason: string | null;
   checkpoints: Array<{
     name: string;
     address: string;
@@ -127,15 +128,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
             >
               {order.is_paid ? "Đã thanh toán" : "Chưa thanh toán"}
             </Tag>
-            {order.is_confirmed ? (
-              <Tag
-                bordered={false}
-                className="tag font-medium"
-                color="green"
-              >
-                Đã xác thực
-              </Tag>
-            ) : null}
+            
             {OrderStatus.map((item) => {
               return (
                 <Fragment key={item.id}>

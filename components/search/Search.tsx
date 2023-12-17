@@ -70,7 +70,6 @@ const Search = () => {
         },
         { skipNull: true }
       );
-      console.log("url", url);
       router.push(url);
     } catch (error) {
       console.error("error handle", error);

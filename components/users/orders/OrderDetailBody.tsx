@@ -17,7 +17,6 @@ type Props = {
 };
 
 const OrderDetailBody = ({ order }: Props) => {
-  console.log(order);
   const items = order.checkpoints.map((item, index) => {
     const orderStatus = OrderStatusMap[item.status];
     return {
@@ -34,7 +33,7 @@ const OrderDetailBody = ({ order }: Props) => {
                   item.status === 5 ? "text-red-600" : "text-primary-color"
                 )}
               >
-                {orderStatus}
+                {orderStatus} {order.cancelled_reason && <span>(Lý do: {order.cancelled_reason})</span>}
               </span>{" "}
               {item.name ? ` ${item.name}` : null}{" "}
             </b>

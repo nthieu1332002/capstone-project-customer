@@ -18,7 +18,7 @@ const TrackingOrderBar = (props: Props) => {
         prefix={<BiSearchAlt size="18" className="text-zinc-500" />}
         placeholder="Tra cứu mã đơn hàng"
         className="custom-search-sidebar"
-        onPressEnter={(e) => onSearch(e.currentTarget.value)}
+        onPressEnter={(e) => onSearch(e.currentTarget.value.replace(/ /g,''))}
       />
     </div>
   );
