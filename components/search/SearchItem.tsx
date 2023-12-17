@@ -14,10 +14,12 @@ type Props = {
 
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
-  const { set } = useBookingStore();
+  const { set, booking } = useBookingStore();
   const chooseBooking = (route: Booking) => {
     set(route);
-    router.push("/booking");
+    if (booking) {
+      router.push("/booking");
+    }
   };
   return (
     <div className="rounded-3xl border p-4 mb-3">
@@ -27,7 +29,10 @@ const SearchItem = ({ route }: Props) => {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
-            src={route.start_station.image_url || "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"}
+            src={
+              route.start_station.image_url ||
+              "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"
+            }
             alt=""
             priority
           />
