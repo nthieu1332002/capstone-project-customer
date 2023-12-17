@@ -7,10 +7,14 @@ import { cn } from "@/lib/utils";
 import { OrderStatusMap } from "@/lib/constants";
 import VerifyCancelModal from "../modals/VerifyCancelModal";
 import { Session } from "next-auth";
+import { axios } from "@/lib/axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 dayjs.locale("vi");
 
 export type Tracking = {
   can_be_cancelled?: boolean;
+  can_be_paid?: boolean;
   checkpoints: Array<{
     name: string;
     address: string;
@@ -26,6 +30,8 @@ type Props = {
 };
 
 const TrackingContent = ({ data, code, currentUser }: Props) => {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = React.useState(false);
   const lastSegment = data.checkpoints[data.checkpoints.length - 1];
   const item = data.checkpoints.map((item, index) => {
@@ -55,6 +61,19 @@ const TrackingContent = ({ data, code, currentUser }: Props) => {
       ),
     };
   });
+  const handlePayment = async () => {
+    try {
+      const res = await axios.get(
+        `/api/customer/orders/${code}/payments/vnpay/url`
+      );
+      if (res.status === 400) {
+        toast.error("Đơn hàng này đã được thanh toán.");
+      }
+      router.push(res.data.data);
+    } catch (error) {
+      toast.error("Có lỗi xảy ra, vui lòng thử lại sau!");
+    }
+  };
   return (
     <>
       <div className="text-center">
@@ -73,6 +92,18 @@ const TrackingContent = ({ data, code, currentUser }: Props) => {
           vào lúc{" "}
           {dayjs(lastSegment.achieved_at).format("hh:mm dddd DD/MM/YYYY")}
         </p>
+        {data.can_be_paid && !currentUser ? (
+          <p className="italic mt-2">
+            (Đơn hàng này chưa được thanh toán.{" "}
+            <span
+              onClick={handlePayment}
+              className="text-primary-color cursor-pointer hover:underline"
+            >
+              Thanh toán ngay.
+            </span>
+            )
+          </p>
+        ) : null}
         {data.can_be_cancelled && !currentUser ? (
           <p className="italic mt-2">
             (Đơn hàng này đủ điều kiện hủy.{" "}

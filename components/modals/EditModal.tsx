@@ -42,7 +42,6 @@ const EditModal = () => {
     setLoading(true);
     try {
       form.validateFields().then(async (fieldsValue) => {
-        console.log("fieldsValue", fieldsValue);
         const res = await axios.put(`/api/customer/orders/${code}`, {
           sender_name: fieldsValue["sender_name"],
           sender_phone:fieldsValue["sender_phone"],
@@ -51,7 +50,6 @@ const EditModal = () => {
           receiver_phone: fieldsValue["receiver_phone"],
           receiver_email:fieldsValue["receiver_email"],
         });
-        console.log(res);
         if (res.status === 200) {
           toast.success("Cập nhật thành công!");
           router.refresh();

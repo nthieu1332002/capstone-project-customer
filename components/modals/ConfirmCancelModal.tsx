@@ -18,7 +18,6 @@ const ConfirmCancelModal = () => {
       const res = await axios.put(`/api/customer/orders/${code}/cancelled`, {
         identifier,
       });
-      console.log(res);
       if (res.status === 200) {
         toast.success("Hủy đơn hàng thành công!");
         router.refresh();

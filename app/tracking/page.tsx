@@ -16,8 +16,8 @@ const getTracking = async ({ code }: { code: string }) => {
   try {
     const res = await axios.get(`/api/customer/orders/${code}/tracking/`);
     return res.data.data;
-  } catch (error) {
-    throw new Error("Failed to fetch data");
+  } catch (error: any) {
+    throw new Error("Failed to fetch data", error);
   }
 };
 
