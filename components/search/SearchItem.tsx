@@ -2,7 +2,7 @@
 
 import { Tooltip } from "antd";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
@@ -15,11 +15,14 @@ type Props = {
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
   const { set, booking } = useBookingStore();
+  const [loading, setLoading] = useState(false)
   const chooseBooking = (route: Booking) => {
+    setLoading(true)
     set(route);
     if (booking) {
       router.push("/booking");
     }
+    setLoading(false)
   };
   return (
     <div className="rounded-3xl border p-4 mb-3">
@@ -77,6 +80,7 @@ const SearchItem = ({ route }: Props) => {
             {new Intl.NumberFormat("en-Us").format(route.lowest_price)}đ
           </p>
           <Button
+            disabled={loading}
             onClick={() => chooseBooking(route)}
             className="rounded-full text-xs px-4 mt-3"
             label="Chọn chuyến"
