@@ -2,13 +2,15 @@
 import { CheckCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 export default function BookingSuccess() {
-  const searchParams = useSearchParams()
- 
-  const code = searchParams.get('code')
-  const email = searchParams.get('email')
-  return(
+  const searchParams = useSearchParams();
+  const { data } = useSession()
+  console.log(data);
+  const code = searchParams.get("code");
+  const email = searchParams.get("email");
+  return (
     <div className="flex flex-col gap-5 h-full max-w-screen px-5 md:px-40 pt-5 md:pt-8 pb-10">
       <div className="text-center">
         <div className="flex items-center justify-center my-3">
@@ -31,6 +33,7 @@ export default function BookingSuccess() {
             </Link>{" "}
             cho đến khi chành xe xác nhận đơn hàng.
           </p>
+          {data ? <Link href={`/user/order/${code}`} className="text-blue-600">Xem chi tiết đơn hàng tại đây</Link>: <p className="text-yellow-600">Hãy tạo tài khoản để dễ dàng theo dõi và quản lý đơn hàng của bạn.</p>}
         </div>
       </div>
 
@@ -48,7 +51,11 @@ export default function BookingSuccess() {
           <CheckCircleOutlined className="!text-primary-color" /> Thanh toán đơn
           hàng sau khi chành xe đã xác nhận kích cỡ và loại của đơn hàng.
         </p>
+        <p className="text-red-500">
+          <b className="underline">Lưu ý:</b>{" "}
+          Thanh toán chỉ có thể được thực hiện sau khi nhà xe xác nhận đơn hàng.
+        </p>
       </div>
     </div>
-  )
+  );
 }
