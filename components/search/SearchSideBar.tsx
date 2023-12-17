@@ -51,7 +51,6 @@ const SearchSideBar = () => {
   );
   const router = useRouter();
   const handleSubmit = async () => {
-    console.log("Submit");
     if (((!from || !to) && (!locationFrom || !locationTo)) || !packages) {
       return;
     }
@@ -60,8 +59,6 @@ const SearchSideBar = () => {
         getCoordinates(from),
         getCoordinates(to),
       ]);
-      console.log("start", start);
-      console.log("end", end);
       startTransition(() => {
         const url = qs.stringifyUrl(
           {
@@ -82,7 +79,6 @@ const SearchSideBar = () => {
           },
           { skipNull: true }
         );
-        console.log("url", url);
         router.replace(url);
       });
     } catch (error) {

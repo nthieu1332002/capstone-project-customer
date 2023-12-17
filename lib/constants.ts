@@ -36,6 +36,7 @@ export const OrderStatusMap: { [key: number]: string } = {
     3: "đã đến",
     4: "đã giao hàng thành công tại",
     5: "đã hủy",
+    6: "đã được xác nhận"
 };
 export const OrderStatus = [
     {

@@ -34,7 +34,6 @@ const CustomFilter = ({}: Props) => {
   }, [handleClickOutside]);
 
   const onAfterChange = (value: number[]) => {
-    console.log(value);
     setPrice(value);
   };
   const onFilter = () => {
@@ -45,7 +44,6 @@ const CustomFilter = ({}: Props) => {
       },
       { skipNull: true }
     );
-    console.log(url);
     router.push(url);
   };
   return (
