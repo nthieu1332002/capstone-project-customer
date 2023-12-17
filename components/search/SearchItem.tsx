@@ -2,7 +2,7 @@
 
 import { Tooltip } from "antd";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
@@ -14,10 +14,15 @@ type Props = {
 
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
-  const { set } = useBookingStore();
+  const { set, booking } = useBookingStore();
+  const [loading, setLoading] = useState(false)
   const chooseBooking = (route: Booking) => {
+    setLoading(true)
     set(route);
-    router.push("/booking");
+    if (booking) {
+      router.push("/booking");
+    }
+    setLoading(false)
   };
   return (
     <div className="rounded-3xl border p-4 mb-3">
@@ -27,7 +32,10 @@ const SearchItem = ({ route }: Props) => {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
-            src={route.start_station.image_url || "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"}
+            src={
+              route.start_station.image_url ||
+              "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"
+            }
             alt=""
             priority
           />
@@ -72,6 +80,7 @@ const SearchItem = ({ route }: Props) => {
             {new Intl.NumberFormat("en-Us").format(route.lowest_price)}đ
           </p>
           <Button
+            disabled={loading}
             onClick={() => chooseBooking(route)}
             className="rounded-full text-xs px-4 mt-3"
             label="Chọn chuyến"
