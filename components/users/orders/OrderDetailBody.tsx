@@ -56,7 +56,7 @@ const OrderDetailBody = ({ order }: Props) => {
                 className="object-cover"
                 src={
                   order.start_station.image_url ||
-                  "https://res.cloudinary.com/dad0fircy/image/upload/v1697609388/capstone/nu-cuoi-viet-du-lich-vung-tau-09_hifmbu.jpg"
+                  "https://res.cloudinary.com/dad0fircy/image/upload/v1702828398/capstone/icon_we9y8a.png"
                 }
                 alt=""
                 priority
