@@ -21,13 +21,15 @@ export type OrderDetail = {
     id: number;
     name: string;
     address: string;
-    image_url: string;
+    imageUrl: string | null;
+    partnerPhones: string[];
   };
   end_station: {
     id: number;
     name: string;
     address: string;
-    image_url: string;
+    imageUrl: string | null;
+    partnerPhones: string[];
   };
   code: string;
   sender_name: string;
@@ -128,7 +130,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
             >
               {order.is_paid ? "Đã thanh toán" : "Chưa thanh toán"}
             </Tag>
-            
+
             {OrderStatus.map((item) => {
               return (
                 <Fragment key={item.id}>

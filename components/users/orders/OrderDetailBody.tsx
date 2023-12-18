@@ -55,7 +55,7 @@ const OrderDetailBody = ({ order }: Props) => {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
                 src={
-                  order.start_station.image_url ||
+                  order.start_station.imageUrl ||
                   "https://res.cloudinary.com/dad0fircy/image/upload/v1702828398/capstone/icon_we9y8a.png"
                 }
                 alt=""
