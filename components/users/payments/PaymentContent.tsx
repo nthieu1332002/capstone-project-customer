@@ -1,5 +1,4 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
 import { ColumnsType } from "antd/es/table";
 import { Pagination, Table } from "antd";
 import dayjs from "dayjs";
@@ -24,8 +23,6 @@ type Props = {
 };
 
 const PaymentContent = ({ data }: Props) => {
-  const router = useRouter();
-  const params = useSearchParams();
   const payments: Payment[] = data.data.map(
     (item: {
       id: any;
@@ -52,6 +49,8 @@ const PaymentContent = ({ data }: Props) => {
       title: "Giao dịch",
       key: "order_code",
       dataIndex: ["order_code", "vnpay_transaction_code"],
+      fixed: "left",
+      width: 230,
       render: (text, record) => (
         <>
           <p className="font-bold text-sm">
@@ -71,7 +70,7 @@ const PaymentContent = ({ data }: Props) => {
       key: "value",
       dataIndex: "value",
       sorter: (a, b) => a.value - b.value,
-      width: 200,
+      width: 150,
       render: (text) => <b>{new Intl.NumberFormat("en-Us").format(text)}đ</b>,
     },
     {
@@ -79,7 +78,7 @@ const PaymentContent = ({ data }: Props) => {
       key: "created_at",
       dataIndex: "created_at",
       sorter: (a, b) => a.created_at.localeCompare(b.created_at),
-      render: (text) => <p> {dayjs(text).format("DD/MM/YYYY")}</p>,
+      render: (text) => <b> {dayjs(text).format("hh:mm:ss ngày DD/MM/YYYY")}</b>,
     },
     {
       title: "Phương thức thanh toán",
@@ -103,7 +102,7 @@ const PaymentContent = ({ data }: Props) => {
           dataSource={payments}
           columns={columns}
           pagination={false}
-          scroll={{ x: 500 }}
+          scroll={{ x: 800 }}
         />
         <div className="mt-3 flex justify-end">
           <Pagination

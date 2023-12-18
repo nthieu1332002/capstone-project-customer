@@ -33,7 +33,10 @@ const OrderDetailBody = ({ order }: Props) => {
                   item.status === 5 ? "text-red-600" : "text-primary-color"
                 )}
               >
-                {orderStatus} {order.cancelled_reason && <span>(Lý do: {order.cancelled_reason})</span>}
+                {orderStatus}{" "}
+                {item.status === 5 && order.cancelled_reason ? (
+                  <span>(Lý do: {order.cancelled_reason})</span>
+                ) : null}
               </span>{" "}
               {item.name ? ` ${item.name}` : null}{" "}
             </b>
@@ -45,11 +48,11 @@ const OrderDetailBody = ({ order }: Props) => {
   });
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between gap-4">
-      <div className="flex flex-col gap-4 w-full md:w-[calc(100%-220px)]">
-        <div className="bg-white rounded-sm shadow-sm px-5 py-4">
+    <div className="flex flex-col lg:flex-row md:justify-between gap-4">
+      <div className="flex flex-col gap-4 w-full lg:w-[calc(100%-220px)]">
+        <div className="bg-white min-h-[130px] rounded-sm shadow-sm px-5 py-4">
           <div className="flex gap-5">
-            <div className="relative flex-shrink-0 h-36 w-32 rounded-md overflow-hidden">
+            <div className="relative flex-shrink-0 hidden lg:block md:h-36 md:w-32 rounded-md overflow-hidden">
               <Image
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -119,30 +122,29 @@ const OrderDetailBody = ({ order }: Props) => {
         </div>
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
           <h2 className="font-bold">Thông tin gói hàng</h2>
-          <div className="flex gap-5 mt-4">
-            <div className="flex whitespace-nowrap gap-16 w-full">
-              <div className="flex flex-col gap-3">
-                <p className="text-gray-500">Tổng khối lượng</p>
+
+            <div className="flex flex-wrap whitespace-nowrap gap-5 lg:gap-16 w-full mt-4">
+              <div className="space-y-3">
+                <p className="text-gray-500">Khối lượng</p>
                 <p className="font-medium">{convertUnit(order.weight)} kg</p>
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="space-y-3">
                 <p className="text-gray-500">Chiều dài</p>
                 <p className="font-medium">{convertUnit(order.length)} m</p>
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="space-y-3">
                 <p className="text-gray-500">Chiều rộng</p>
                 <p className="font-medium">{convertUnit(order.width)} m</p>
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="space-y-3">
                 <p className="text-gray-500">Chiều cao</p>
                 <p className="font-medium">{convertUnit(order.height)} m</p>
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="space-y-3">
                 <p className="text-gray-500">Trị giá</p>
                 <p className="font-medium">
                   {new Intl.NumberFormat("en-Us").format(order.package_value)}đ
                 </p>
-              </div>
             </div>
           </div>
           <div className="flex gap-1 mt-3">
@@ -162,7 +164,7 @@ const OrderDetailBody = ({ order }: Props) => {
         <Timeline reverse items={items} />
       </div>
       <div className="w-full md:w-[220px]">
-        <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm flex flex-col gap-3">
+        <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm space-y-3">
           <h2 className="text-lg font-bold">Khách hàng</h2>
           <div className="py-3">
             <p className="text-sm font-semibold mb-3">Người gửi</p>
