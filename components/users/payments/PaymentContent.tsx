@@ -21,8 +21,13 @@ type Payment = {
 type Props = {
   data: any;
 };
+import qs from "query-string";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const PaymentContent = ({ data }: Props) => {
+  const params = useSearchParams();
+  const router = useRouter();
+
   const payments: Payment[] = data.data.map(
     (item: {
       id: any;
@@ -78,7 +83,7 @@ const PaymentContent = ({ data }: Props) => {
       key: "created_at",
       dataIndex: "created_at",
       sorter: (a, b) => a.created_at.localeCompare(b.created_at),
-      render: (text) => <b> {dayjs(text).format("hh:mm:ss ngày DD/MM/YYYY")}</b>,
+      render: (text) => <b> {dayjs(text).format("HH:mm:ss ngày DD/MM/YYYY")}</b>,
     },
     {
       title: "Phương thức thanh toán",
@@ -94,6 +99,17 @@ const PaymentContent = ({ data }: Props) => {
       ),
     },
   ];
+  
+  const handleNavigation = (page: number, pageSize: number) => {
+    const url = qs.stringifyUrl(
+      {
+        url: "/user/payment",
+        query: { ...Object.fromEntries(params), page },
+      },
+      { skipNull: true }
+    );
+    router.push(url);
+  };
   return (
     <div className="flex flex-col mt-3">
       <div className="px-5 py-1 bg-white rounded-xl">
@@ -110,7 +126,7 @@ const PaymentContent = ({ data }: Props) => {
             pageSize={meta.per_page}
             total={meta.total}
             showSizeChanger={false}
-            // onChange={(page, pageSize) => handleNavigation(page, pageSize)}
+            onChange={(page, pageSize) => handleNavigation(page, pageSize)}
           />
         </div>
       </div>
