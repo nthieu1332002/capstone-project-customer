@@ -4,14 +4,11 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import Button from "../Button";
-import useLoading from "@/hooks/useLoading";
 
 const TrackingSection = () => {
   const router = useRouter();
-  const { onOpen } = useLoading();
   const [value, setValue] = useState("")
   const onSearch = () => {
-    onOpen();
     router.push(`/tracking?code=${value}`);
   };
   return (

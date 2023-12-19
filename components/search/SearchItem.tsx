@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
 import { convertUnit } from "@/lib/transfer-unit";
 import Link from "next/link";
-import useLoading from "@/hooks/useLoading";
 
 type Props = {
   route: Booking;
@@ -16,15 +15,14 @@ type Props = {
 
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
-  const { onOpen } = useLoading();
-
-  const { set, booking } = useBookingStore();
+  const [disabled, setDisabled] = useState(false);
+  const { set } = useBookingStore();
   const chooseBooking = (route: Booking) => {
-    onOpen()
+    setDisabled(true);
     set(route);
-    if (booking) {
+    setTimeout(() => {
       router.push("/booking");
-    }
+    }, 2000);
   };
   return (
     <div className="rounded-3xl border p-4 mb-3">
@@ -43,7 +41,15 @@ const SearchItem = ({ route }: Props) => {
           />
         </div>
         <div className="flex-grow flex flex-col justify-between">
-          <h2><Link href={`/partner/${route.start_station.id}`} target="_blank" className="font-semibold text-blue-600">{route.start_station.partner.name}</Link></h2>
+          <h2>
+            <Link
+              href={`/partner/${route.start_station.id}`}
+              target="_blank"
+              className="font-semibold text-blue-600"
+            >
+              {route.start_station.partner.name}
+            </Link>
+          </h2>
           <ul className="flex flex-col gap-2 mt-2 list-disc list-inside">
             <li className="font-medium">
               <Tooltip placement="right" title={route.start_station.address}>
@@ -82,6 +88,7 @@ const SearchItem = ({ route }: Props) => {
             {new Intl.NumberFormat("en-Us").format(route.lowest_price)}đ
           </p>
           <Button
+            disabled={disabled}
             onClick={() => chooseBooking(route)}
             className="rounded-full text-xs px-4 mt-3"
             label="Chọn chuyến"

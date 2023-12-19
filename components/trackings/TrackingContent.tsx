@@ -10,6 +10,7 @@ import { Session } from "next-auth";
 import { axios } from "@/lib/axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import useLoading from "@/hooks/useLoading";
 dayjs.locale("vi");
 
 export type Tracking = {
@@ -31,7 +32,6 @@ type Props = {
 
 const TrackingContent = ({ data, code, currentUser }: Props) => {
   const router = useRouter();
-
   const [isOpen, setIsOpen] = React.useState(false);
   const lastSegment = data.checkpoints[data.checkpoints.length - 1];
   const item = data.checkpoints.map((item, index) => {
