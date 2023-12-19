@@ -12,6 +12,7 @@ import { Select } from "antd";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { LocationType, packageList } from "@/lib/constants";
+import useLoading from "@/hooks/useLoading";
 
 const apiKey = process.env.NEXT_PUBLIC_GOONG_API_KEY;
 export const getCoordinates = async (location: string) => {
@@ -31,6 +32,8 @@ export const getCoordinates = async (location: string) => {
 const Search = () => {
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
+  const { onOpen } = useLoading();
+
   const initialValue = {
     code: "",
     parent_code: "",
@@ -42,6 +45,8 @@ const Search = () => {
   const [packages, setPackages] = useState<string[]>();
   const router = useRouter();
   const handleSearch = async () => {
+    onOpen();
+
     if (((!from || !to) && (!locationFrom || !locationTo)) || !packages) {
 
       return;

@@ -164,11 +164,11 @@ const OrderDetailBody = ({ order }: Props) => {
         <Timeline reverse items={items} />
       </div>
       <div className="w-full md:w-[220px]">
-        <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm space-y-3">
+        <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm space-y-3 break-words">
           <h2 className="text-lg font-bold">Khách hàng</h2>
           <div className="py-3">
             <p className="text-sm font-semibold mb-3">Người gửi</p>
-            <div className="flex flex-col gap-1">
+            <div className="space-y-1">
               <p>{order.sender_name}</p>
               <p>{order.sender_email}</p>
               <p>
@@ -181,7 +181,7 @@ const OrderDetailBody = ({ order }: Props) => {
           </div>
           <div className="py-3 border-t-[1px]">
             <p className="text-sm font-semibold mb-3">Người nhận</p>
-            <div className="flex flex-col gap-1">
+            <div className="space-y-1">
               <p>{order.receiver_name}</p>
               <p>{order.receiver_email}</p>
               <p>

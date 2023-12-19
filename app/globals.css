@@ -150,8 +150,31 @@
   background-color: rgb(230, 230, 230);
 
 }
-
-
+.car-movement > .car {
+  position: relative;
+  display: inline-block;
+  animation: linear infinite;
+  animation-name: run;
+  animation-duration: 5s;
+}
+@keyframes run {
+  0% {
+    transform: rotateY(0deg);
+    left: -100px;
+  }
+  50% {
+    transform: rotateY(0deg);
+    left: 100%;
+  }
+  51% {
+    transform: rotateY(180deg);
+    left: calc(100% + 100px);
+  }
+  100% {
+    transform: rotateY(180deg);
+    left: -100px;
+  }
+}
 @layer utilities {
   @variants responsive {
 

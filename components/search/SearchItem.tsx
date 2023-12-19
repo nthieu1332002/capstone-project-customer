@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
 import { convertUnit } from "@/lib/transfer-unit";
 import Link from "next/link";
+import useLoading from "@/hooks/useLoading";
 
 type Props = {
   route: Booking;
@@ -15,17 +16,16 @@ type Props = {
 
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
+  const { onOpen } = useLoading();
+
   const { set, booking } = useBookingStore();
-  const [loading, setLoading] = useState(false)
   const chooseBooking = (route: Booking) => {
-    setLoading(true)
+    onOpen()
     set(route);
     if (booking) {
       router.push("/booking");
     }
-    setLoading(false)
   };
-  console.log("route.start_station.partner.avatar", route.start_station.partner.avatar);
   return (
     <div className="rounded-3xl border p-4 mb-3">
       <div className="flex gap-5">
@@ -38,7 +38,7 @@ const SearchItem = ({ route }: Props) => {
               route.start_station.partner.avatar ||
               "https://res.cloudinary.com/dad0fircy/image/upload/v1702828398/capstone/icon_we9y8a.png"
             }
-            alt=""
+            alt={route.start_station.partner.name}
             priority
           />
         </div>
@@ -66,7 +66,7 @@ const SearchItem = ({ route }: Props) => {
               <Tooltip placement="right" title={route.end_station.address}>
                 {route.end_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  {route.start_station.distance_to_sender
+                  {route.end_station.distance_to_receiver
                     ? `cách điểm đến ${convertUnit(
                         route.end_station.distance_to_receiver
                       )} km`
@@ -82,7 +82,6 @@ const SearchItem = ({ route }: Props) => {
             {new Intl.NumberFormat("en-Us").format(route.lowest_price)}đ
           </p>
           <Button
-            disabled={loading}
             onClick={() => chooseBooking(route)}
             className="rounded-full text-xs px-4 mt-3"
             label="Chọn chuyến"
