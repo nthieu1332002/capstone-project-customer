@@ -53,13 +53,13 @@ const EditModal = () => {
         if (res.status === 200) {
           toast.success("Cập nhật thành công!");
           router.refresh();
+          onClose();
         }
       });
     } catch (error: any) {
       toast.error("Cập nhật  thất bại!");
     }
     setLoading(false);
-    onClose();
   };
 
   return (

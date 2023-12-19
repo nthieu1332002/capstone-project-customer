@@ -9,8 +9,8 @@ type Props = {
 
 const RouteSuggestionItem = ({route}: Props) => {
   return (
-    <div className={cn("relative flex flex-col gap-2", route.key % 2 === 0 && "translate-y-5")}>
-      <div className="relative h-64 w-52 rounded-2xl overflow-hidden">
+    <div className={cn("relative flex flex-col gap-2", route.key % 2 === 0 && "md:translate-y-5")}>
+      <div className="relative h-52 w-40 md:h-64 md:w-52 rounded-2xl overflow-hidden">
         <Image
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -18,7 +18,7 @@ const RouteSuggestionItem = ({route}: Props) => {
           src={
             route.image
           }
-          alt=""
+          alt={route.route}
           priority
         />
       </div>

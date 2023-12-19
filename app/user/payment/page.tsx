@@ -1,8 +1,17 @@
 import PaymentContent from "@/components/users/payments/PaymentContent";
 import { axios } from "@/lib/axios";
 import React from "react";
-import qs from "query-string";
+import { Metadata } from "next";
 
+import qs from "query-string";
+export const metadata: Metadata = {
+  title: "Lịch sử giao dịch",
+  description:
+    "Lịch sử giao dịch của khách hàng sẽ được hiển thị tại đây với mỗi giao dịch, thanh toán thành công.",
+  alternates: {
+    canonical: "/user/payment",
+  },
+};
 const getPaymentList = async (page?: string) => {
   try {
     const url = qs.stringifyUrl(

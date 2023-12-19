@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react";
 export default function BookingSuccess() {
   const searchParams = useSearchParams();
   const { data } = useSession()
-  console.log(data);
   const code = searchParams.get("code");
   const email = searchParams.get("email");
   return (

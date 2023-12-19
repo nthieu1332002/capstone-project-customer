@@ -3,6 +3,7 @@ import RouteSuggestion from "@/components/homepage/routes/RouteSuggestion";
 import HubSection from "@/components/homepage/hubs/HubSection";
 import WhyChoosing from "@/components/homepage/WhyChoosing";
 import { Metadata } from "next";
+import TrackingSection from "@/components/homepage/TrackingSection";
 export const metadata: Metadata = {
   title: "Trang chủ | Chành Xe Miền Tây - Vận chuyển siêu nhanh, Giá siêu tốt",
   description:
@@ -28,6 +29,7 @@ const Home = () => {
         </div>
         <Search />
       </div>
+      <TrackingSection />
       <RouteSuggestion />
       <WhyChoosing/>
       <HubSection />

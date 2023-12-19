@@ -1,8 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
 
-type Props = {};
-
 export const metadata: Metadata = {
   title: "Chính sách bồi thường",
   description:
@@ -16,7 +14,7 @@ export const metadata: Metadata = {
       "Chính sách bồi thường của chành xe miền tây, chúng tôi cung cấp rõ ràng tất cả trường hợp và chi tiết giá trị bồi thường.",
   },
 };
-const Policy = (props: Props) => {
+const Policy = () => {
   return (
     <div className="min-h-screen">
       <div className="pt-[68px] h-full max-w-screen py-8 mx-auto px-4 md:px-12 lg:px-40">

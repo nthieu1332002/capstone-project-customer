@@ -1,5 +1,4 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
 import { ColumnsType } from "antd/es/table";
 import { Pagination, Table } from "antd";
 import dayjs from "dayjs";
@@ -22,10 +21,13 @@ type Payment = {
 type Props = {
   data: any;
 };
+import qs from "query-string";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const PaymentContent = ({ data }: Props) => {
-  const router = useRouter();
   const params = useSearchParams();
+  const router = useRouter();
+
   const payments: Payment[] = data.data.map(
     (item: {
       id: any;
@@ -52,6 +54,8 @@ const PaymentContent = ({ data }: Props) => {
       title: "Giao dịch",
       key: "order_code",
       dataIndex: ["order_code", "vnpay_transaction_code"],
+      fixed: "left",
+      width: 230,
       render: (text, record) => (
         <>
           <p className="font-bold text-sm">
@@ -71,7 +75,7 @@ const PaymentContent = ({ data }: Props) => {
       key: "value",
       dataIndex: "value",
       sorter: (a, b) => a.value - b.value,
-      width: 200,
+      width: 150,
       render: (text) => <b>{new Intl.NumberFormat("en-Us").format(text)}đ</b>,
     },
     {
@@ -79,7 +83,7 @@ const PaymentContent = ({ data }: Props) => {
       key: "created_at",
       dataIndex: "created_at",
       sorter: (a, b) => a.created_at.localeCompare(b.created_at),
-      render: (text) => <p> {dayjs(text).format("DD/MM/YYYY")}</p>,
+      render: (text) => <b> {dayjs(text).format("HH:mm:ss ngày DD/MM/YYYY")}</b>,
     },
     {
       title: "Phương thức thanh toán",
@@ -95,6 +99,17 @@ const PaymentContent = ({ data }: Props) => {
       ),
     },
   ];
+  
+  const handleNavigation = (page: number, pageSize: number) => {
+    const url = qs.stringifyUrl(
+      {
+        url: "/user/payment",
+        query: { ...Object.fromEntries(params), page },
+      },
+      { skipNull: true }
+    );
+    router.push(url);
+  };
   return (
     <div className="flex flex-col mt-3">
       <div className="px-5 py-1 bg-white rounded-xl">
@@ -103,7 +118,7 @@ const PaymentContent = ({ data }: Props) => {
           dataSource={payments}
           columns={columns}
           pagination={false}
-          scroll={{ x: 500 }}
+          scroll={{ x: 800 }}
         />
         <div className="mt-3 flex justify-end">
           <Pagination
@@ -111,7 +126,7 @@ const PaymentContent = ({ data }: Props) => {
             pageSize={meta.per_page}
             total={meta.total}
             showSizeChanger={false}
-            // onChange={(page, pageSize) => handleNavigation(page, pageSize)}
+            onChange={(page, pageSize) => handleNavigation(page, pageSize)}
           />
         </div>
       </div>
