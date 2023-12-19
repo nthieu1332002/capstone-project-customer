@@ -6,7 +6,6 @@ import LogoutModal from "@/components/modals/LogoutModal";
 import RegisterModal from "@/components/modals/RegisterModal";
 import React, { useEffect, useState } from "react";
 
-
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -20,9 +19,9 @@ const ModalProvider = () => {
     <>
       <LoginModal />
       <RegisterModal />
-      <LogoutModal/>
-      <ConfirmCancelModal/>
-      <EditModal/>
+      <LogoutModal />
+      <ConfirmCancelModal />
+      <EditModal />
     </>
   );
 };

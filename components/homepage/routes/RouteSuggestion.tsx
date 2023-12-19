@@ -28,11 +28,11 @@ const routes = [
 
 const RouteSuggestion = (props: Props) => {
   return (
-    <div className="mx-auto md:px-40 sm:px-2 px-4 py-5 md:py-10">
+    <div className="mx-auto lg:px-40 md:px-32 sm:px-2 px-4 py-5 md:py-10 bg-slate-100">
       <h1 className="font-bold text-2xl md:text-3xl text-center mb-3 md:mb-8">
         Các tuyến đường phổ biến
       </h1>
-      <div className="flex flex-wrap md:flex-nowrap justify-center gap-4 md:gap-6 lg:gap-10 w-full">
+      <div className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-10 w-full">
         {routes.map((route) => {
           return <RouteSuggestionItem key={route.key} route={route} />;
         })}

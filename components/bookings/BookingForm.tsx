@@ -108,8 +108,8 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
   }, [length, width, height, weight, debouncedHandleFetchPrice]);
 
   const handleSubmit = async (values: FieldType) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const data = {
         ...values,
         height: values.height * 10,
@@ -132,8 +132,9 @@ const BookingForm = ({ booking, user, onChange, setSizePrice }: Props) => {
       }
     } catch (error) {
       toast.error("Có lỗi xảy ra, tạo đơn hàng thất bại!");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

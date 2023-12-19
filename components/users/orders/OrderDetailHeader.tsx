@@ -21,13 +21,15 @@ export type OrderDetail = {
     id: number;
     name: string;
     address: string;
-    image_url: string;
+    imageUrl: string | null;
+    partnerPhones: string[];
   };
   end_station: {
     id: number;
     name: string;
     address: string;
-    image_url: string;
+    imageUrl: string | null;
+    partnerPhones: string[];
   };
   code: string;
   sender_name: string;
@@ -115,8 +117,8 @@ const OrderDetailHeader = ({ code, order }: Props) => {
         </div>
       </div>
 
-      <div className="flex whitespace-nowrap flex-col md:flex-row justify-between">
-        <div className="flex gap-1 md:gap-2 items-start flex-col md:flex-row lg:items-center lg:flex-row ">
+      <div className="flex whitespace-nowrap flex-row justify-between">
+        <div className="flex  flex-wrap gap-1 md:gap-2 items-start flex-col md:flex-row lg:items-center lg:flex-row ">
           <h1 className="text-base md:text-2xl font-bold text-slate-500">
             Đơn hàng <span className="text-black uppercase">#{code}</span>
           </h1>
@@ -128,7 +130,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
             >
               {order.is_paid ? "Đã thanh toán" : "Chưa thanh toán"}
             </Tag>
-            
+
             {OrderStatus.map((item) => {
               return (
                 <Fragment key={item.id}>
@@ -155,6 +157,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
             </p>
           </div>
         </div>
+        <div>
         <div className="flex gap-2">
           <button
             onClick={handlePayment}
@@ -192,6 +195,7 @@ const OrderDetailHeader = ({ code, order }: Props) => {
               <BsThreeDotsVertical />
             </button>
           </Dropdown>
+        </div>
         </div>
       </div>
     </div>

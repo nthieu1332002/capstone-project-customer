@@ -12,7 +12,7 @@ const TrackingOrderBar = (props: Props) => {
     router.push(`/tracking?code=${value}`);
   };
   return (
-    <div>
+    <div className="hidden md:block">
       <Input
         allowClear
         prefix={<BiSearchAlt size="18" className="text-zinc-500" />}

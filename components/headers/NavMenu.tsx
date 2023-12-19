@@ -98,7 +98,7 @@ const NavMenu = ({ currentUser }: NavMenuProps) => {
           </div>
         </div>
       ) : (
-        <div className="hidden lg:flex items-center gap-5">
+        <div className="flex items-center md:gap-5 gap-3">
           <AuthButton name="Đăng nhập" onClick={() => onOpen("login")} />
           <AuthButton
             name="Đăng ký"

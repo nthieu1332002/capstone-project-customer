@@ -34,6 +34,9 @@ const Footer = (props: Props) => {
           <Link href="/policy" className="hover:underline">
             Chính sách
           </Link>
+          <Link href="/partner" className="hover:underline">
+            Danh sách nhà chành
+          </Link>
         </div>
         <div className="flex flex-col gap-3 text-white text-sm">
           <h2 className="text-base font-bold">Chính sách</h2>

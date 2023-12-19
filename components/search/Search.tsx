@@ -31,6 +31,7 @@ export const getCoordinates = async (location: string) => {
 const Search = () => {
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
+
   const initialValue = {
     code: "",
     parent_code: "",
@@ -43,7 +44,6 @@ const Search = () => {
   const router = useRouter();
   const handleSearch = async () => {
     if (((!from || !to) && (!locationFrom || !locationTo)) || !packages) {
-
       return;
     }
     try {

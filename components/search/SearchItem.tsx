@@ -7,6 +7,7 @@ import Button from "../Button";
 import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
 import { convertUnit } from "@/lib/transfer-unit";
+import Link from "next/link";
 
 type Props = {
   route: Booking;
@@ -14,15 +15,14 @@ type Props = {
 
 const SearchItem = ({ route }: Props) => {
   const router = useRouter();
-  const { set, booking } = useBookingStore();
-  const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(false);
+  const { set } = useBookingStore();
   const chooseBooking = (route: Booking) => {
-    setLoading(true)
+    setDisabled(true);
     set(route);
-    if (booking) {
+    setTimeout(() => {
       router.push("/booking");
-    }
-    setLoading(false)
+    }, 2000);
   };
   return (
     <div className="rounded-3xl border p-4 mb-3">
@@ -33,15 +33,23 @@ const SearchItem = ({ route }: Props) => {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
             src={
-              route.start_station.image_url ||
+              route.start_station.partner.avatar ||
               "https://res.cloudinary.com/dad0fircy/image/upload/v1702828398/capstone/icon_we9y8a.png"
             }
-            alt=""
+            alt={route.start_station.partner.name}
             priority
           />
         </div>
         <div className="flex-grow flex flex-col justify-between">
-          <h2 className="font-semibold">{route.start_station.partner.name}</h2>
+          <h2>
+            <Link
+              href={`/partner/${route.start_station.id}`}
+              target="_blank"
+              className="font-semibold text-blue-600"
+            >
+              {route.start_station.partner.name}
+            </Link>
+          </h2>
           <ul className="flex flex-col gap-2 mt-2 list-disc list-inside">
             <li className="font-medium">
               <Tooltip placement="right" title={route.start_station.address}>
@@ -64,7 +72,7 @@ const SearchItem = ({ route }: Props) => {
               <Tooltip placement="right" title={route.end_station.address}>
                 {route.end_station.name}{" "}
                 <span className="text-sm italic text-gray-400">
-                  {route.start_station.distance_to_sender
+                  {route.end_station.distance_to_receiver
                     ? `cách điểm đến ${convertUnit(
                         route.end_station.distance_to_receiver
                       )} km`
@@ -80,7 +88,7 @@ const SearchItem = ({ route }: Props) => {
             {new Intl.NumberFormat("en-Us").format(route.lowest_price)}đ
           </p>
           <Button
-            disabled={loading}
+            disabled={disabled}
             onClick={() => chooseBooking(route)}
             className="rounded-full text-xs px-4 mt-3"
             label="Chọn chuyến"
