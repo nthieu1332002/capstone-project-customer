@@ -7,6 +7,7 @@ import Button from "../Button";
 import { useRouter } from "next/navigation";
 import useBookingStore, { Booking } from "@/hooks/useBookingStore";
 import { convertUnit } from "@/lib/transfer-unit";
+import Link from "next/link";
 
 type Props = {
   route: Booking;
@@ -24,6 +25,7 @@ const SearchItem = ({ route }: Props) => {
     }
     setLoading(false)
   };
+  console.log("route.start_station.partner.avatar", route.start_station.partner.avatar);
   return (
     <div className="rounded-3xl border p-4 mb-3">
       <div className="flex gap-5">
@@ -33,7 +35,7 @@ const SearchItem = ({ route }: Props) => {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
             src={
-              route.start_station.image_url ||
+              route.start_station.partner.avatar ||
               "https://res.cloudinary.com/dad0fircy/image/upload/v1702828398/capstone/icon_we9y8a.png"
             }
             alt=""
@@ -41,7 +43,7 @@ const SearchItem = ({ route }: Props) => {
           />
         </div>
         <div className="flex-grow flex flex-col justify-between">
-          <h2 className="font-semibold">{route.start_station.partner.name}</h2>
+          <h2><Link href={`/partner/${route.start_station.id}`} target="_blank" className="font-semibold text-blue-600">{route.start_station.partner.name}</Link></h2>
           <ul className="flex flex-col gap-2 mt-2 list-disc list-inside">
             <li className="font-medium">
               <Tooltip placement="right" title={route.start_station.address}>

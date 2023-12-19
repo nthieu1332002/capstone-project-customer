@@ -12,8 +12,8 @@ export type Booking = {
     partner: {
       id: number;
       name: string;
+      avatar: string;
     };
-    image_url: string;
   };
   end_station: {
     id: number;
@@ -24,8 +24,8 @@ export type Booking = {
     partner: {
       id: number;
       name: string;
+      avatar: string;
     };
-    image_url: string;
   };
   lowest_price: number;
   total_distance: number;
