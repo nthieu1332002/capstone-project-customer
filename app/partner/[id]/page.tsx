@@ -43,14 +43,13 @@ const PartnerProfile = async ({ params }: Props) => {
             <div>
               <h1 className="text-2xl md:text-3xl font-bold">{data.name}</h1>
               <div className="items-center font-medium flex flex-wrap gap-2 mt-4">
-                {data.phones.length > 0 && (
-                  <AiOutlinePhone size="20" className="text-gray-400" />
-                )}
-                {data.phones.map((item: string, index: number) => (
+                <AiOutlinePhone size="20" className="text-gray-400" />
+
+                {data.phones.length > 0 ? data.phones.map((item: string, index: number) => (
                   <span key={index}>
                     {index > 0 && " - "} {item}
                   </span>
-                ))}
+                )) : "Đang cập nhật"}
               </div>
               <div className="items-center font-medium flex gap-2 mt-2">
                 <MdMyLocation size="20" className="text-primary-color" />
@@ -66,7 +65,7 @@ const PartnerProfile = async ({ params }: Props) => {
         <div className="rounded-lg bg-white w-full p-5 md:p-7 mt-7">
           <h2 className="text-xl md:text-2xl font-bold">Giới thiệu</h2>
           <Divider />
-          <p>{data.description}</p>
+          {data.description}
         </div>
         <div className="rounded-lg bg-white w-full p-5 md:p-7 mt-5">
           <h2 className="text-xl md:text-2xl font-bold">Danh sách cách trạm</h2>
