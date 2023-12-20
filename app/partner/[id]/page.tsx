@@ -43,7 +43,9 @@ const PartnerProfile = async ({ params }: Props) => {
             <div>
               <h1 className="text-2xl md:text-3xl font-bold">{data.name}</h1>
               <div className="items-center font-medium flex flex-wrap gap-2 mt-4">
-                <AiOutlinePhone size="20" className="text-gray-400" />
+                {data.phones.length > 0 && (
+                  <AiOutlinePhone size="20" className="text-gray-400" />
+                )}
                 {data.phones.map((item: string, index: number) => (
                   <span key={index}>
                     {index > 0 && " - "} {item}
@@ -56,7 +58,8 @@ const PartnerProfile = async ({ params }: Props) => {
               </div>
             </div>
             <div className="ml-auto mt-auto font-medium">
-              Ngày tham gia: <b>{dayjs(data.created_at).format("DD/MM/YYYY")}</b>
+              Ngày tham gia:{" "}
+              <b>{dayjs(data.created_at).format("DD/MM/YYYY")}</b>
             </div>
           </div>
         </div>
@@ -70,7 +73,12 @@ const PartnerProfile = async ({ params }: Props) => {
           <Divider />
           <ul className="list-disc list-inside font-medium ml-2 space-y-1">
             {data.stations.map((item: any) => (
-              <li key={item.id}>{item.name}. <span className="italic text-sm text-gray-400">({item.address})</span></li>
+              <li key={item.id}>
+                {item.name}.{" "}
+                <span className="italic text-sm text-gray-400">
+                  ({item.address})
+                </span>
+              </li>
             ))}
           </ul>
         </div>
