@@ -57,6 +57,7 @@ const getSearchList = async ({
           end_latitude,
           end_longitude,
           package_types,
+          number_of_results: 20
         },
       },
       { skipNull: true, skipEmptyString: true }
