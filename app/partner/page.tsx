@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 const getPartnerList = async () => {
   try {
-    const res = await axios.get("/api/customer/partners");
+    const res = await axios.get("/api/customer/partners?number_of_results=100");
     return res.data.data;
   } catch (error: any) {
     throw new Error("Failed to fetch data", error);
