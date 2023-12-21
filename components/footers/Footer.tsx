@@ -13,7 +13,7 @@ const Footer = (props: Props) => {
     <div className=" bottom-0 w-full bg-black z-10 shadow-sm">
       <div className="mx-auto md:px-10 xl:px-40 sm:px-2 px-4 py-5 md:py-10 pt-10 pb-4 flex flex-col flex-wrap md:flex-row lg:flex-nowrap gap-5 lg:gap-14">
         <div className="flex flex-col gap-3 max-w-xs text-white text-sm">
-          <BrandName className="bg-white rounded-md"/>
+          <BrandName className="bg-white rounded-md" />
           <p>
             Chành xe miền Tây là dự án thuộc đồ án tốt nghiệp năm 2023 của nhóm
             sinh viên đại học FPT.
@@ -58,7 +58,11 @@ const Footer = (props: Props) => {
         </div>
         <div className="flex flex-col gap-3 text-white text-sm">
           <h2 className="text-base font-bold">Khác</h2>
-          <Link href="/" className="hover:underline">
+          <Link
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdEI60gkhOhuKPodWYpHaimMozVaxTuXaNbJR5tQkGwnBq_YQ/viewform?usp=sf_link"
+            target="_blank"
+            className="hover:underline"
+          >
             Chành xe dành cho đối tác
           </Link>
         </div>
