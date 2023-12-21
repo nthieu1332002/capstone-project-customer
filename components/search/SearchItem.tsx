@@ -43,7 +43,7 @@ const SearchItem = ({ route }: Props) => {
         <div className="flex-grow flex flex-col justify-between">
           <h2>
             <Link
-              href={`/partner/${route.start_station.id}`}
+              href={`/partner/${route.start_station.partner.id}`}
               target="_blank"
               className="font-semibold text-blue-600"
             >
