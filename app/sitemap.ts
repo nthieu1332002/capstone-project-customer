@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseURL = 'https://chanhxemientay.vercel.app/'
+  const baseURL = 'https://chanhxemientay.vercel.app'
   return [
     {
       url: baseURL,
@@ -17,6 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseURL}/policy`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseURL}/partner`,
       lastModified: new Date(),
     },
     {
