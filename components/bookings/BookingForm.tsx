@@ -33,7 +33,7 @@ import { CheckboxChangeEvent } from "antd/es/checkbox";
 const { TextArea } = Input;
 type FieldType = {
   sender_name: string;
-  sender_phone: number;
+  sender_phone: string;
   sender_email: string;
   receiver_name: string;
   receiver_phone: string;

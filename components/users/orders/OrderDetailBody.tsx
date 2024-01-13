@@ -1,7 +1,7 @@
 "use client";
 
 import { OrderStatusMap, packageType } from "@/lib/constants";
-
+import { Image as ImageAntd } from "antd";
 import Image from "next/image";
 import vnpay from "@/public/assets/vnpay.png";
 import cash from "@/public/assets/cash.jpg";
@@ -123,35 +123,32 @@ const OrderDetailBody = ({ order }: Props) => {
         <div className="bg-white rounded-sm shadow-sm px-5 py-4">
           <h2 className="font-bold">Thông tin gói hàng</h2>
 
-            <div className="flex flex-wrap whitespace-nowrap gap-5 lg:gap-16 w-full mt-4">
-              <div className="space-y-3">
-                <p className="text-gray-500">Khối lượng</p>
-                <p className="font-medium">{convertUnit(order.weight)} kg</p>
-              </div>
-              <div className="space-y-3">
-                <p className="text-gray-500">Chiều dài</p>
-                <p className="font-medium">{convertUnit(order.length)} m</p>
-              </div>
-              <div className="space-y-3">
-                <p className="text-gray-500">Chiều rộng</p>
-                <p className="font-medium">{convertUnit(order.width)} m</p>
-              </div>
-              <div className="space-y-3">
-                <p className="text-gray-500">Chiều cao</p>
-                <p className="font-medium">{convertUnit(order.height)} m</p>
-              </div>
-              <div className="space-y-3">
-                <p className="text-gray-500">Trị giá</p>
-                <p className="font-medium">
-                  {new Intl.NumberFormat("en-Us").format(order.package_value)}đ
-                </p>
+          <div className="flex flex-wrap whitespace-nowrap gap-5 lg:gap-16 w-full mt-4">
+            <div className="space-y-3">
+              <p className="text-gray-500">Khối lượng</p>
+              <p className="font-medium">{convertUnit(order.weight)} kg</p>
+            </div>
+            <div className="space-y-3">
+              <p className="text-gray-500">Chiều dài</p>
+              <p className="font-medium">{convertUnit(order.length)} m</p>
+            </div>
+            <div className="space-y-3">
+              <p className="text-gray-500">Chiều rộng</p>
+              <p className="font-medium">{convertUnit(order.width)} m</p>
+            </div>
+            <div className="space-y-3">
+              <p className="text-gray-500">Chiều cao</p>
+              <p className="font-medium">{convertUnit(order.height)} m</p>
+            </div>
+            <div className="space-y-3">
+              <p className="text-gray-500">Trị giá</p>
+              <p className="font-medium">
+                {new Intl.NumberFormat("en-Us").format(order.package_value)}đ
+              </p>
             </div>
           </div>
           <div className="flex gap-1 mt-3">
             {order.package_types.map((value: number) => {
-              {
-                packageType.find((type) => type.value === value)?.label;
-              }
               return (
                 <Tag key={value} color="blue">
                   {packageType.find((type) => type.value === value)?.label}
@@ -195,6 +192,28 @@ const OrderDetailBody = ({ order }: Props) => {
           <div className="py-3 border-t-[1px]">
             <p className="text-sm font-semibold mb-3">Ghi chú</p>
             <p>{order.note}</p>
+          </div>
+        </div>
+        <div className="mt-4 px-4 ">
+          <h2 className="text-lg font-bold my-2">Hình ảnh</h2>
+          <div className="flex gap-2">
+            {order.package_image_url && (
+            <div className="relative w-20 h-20 bg-red-50 cursor-pointer">
+              <ImageAntd
+                src={
+                  order.package_image_url}
+                alt=""
+              />
+            </div>
+            )}
+            {order.delivered_image_url && (
+              <div className="relative w-20 h-20 bg-red-50">
+                <ImageAntd
+                  src={order.delivered_image_url}
+                  alt=""
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

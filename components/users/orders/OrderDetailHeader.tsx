@@ -59,6 +59,9 @@ export type OrderDetail = {
     status: number;
     achieved_at: string;
   }>;
+  package_image_url: string;
+  delivered_image_url: string;
+  receive_token: string;
 };
 
 type Props = {
@@ -158,44 +161,44 @@ const OrderDetailHeader = ({ code, order }: Props) => {
           </div>
         </div>
         <div>
-        <div className="flex gap-2">
-          <button
-            onClick={handlePayment}
-            type="button"
-            disabled={
-              order.is_paid ||
-              !order.is_confirmed ||
-              order.is_cancelled ||
-              order.payment_method === 0
-            }
-            className={cn(
-              " rounded-md text-white p-2 text-sm",
-              order.is_paid ||
+          <div className="flex gap-2">
+            <button
+              onClick={handlePayment}
+              type="button"
+              disabled={
+                order.is_paid ||
                 !order.is_confirmed ||
                 order.is_cancelled ||
                 order.payment_method === 0
-                ? "cursor-not-allowed bg-primary-color/30"
-                : "bg-primary-color hover:bg-primary-color/80"
-            )}
-          >
-            Thanh toán
-          </button>
-
-          <Dropdown
-            placement="bottomRight"
-            menu={{
-              items,
-            }}
-            trigger={["click"]}
-          >
-            <button
-              onClick={(e: any) => e.preventDefault()}
-              className="focus:border-primary-color focus:text-primary-color bg-white border-2 p-2 rounded-md transition"
+              }
+              className={cn(
+                " rounded-md text-white p-2 text-sm",
+                order.is_paid ||
+                  !order.is_confirmed ||
+                  order.is_cancelled ||
+                  order.payment_method === 0
+                  ? "cursor-not-allowed bg-primary-color/30"
+                  : "bg-primary-color hover:bg-primary-color/80"
+              )}
             >
-              <BsThreeDotsVertical />
+              Thanh toán
             </button>
-          </Dropdown>
-        </div>
+
+            <Dropdown
+              placement="bottomRight"
+              menu={{
+                items,
+              }}
+              trigger={["click"]}
+            >
+              <button
+                onClick={(e: any) => e.preventDefault()}
+                className="focus:border-primary-color focus:text-primary-color bg-white border-2 p-2 rounded-md transition"
+              >
+                <BsThreeDotsVertical />
+              </button>
+            </Dropdown>
+          </div>
         </div>
       </div>
     </div>
