@@ -1,7 +1,7 @@
 "use client";
 
 import { OrderStatusMap, packageType } from "@/lib/constants";
-import { Image as ImageAntd } from "antd";
+import { Image as ImageAntd, QRCode } from "antd";
 import Image from "next/image";
 import vnpay from "@/public/assets/vnpay.png";
 import cash from "@/public/assets/cash.jpg";
@@ -10,6 +10,8 @@ import dayjs from "dayjs";
 import { OrderDetail } from "./OrderDetailHeader";
 import { cn } from "@/lib/utils";
 import { convertUnit } from "@/lib/transfer-unit";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import { useState } from "react";
 
 type Props = {
   code: string;
@@ -17,6 +19,7 @@ type Props = {
 };
 
 const OrderDetailBody = ({ order }: Props) => {
+  const [show, setShow] = useState(false);
   const items = order.checkpoints.map((item, index) => {
     const orderStatus = OrderStatusMap[item.status];
     return {
@@ -161,7 +164,16 @@ const OrderDetailBody = ({ order }: Props) => {
         <Timeline reverse items={items} />
       </div>
       <div className="w-full md:w-[220px]">
-        <div className="p-4 bg-white rounded-sm shadow-sm h-[500px] min-h-[500px] text-sm space-y-3 break-words">
+        <div className="p-4 bg-white rounded-sm shadow-sm min-h-[500px] text-sm space-y-3 break-words">
+          <div className="flex flex-col items-center justify-center gap-1">
+            <QRCode value={order.receive_token} size={164} />
+            <div className="flex gap-1 items-center">
+              <p className="uppercase font-semibold">
+                {show ? order.receive_token : "***********"}
+              </p>
+              <div onClick={() => setShow(!show)}>{show ? <FaRegEye /> : <FaRegEyeSlash />}</div>
+            </div>
+          </div>
           <h2 className="text-lg font-bold">Khách hàng</h2>
           <div className="py-3">
             <p className="text-sm font-semibold mb-3">Người gửi</p>
@@ -198,20 +210,13 @@ const OrderDetailBody = ({ order }: Props) => {
           <h2 className="text-lg font-bold my-2">Hình ảnh</h2>
           <div className="flex gap-2">
             {order.package_image_url && (
-            <div className="relative w-20 h-20 bg-red-50 cursor-pointer">
-              <ImageAntd
-                src={
-                  order.package_image_url}
-                alt=""
-              />
-            </div>
+              <div className="relative w-20 h-20 bg-red-50 cursor-pointer">
+                <ImageAntd src={order.package_image_url} alt="" />
+              </div>
             )}
             {order.delivered_image_url && (
               <div className="relative w-20 h-20 bg-red-50">
-                <ImageAntd
-                  src={order.delivered_image_url}
-                  alt=""
-                />
+                <ImageAntd src={order.delivered_image_url} alt="" />
               </div>
             )}
           </div>

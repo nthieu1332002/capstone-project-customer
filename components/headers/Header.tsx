@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import BrandName from "../BrandName";
 import Link from "next/link";
 import NavMenu from "./NavMenu";
 import { Session } from "next-auth";
@@ -11,6 +10,7 @@ import TrackingOrderBar from "./TrackingOrderBar";
 import Image from "next/image";
 import mobile from "@/public/assets/icon-removebg.png";
 import tablet from "@/public/assets/ChanhXeMienTay.png";
+import Notifications from "../notifications/Notifications";
 
 type Props = {
   currentUser: Session | null;
@@ -43,27 +43,30 @@ const Header = ({ currentUser }: Props) => {
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div className="py-4 border-b-[1px]">
-        <div className="max-w-[2520px] mx-auto xl:px-8 md:px-10 sm:px-2 px-4">
+        <div className="w-full xl:px-8 md:px-10 sm:px-2 px-4">
           <div className="flex items-center lg:justify-between gap-3 md:gap-0">
-            <Link href="/" className="relative w-24 h-10 md:w-64 md:h-8 flex items-center justify-center">
-                <Image
-                  src={mobile}
-                  alt="logo"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority
-                  quality={30}
-                  className="block md:hidden"
-                />
-                <Image
-                  src={tablet}
-                  alt="logo"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority
-                  quality={30}
-                  className="hidden md:block"
-                />
+            <Link
+              href="/"
+              className="relative w-24 h-10 md:w-64 md:h-8 flex items-center justify-center"
+            >
+              <Image
+                src={mobile}
+                alt="logo"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
+                quality={30}
+                className="block md:hidden"
+              />
+              <Image
+                src={tablet}
+                alt="logo"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
+                quality={30}
+                className="hidden md:block"
+              />
             </Link>
 
             <div className="hidden lg:flex ">
@@ -72,7 +75,7 @@ const Header = ({ currentUser }: Props) => {
               <NavLink name="Chính sách" type="normal" href="/policy" />
               <NavLink name="Nhà chành" type="normal" href="/partner" />
             </div>
-            
+
             <div className="flex lg:hidden px-3 ml-auto lg:ml-0">
               <Dropdown
                 dropdownRender={(menu) => (
@@ -92,6 +95,7 @@ const Header = ({ currentUser }: Props) => {
             </div>
             <div className="flex gap-3 items-center">
               <TrackingOrderBar />
+              {currentUser && <Notifications />}
               <NavMenu currentUser={currentUser} />
             </div>
           </div>
