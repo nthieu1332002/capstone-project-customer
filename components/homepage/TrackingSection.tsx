@@ -12,7 +12,7 @@ const TrackingSection = () => {
     router.push(`/tracking?code=${value}`);
   };
   return (
-    <div className="mx-auto lg:px-60 px-4 py-5 md:py-10 min-h-[250px]">
+    <div className="mx-auto lg:px-60 px-4 py-5 md:py-10 min-h-[250px] bg-white">
       <h1 className="font-bold text-2xl md:text-3xl text-center mb-3 md:mb-8">
         Tra cứu vận đơn
       </h1>

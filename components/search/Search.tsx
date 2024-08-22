@@ -85,9 +85,9 @@ const Search = () => {
       <div className="md:border-[1px] w-full py-2 md:rounded-full shadow-sm hover:shadow-md transition cursor-pointer">
         <div className="flex flex-col gap-3 md:flex-row items-center justify-between text-sm font-semibold mx-1">
           <div className="flex items-center gap-2 px-3 md:px-6 w-full">
-            <GoLocation size="18" />
+            <GoLocation size="18" className="text-black"/>
             <div className="relative flex flex-col w-full">
-              <label htmlFor="from"> Nơi xuất phát</label>
+              <label htmlFor="from" className="text-black"> Nơi xuất phát</label>
               <DebouceInput
                 placeholder="Chọn điểm xuất phát"
                 value={from || locationFrom.path_with_type}
@@ -103,7 +103,7 @@ const Search = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 md:px-6 w-full md:border-x">
+          <div className="flex items-center gap-2 px-3 md:px-6 w-full md:border-x text-black">
             <TbLocation size="18" />
             <div className="relative flex flex-col w-full">
               <label htmlFor="to">Điểm đến</label>
@@ -122,10 +122,10 @@ const Search = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 md:px-6 w-full">
-            <GoPackage size="18" />
+          <div className="flex items-center gap-2 px-3 md:px-6 w-full ">
+            <GoPackage size="18" className="text-black"/>
             <div className="relative flex flex-col w-full">
-              <label htmlFor="packages">Loại hàng</label>
+              <label htmlFor="packages"className="text-black">Loại hàng</label>
               <Select
                 id="packages"
                 mode="multiple"
